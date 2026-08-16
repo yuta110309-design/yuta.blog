@@ -32,6 +32,22 @@ window.addEventListener(
   { passive: true }
 );
 
+// 同姓同名の別人を誤って同一回答者として扱わないよう、端末ごとのIDで判定する
+// （名前の文字列一致ではない）。thirdplace-app側（lib/deviceId.ts）と同じ考え方。
+function getDeviceId() {
+  try {
+    let id = localStorage.getItem('thirdplaceDeviceId');
+    if (!id) {
+      id = crypto.randomUUID ? crypto.randomUUID() : Date.now() + '-' + Math.random().toString(36).slice(2);
+      localStorage.setItem('thirdplaceDeviceId', id);
+    }
+    return id;
+  } catch {
+    return '';
+  }
+}
+const RSVP_DEVICE_ID = getDeviceId();
+
 // Event RSVP: mirrors thirdplace-app's lib/events.ts recurrence config so
 // occ_date bucketing lines up with the same Supabase responses rows.
 const RSVP_EVENTS = {
@@ -109,7 +125,7 @@ if (eventRows.length && APP_API_BASE) {
       return;
     }
 
-    const alreadyGoing = list.some((r) => r.name === draft.name.trim() && r.status === 'go');
+    const alreadyGoing = list.some((r) => r.device_id === RSVP_DEVICE_ID && r.status === 'go');
     const options = [
       { value: 'go', label: '参加' },
       { value: 'maybe', label: '未定' },
@@ -169,7 +185,7 @@ if (eventRows.length && APP_API_BASE) {
         const res = await fetch(APP_API_BASE + '/api/responses', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ eventId, occDate, name: draft.name.trim(), status: draft.status })
+          body: JSON.stringify({ eventId, occDate, name: draft.name.trim(), status: draft.status, deviceId: RSVP_DEVICE_ID })
         });
         if (!res.ok) throw new Error('failed');
         await loadResponsesAndRender();

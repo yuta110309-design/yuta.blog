@@ -16,7 +16,7 @@ export async function OPTIONS() {
 export async function GET() {
   const { data, error } = await supabase
     .from('responses')
-    .select('event_id, occ_date, name, status, updated_at')
+    .select('event_id, occ_date, name, device_id, status, updated_at')
     .order('updated_at', { ascending: false });
 
   if (error) {
@@ -25,10 +25,12 @@ export async function GET() {
   return NextResponse.json(data ?? [], { headers: CORS_HEADERS });
 }
 
-// POST /api/responses -> 回答を登録・更新（同一 event_id + occ_date + name は上書き）
+// POST /api/responses -> 回答を登録・更新
+// 同姓同名の別人を区別するため、同一 event_id + occ_date + deviceId（端末ごとに割り当てるID）を
+// 同一回答者とみなして上書きする。deviceIdが無い（古いクライアント）場合は毎回新規行になる。
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { eventId, occDate, name, status } = body;
+  const { eventId, occDate, name, status, deviceId } = body;
 
   if (!eventId || !name || !status) {
     return NextResponse.json(
@@ -44,10 +46,11 @@ export async function POST(req: NextRequest) {
         event_id: eventId,
         occ_date: occDate ?? '',
         name,
+        device_id: deviceId ?? null,
         status,
         updated_at: new Date().toISOString()
       },
-      { onConflict: 'event_id,occ_date,name' }
+      { onConflict: 'event_id,occ_date,device_id' }
     );
 
   if (error) {

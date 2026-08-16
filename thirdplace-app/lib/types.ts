@@ -28,6 +28,7 @@ export interface ResponseRow {
   event_id: string;
   occ_date: string;
   name: string;
+  device_id?: string | null;
   status: AttendanceStatus;
   updated_at: string;
 }

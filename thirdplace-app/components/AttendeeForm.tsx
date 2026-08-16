@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AttendanceStatus, EventConfig, ResponseRow } from '@/lib/types';
+import { getDeviceId } from '@/lib/deviceId';
 
 export default function AttendeeForm({
   event,
@@ -22,7 +23,13 @@ export default function AttendeeForm({
   const [saved, setSaved] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
-  const alreadyGoing = list.some((x) => x.name === name.trim() && x.status === 'go');
+  // 同姓同名の別人を誤って同一回答者として扱わないよう、端末ごとのIDで判定する
+  // （名前の文字列一致ではない）。SSRとの不一致を避けるためマウント後に取得する。
+  const [deviceId, setDeviceId] = useState('');
+  useEffect(() => {
+    setDeviceId(getDeviceId());
+  }, []);
+  const alreadyGoing = list.some((x) => x.device_id === deviceId && x.status === 'go');
 
   async function handleSubmit() {
     if (!name.trim() || !status) {
@@ -41,7 +48,7 @@ export default function AttendeeForm({
       const res = await fetch('/api/responses', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ eventId: event.id, occDate, name: name.trim(), status })
+        body: JSON.stringify({ eventId: event.id, occDate, name: name.trim(), status, deviceId })
       });
       if (!res.ok) throw new Error('failed');
       setSaved(true);

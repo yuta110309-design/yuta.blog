@@ -8,10 +8,20 @@ create table if not exists responses (
   event_id text not null,
   occ_date text not null default '',
   name text not null,
+  device_id text,
   status text not null check (status in ('go', 'maybe', 'no')),
-  updated_at timestamptz not null default now(),
-  unique (event_id, occ_date, name)
+  updated_at timestamptz not null default now()
 );
+
+-- 既存テーブルに対する追記用マイグレーション（新規作成時は上のcreate tableで既にdevice_id列がある）。
+-- 同姓・同名の別人が「同じ回答者」として上書きされてしまう問題を避けるため、
+-- 回答者の識別を名前の文字列一致ではなく、端末ごとに割り当てるIDに切り替える。
+alter table responses add column if not exists device_id text;
+
+alter table responses drop constraint if exists responses_event_id_occ_date_name_key;
+
+create unique index if not exists responses_event_occdate_device_key
+  on responses (event_id, occ_date, device_id);
 
 -- 参加者は名前を入力するだけの想定のため、匿名アクセスを許可する。
 -- 認証を追加する場合はここを見直すこと（要件定義書 9章 参照）。

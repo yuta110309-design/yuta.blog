@@ -60,7 +60,7 @@ export default function OrganizerPanel({
             .sort((a, b) => (a.updated_at < b.updated_at ? 1 : -1))
             .map((r) => (
               <div
-                key={`${r.event_id}-${r.occ_date}-${r.name}`}
+                key={`${r.event_id}-${r.occ_date}-${r.device_id || r.name}`}
                 className="flex justify-between items-center py-2.5 border-b border-white/10 text-[13px] last:border-none"
               >
                 <span className="flex items-center gap-2">

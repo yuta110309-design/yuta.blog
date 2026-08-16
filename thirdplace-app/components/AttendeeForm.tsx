@@ -18,6 +18,7 @@ export default function AttendeeForm({
   onSubmitted: () => Promise<void> | void;
 }) {
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [status, setStatus] = useState<AttendanceStatus | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -48,7 +49,14 @@ export default function AttendeeForm({
       const res = await fetch('/api/responses', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ eventId: event.id, occDate, name: name.trim(), status, deviceId })
+        body: JSON.stringify({
+          eventId: event.id,
+          occDate,
+          name: name.trim(),
+          status,
+          deviceId,
+          email: email.trim() || undefined
+        })
       });
       if (!res.ok) throw new Error('failed');
       setSaved(true);
@@ -80,6 +88,18 @@ export default function AttendeeForm({
           setName(e.target.value);
           setSaved(false);
         }}
+        className="w-full bg-baseDeep border border-gold/40 px-4 py-3 text-cream text-[14.5px] mb-4.5 placeholder:text-cream/30"
+      />
+
+      <label className="block text-[10.5px] text-sage mb-2 font-medium tracking-widest uppercase" htmlFor={`email-${event.id}`}>
+        メールアドレス（任意・確認メールを送ります）
+      </label>
+      <input
+        id={`email-${event.id}`}
+        type="email"
+        placeholder="you@example.com"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         className="w-full bg-baseDeep border border-gold/40 px-4 py-3 text-cream text-[14.5px] mb-4.5 placeholder:text-cream/30"
       />
 

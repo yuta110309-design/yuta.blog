@@ -117,7 +117,7 @@ if (eventRows.length && APP_API_BASE) {
 
     const body = row.querySelector('.event-rsvp-body');
     if (!body) return;
-    const draft = row._rsvpDraft || { name: '', status: null };
+    const draft = row._rsvpDraft || { name: '', email: '', status: null };
     row._rsvpDraft = draft;
 
     if (pastDeadline) {
@@ -141,6 +141,14 @@ if (eventRows.length && APP_API_BASE) {
       '" type="text" placeholder="山田 太郎" value="' +
       draft.name.replace(/"/g, '&quot;') +
       '">' +
+      '<label class="field-label" for="rsvp-email-' +
+      eventId +
+      '">メールアドレス（任意・確認メールを送ります）</label>' +
+      '<input class="field-input" id="rsvp-email-' +
+      eventId +
+      '" type="email" placeholder="you@example.com" value="' +
+      draft.email.replace(/"/g, '&quot;') +
+      '">' +
       (full && !alreadyGoing ? '<p class="rsvp-hint">定員に達しているため「参加」は選択できません</p>' : '') +
       '<div class="rsvp-status-row">' +
       options
@@ -162,8 +170,11 @@ if (eventRows.length && APP_API_BASE) {
       '</div>' +
       '<button type="button" class="rsvp-submit">' + (draft.message || '送信する') + '</button>';
 
-    body.querySelector('input').addEventListener('input', (e) => {
+    body.querySelector('#rsvp-name-' + eventId).addEventListener('input', (e) => {
       draft.name = e.target.value;
+    });
+    body.querySelector('#rsvp-email-' + eventId).addEventListener('input', (e) => {
+      draft.email = e.target.value;
     });
     body.querySelectorAll('[data-status]').forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -185,7 +196,14 @@ if (eventRows.length && APP_API_BASE) {
         const res = await fetch(APP_API_BASE + '/api/responses', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ eventId, occDate, name: draft.name.trim(), status: draft.status, deviceId: RSVP_DEVICE_ID })
+          body: JSON.stringify({
+            eventId,
+            occDate,
+            name: draft.name.trim(),
+            status: draft.status,
+            deviceId: RSVP_DEVICE_ID,
+            email: draft.email.trim() || undefined
+          })
         });
         if (!res.ok) throw new Error('failed');
         await loadResponsesAndRender();

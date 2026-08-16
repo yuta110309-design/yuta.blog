@@ -92,6 +92,33 @@ a { color: inherit; }
 }
 .btn-nav:hover { border-color: var(--sage); color: var(--sage-deep); }
 
+.nav-tabs {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 28px 14px;
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-tabs::-webkit-scrollbar { display: none; }
+.nav-tabs a {
+  font-family: "Space Mono", monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.nav-tabs a:hover { color: var(--sage-deep); border-color: var(--sage); }
+@media (max-width: 640px) {
+  .nav-tabs { padding: 0 20px 14px; gap: 18px; }
+}
+
 /* SECTIONS */
 .section { padding: 96px 0; }
 .section-alt { background: var(--paper-alt); }

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
-import { notionRequest } from '@/lib/notion';
+import { notionRequest, formatJst } from '@/lib/notion';
 
 // ランディングページ（GitHub Pages・別オリジン）から呼ばれるため CORS を許可する。
 // insert のみを受け付ける公開フォームのエンドポイントなので、オリジンは絞らずワイルドカードにしている。
@@ -77,9 +77,9 @@ async function syncMemberToNotion({
         properties: {
           名前: { title: [{ text: { content: name } }] },
           連絡先: { rich_text: [{ text: { content: contact } }] },
-          プラン: { select: { name: PLAN_LABEL[plan] } },
+          プラン: { rich_text: [{ text: { content: PLAN_LABEL[plan] } }] },
           メッセージ: { rich_text: message ? [{ text: { content: message } }] : [] },
-          申込日時: { date: { start: new Date().toISOString() } }
+          申込日時: { rich_text: [{ text: { content: formatJst(new Date()) } }] }
         }
       })
     });

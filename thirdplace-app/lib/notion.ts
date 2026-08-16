@@ -15,3 +15,21 @@ export async function notionRequest(path: string, init: RequestInit): Promise<Re
     }
   });
 }
+
+/**
+ * Notion側のデータベース列はすべて「テキスト」型で統一している
+ * （セレクト・日付型だと列の型を手動で選ぶ手間が増えるため）。
+ * 日時もテキストとして書き込むので、読みやすい文字列に整形する。
+ */
+export function formatJst(d: Date): string {
+  const parts = new Intl.DateTimeFormat('ja-JP', {
+    timeZone: 'Asia/Tokyo',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  }).formatToParts(d);
+  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? '';
+  return `${get('year')}-${get('month')}-${get('day')} ${get('hour')}:${get('minute')}`;
+}

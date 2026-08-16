@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { EVENTS, formatLabel } from '@/lib/events';
-import { notionRequest } from '@/lib/notion';
+import { notionRequest, formatJst } from '@/lib/notion';
 
 const STATUS_LABEL: Record<string, string> = { go: '参加', maybe: '未定', no: '不参加' };
 
@@ -156,10 +156,10 @@ async function syncResponseToNotion({
   const matchKey = `${eventId}|${occDate}|${deviceId ?? ''}`;
   const properties = {
     名前: { title: [{ text: { content: name } }] },
-    イベント: { select: { name: eventTitle } },
+    イベント: { rich_text: [{ text: { content: eventTitle } }] },
     開催日: { rich_text: dateLabel ? [{ text: { content: dateLabel } }] : [] },
-    出欠: { select: { name: STATUS_LABEL[status] ?? status } },
-    更新日時: { date: { start: new Date().toISOString() } },
+    出欠: { rich_text: [{ text: { content: STATUS_LABEL[status] ?? status } }] },
+    更新日時: { rich_text: [{ text: { content: formatJst(new Date()) } }] },
     回答ID: { rich_text: [{ text: { content: matchKey } }] }
   };
 

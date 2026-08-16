@@ -1,3 +1,8 @@
+// thirdplace-app を Vercel にデプロイしたら、そのURLに差し替える
+// （例: 'https://thirdplace-app.vercel.app'）。空のままだと申し込みフォームは
+// エラーメッセージを表示するだけで、既存の他の機能には影響しない。
+const MEMBERS_API_BASE = '';
+
 const reveals = document.querySelectorAll('.reveal');
 
 const observer = new IntersectionObserver((entries) => {
@@ -115,4 +120,83 @@ if (makerDropzone) {
   });
 
   render();
+}
+
+// Signup modal: opened from the membership plan buttons, posts to thirdplace-app's /api/members
+const PLAN_LABELS = { free: 'Free', standard: 'Standard（Founding Member）', premium: 'Premium' };
+
+const signupOverlay = document.getElementById('signup-overlay');
+if (signupOverlay) {
+  const formView = document.getElementById('signup-form-view');
+  const successView = document.getElementById('signup-success-view');
+  const form = document.getElementById('signup-form');
+  const planLabel = document.getElementById('signup-plan-label');
+  const planInput = document.getElementById('signup-plan');
+  const errorEl = document.getElementById('signup-error');
+  const submitBtn = document.getElementById('signup-submit');
+
+  function openSignup(plan) {
+    planInput.value = plan;
+    planLabel.textContent = PLAN_LABELS[plan] || plan;
+    errorEl.hidden = true;
+    formView.hidden = false;
+    successView.hidden = true;
+    form.reset();
+    planInput.value = plan;
+    signupOverlay.hidden = false;
+    document.getElementById('signup-name').focus();
+  }
+
+  function closeSignup() {
+    signupOverlay.hidden = true;
+  }
+
+  document.querySelectorAll('[data-open-signup]').forEach((btn) => {
+    btn.addEventListener('click', () => openSignup(btn.dataset.openSignup));
+  });
+  document.getElementById('signup-close').addEventListener('click', closeSignup);
+  document.getElementById('signup-done').addEventListener('click', closeSignup);
+  signupOverlay.addEventListener('click', (e) => {
+    if (e.target === signupOverlay) closeSignup();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !signupOverlay.hidden) closeSignup();
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorEl.hidden = true;
+
+    if (!MEMBERS_API_BASE) {
+      errorEl.textContent = '現在申し込みフォームは準備中です。お手数ですがLINEまたはInstagramからご連絡ください。';
+      errorEl.hidden = false;
+      return;
+    }
+
+    const payload = {
+      name: document.getElementById('signup-name').value.trim(),
+      contact: document.getElementById('signup-contact').value.trim(),
+      plan: planInput.value,
+      message: document.getElementById('signup-message').value.trim()
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = '送信中…';
+    try {
+      const res = await fetch(`${MEMBERS_API_BASE}/api/members`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('failed');
+      formView.hidden = true;
+      successView.hidden = false;
+    } catch {
+      errorEl.textContent = '送信に失敗しました。しばらくしてからもう一度お試しください。';
+      errorEl.hidden = false;
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = '送信する';
+    }
+  });
 }

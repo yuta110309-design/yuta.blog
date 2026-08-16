@@ -219,7 +219,7 @@
           <li>一般公開イベントへの参加（1回¥3,000〜5,000）</li>
           <li>コミュニティの雰囲気をまず体験したい方に</li>
         </ul>
-        <a href="https://line.me/ti/g2/qDymAJY28KLoy_T2bjAWbS3ZixI-SohbiUrRHQ?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" rel="noopener noreferrer" class="btn btn-outline">無料で始める</a>
+        <button type="button" class="btn btn-outline" data-open-signup="free">無料で始める</button>
       </div>
 
       <div class="plan-card featured">
@@ -234,7 +234,7 @@
           <li>入会金免除（¥10,000 → ¥0）</li>
           <li>Founding Memberバッジ</li>
         </ul>
-        <a href="https://line.me/ti/g2/qDymAJY28KLoy_T2bjAWbS3ZixI-SohbiUrRHQ?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" rel="noopener noreferrer" class="btn btn-primary">申し込む</a>
+        <button type="button" class="btn btn-primary" data-open-signup="standard">申し込む</button>
       </div>
 
       <div class="plan-card">
@@ -247,7 +247,7 @@
           <li>1on1セッション</li>
           <li>先行情報・意思決定参加</li>
         </ul>
-        <a href="https://www.instagram.com/the.thirdplace.ebisu?igsh=MTFuY2RzZWJjZzlnZA==" target="_blank" rel="noopener noreferrer" class="btn btn-outline">お問い合わせ</a>
+        <button type="button" class="btn btn-outline" data-open-signup="premium">お問い合わせ</button>
       </div>
     </div>
 
@@ -423,6 +423,42 @@
     <p class="footer-copy">© 2026 THE THIRDPLACE EBISU. All rights reserved. 完全紹介制コミュニティ · Ebisu, Tokyo</p>
   </div>
 </footer>
+
+<!-- SIGNUP MODAL -->
+<div class="modal-overlay" id="signup-overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="signup-title">
+    <button type="button" class="modal-close" id="signup-close" aria-label="閉じる">×</button>
+
+    <div id="signup-form-view">
+      <p class="eyebrow" id="signup-plan-label">Free</p>
+      <h3 class="modal-title" id="signup-title">入会申し込み</h3>
+
+      <form id="signup-form">
+        <label class="field-label" for="signup-name">お名前</label>
+        <input class="field-input" id="signup-name" name="name" type="text" required placeholder="山田 太郎">
+
+        <label class="field-label" for="signup-contact">連絡先（メールまたは電話番号）</label>
+        <input class="field-input" id="signup-contact" name="contact" type="text" required placeholder="you@example.com">
+
+        <div id="signup-message-row">
+          <label class="field-label" for="signup-message">メッセージ（任意）</label>
+          <textarea class="field-input" id="signup-message" name="message" rows="3" placeholder="ご質問・ご要望があればご記入ください"></textarea>
+        </div>
+
+        <input type="hidden" id="signup-plan" name="plan" value="free">
+        <p class="field-error" id="signup-error" hidden></p>
+        <button type="submit" class="btn btn-primary modal-submit" id="signup-submit">送信する</button>
+      </form>
+    </div>
+
+    <div id="signup-success-view" hidden>
+      <p class="modal-success-mark">✓</p>
+      <h3 class="modal-title">送信しました</h3>
+      <p class="modal-success-body">お申し込みありがとうございます。運営メンバーより追ってご連絡します。</p>
+      <button type="button" class="btn btn-outline modal-submit" id="signup-done">閉じる</button>
+    </div>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>

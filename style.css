@@ -148,11 +148,13 @@ a { color: inherit; }
 /* BUTTONS */
 .btn {
   display: inline-block;
+  font-family: inherit;
   font-size: 14.5px;
   font-weight: 500;
   padding: 15px 30px;
   text-decoration: none;
   text-align: center;
+  cursor: pointer;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
   border: 1px solid var(--ink);
 }
@@ -459,6 +461,54 @@ a { color: inherit; }
 .footer-links a { font-size: 13px; color: var(--ink-soft); text-decoration: none; }
 .footer-links a:hover { color: var(--sage-deep); }
 .footer-copy { color: var(--muted-pale); font-size: 12px; }
+
+/* SIGNUP MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(3, 8, 6, 0.72);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.modal-overlay[hidden] { display: none; }
+.modal {
+  position: relative;
+  width: 100%; max-width: 440px;
+  max-height: 90vh; overflow-y: auto;
+  background: var(--paper-alt);
+  border: 1px solid var(--line-strong);
+  padding: 36px 28px 28px;
+}
+.modal-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 32px; height: 32px;
+  background: none; border: none; color: var(--ink-soft);
+  font-size: 22px; line-height: 1; cursor: pointer;
+}
+.modal-close:hover { color: var(--ink); }
+.modal-title {
+  font-family: "Shippori Mincho", serif; font-size: 20px; font-weight: 600;
+  margin-bottom: 24px;
+}
+.field-label {
+  display: block; font-family: "Space Mono", monospace; font-size: 10.5px;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--sage);
+  margin-bottom: 8px;
+}
+.field-input {
+  width: 100%; background: var(--paper); border: 1px solid var(--line-strong);
+  color: var(--ink); font-family: inherit; font-size: 14.5px;
+  padding: 12px 14px; margin-bottom: 20px; resize: vertical;
+}
+.field-input:focus { outline: 2px solid var(--sage); outline-offset: 1px; }
+.field-error {
+  color: #e3a58a; font-size: 13px; margin-bottom: 16px;
+}
+.modal-submit { width: 100%; }
+.modal-success-mark {
+  font-family: "Shippori Mincho", serif; font-size: 36px; color: var(--sage-deep);
+  margin-bottom: 16px;
+}
+.modal-success-body { color: var(--ink-soft); font-size: 14px; margin-bottom: 28px; line-height: 1.8; }
 
 /* REVEAL */
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }

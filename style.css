@@ -472,9 +472,8 @@ a { color: inherit; }
 /* FOOTER */
 .footer { border-top: 1px solid var(--line); padding: 56px 0; }
 .footer-inner { text-align: center; }
-.footer-logo { font-family: "Shippori Mincho", serif; font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+.footer-logo { font-family: "Shippori Mincho", serif; font-size: 14px; font-weight: 600; margin-bottom: 20px; }
 .footer-logo .place { color: var(--sage); }
-.footer-tagline { font-size: 14px; color: var(--ink-soft); margin-bottom: 20px; }
 .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
 .footer-links a { font-size: 13px; color: var(--ink-soft); text-decoration: none; }
 .footer-links a:hover { color: var(--sage-deep); }

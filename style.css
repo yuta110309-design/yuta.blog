@@ -235,6 +235,17 @@ a { color: inherit; }
 }
 .link-arrow:hover { color: var(--sage-deep); border-color: var(--sage-deep); }
 
+/* CONCEPT VENN */
+.concept-venn { max-width: 260px; margin: 28px 0 12px; }
+.concept-venn svg { width: 100%; height: auto; overflow: visible; display: block; }
+.venn-circle { fill: none; stroke: var(--muted-pale); stroke-width: 1.2; }
+.venn-circle-accent { fill: var(--sage); fill-opacity: 0.16; stroke: var(--sage-deep); stroke-width: 1.4; }
+.venn-label {
+  font-family: "Space Mono", monospace; font-size: 9px; letter-spacing: 0.08em;
+  fill: var(--muted); text-anchor: middle;
+}
+.venn-label-accent { fill: var(--sage-deep); font-weight: 700; }
+
 /* QUOTE BLOCK */
 .quote-block {
   border-left: 2px solid var(--sage);

@@ -76,8 +76,9 @@ async function sendShortageEmail({
   goCount: number;
 }) {
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.NOTIFY_EMAIL_TO;
-  if (!apiKey || !to) {
+  // 運営メンバーそれぞれに直接届くよう、カンマ区切りで複数アドレスを指定できるようにする
+  const to = process.env.NOTIFY_EMAIL_TO?.split(',').map((addr) => addr.trim()).filter(Boolean);
+  if (!apiKey || !to || to.length === 0) {
     // eslint-disable-next-line no-console
     console.warn('RESEND_API_KEY または NOTIFY_EMAIL_TO が未設定のため、定員割れ通知メールをスキップしました。');
     return;

@@ -1,4 +1,4 @@
-const MEMBERS_API_BASE = 'https://yuta-blog.vercel.app';
+const APP_API_BASE = 'https://yuta-blog.vercel.app';
 
 const reveals = document.querySelectorAll('.reveal');
 
@@ -31,6 +31,193 @@ window.addEventListener(
   },
   { passive: true }
 );
+
+// Event RSVP: mirrors thirdplace-app's lib/events.ts recurrence config so
+// occ_date bucketing lines up with the same Supabase responses rows.
+const RSVP_EVENTS = {
+  yoruran: { recurrence: { mode: 'weekly', weekday: 1, time: '20:00' }, deadlineDaysBefore: 1, capacity: 10 },
+  'karuizawa-tour': { recurrence: { mode: 'once', dateISO: null }, deadlineDaysBefore: null, capacity: 12 },
+  futsal: { recurrence: { mode: 'once', dateISO: '2026-09-21T19:00:00' }, deadlineDaysBefore: 7, capacity: 25 }
+};
+
+function rsvpPad(n) {
+  return n < 10 ? '0' + n : '' + n;
+}
+function rsvpDateKey(d) {
+  return d.getFullYear() + '-' + rsvpPad(d.getMonth() + 1) + '-' + rsvpPad(d.getDate());
+}
+function rsvpApplyTime(d, timeStr) {
+  const parts = (timeStr || '00:00').split(':').map(Number);
+  d.setHours(parts[0] || 0, parts[1] || 0, 0, 0);
+  return d;
+}
+function rsvpComputeOccurrence(recurrence, from) {
+  from = from || new Date();
+  if (!recurrence) return null;
+  if (recurrence.mode === 'once') {
+    return recurrence.dateISO ? new Date(recurrence.dateISO) : null;
+  }
+  if (recurrence.mode === 'weekly') {
+    const candidate = new Date(from);
+    const diff = (((recurrence.weekday || 0) - from.getDay()) + 7) % 7;
+    candidate.setDate(candidate.getDate() + diff);
+    rsvpApplyTime(candidate, recurrence.time);
+    if (candidate < from) candidate.setDate(candidate.getDate() + 7);
+    return candidate;
+  }
+  return null;
+}
+
+const eventRows = document.querySelectorAll('.event-row[data-event-id]');
+if (eventRows.length && APP_API_BASE) {
+  let allResponses = [];
+
+  function rsvpStatusLabel(s) {
+    return s === 'go' ? '参加' : s === 'no' ? '不参加' : '未定';
+  }
+
+  function renderRow(row) {
+    const eventId = row.dataset.eventId;
+    const cfg = RSVP_EVENTS[eventId];
+    if (!cfg) return;
+
+    const now = new Date();
+    const occurrence = rsvpComputeOccurrence(cfg.recurrence, now);
+    const occDate = occurrence ? rsvpDateKey(occurrence) : '';
+
+    let deadline = null;
+    if (occurrence && cfg.deadlineDaysBefore != null) {
+      deadline = new Date(occurrence.getTime() - cfg.deadlineDaysBefore * 86400000);
+      deadline.setHours(23, 59, 59, 999);
+    }
+    const pastDeadline = deadline ? now > deadline : false;
+
+    const list = allResponses.filter((r) => r.event_id === eventId && (r.occ_date || '') === occDate);
+    const goCount = list.filter((r) => r.status === 'go').length;
+    const full = cfg.capacity != null && goCount >= cfg.capacity;
+
+    const countTag = row.querySelector('.event-rsvp-count');
+    if (countTag) countTag.textContent = '👥 参加 ' + goCount + '/' + cfg.capacity + '名';
+
+    const body = row.querySelector('.event-rsvp-body');
+    if (!body) return;
+    const draft = row._rsvpDraft || { name: '', status: null };
+    row._rsvpDraft = draft;
+
+    if (pastDeadline) {
+      body.innerHTML = '<p class="rsvp-closed">募集を締め切りました</p>';
+      return;
+    }
+
+    const alreadyGoing = list.some((r) => r.name === draft.name.trim() && r.status === 'go');
+    const options = [
+      { value: 'go', label: '参加' },
+      { value: 'maybe', label: '未定' },
+      { value: 'no', label: '不参加' }
+    ];
+
+    body.innerHTML =
+      '<label class="field-label" for="rsvp-name-' +
+      eventId +
+      '">お名前</label>' +
+      '<input class="field-input" id="rsvp-name-' +
+      eventId +
+      '" type="text" placeholder="山田 太郎" value="' +
+      draft.name.replace(/"/g, '&quot;') +
+      '">' +
+      (full && !alreadyGoing ? '<p class="rsvp-hint">定員に達しているため「参加」は選択できません</p>' : '') +
+      '<div class="rsvp-status-row">' +
+      options
+        .map((opt) => {
+          const disabled = opt.value === 'go' && full && !alreadyGoing;
+          return (
+            '<button type="button" class="rsvp-status-btn' +
+            (draft.status === opt.value ? ' is-selected' : '') +
+            '"' +
+            (disabled ? ' disabled' : '') +
+            ' data-status="' +
+            opt.value +
+            '">' +
+            opt.label +
+            '</button>'
+          );
+        })
+        .join('') +
+      '</div>' +
+      '<button type="button" class="rsvp-submit">' + (draft.message || '送信する') + '</button>';
+
+    body.querySelector('input').addEventListener('input', (e) => {
+      draft.name = e.target.value;
+    });
+    body.querySelectorAll('[data-status]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        draft.status = btn.dataset.status;
+        renderRow(row);
+      });
+    });
+    body.querySelector('.rsvp-submit').addEventListener('click', async () => {
+      if (!draft.name.trim() || !draft.status) {
+        draft.message = 'お名前と出欠を選んでください';
+        renderRow(row);
+        setTimeout(() => {
+          draft.message = null;
+          renderRow(row);
+        }, 1800);
+        return;
+      }
+      try {
+        const res = await fetch(APP_API_BASE + '/api/responses', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ eventId, occDate, name: draft.name.trim(), status: draft.status })
+        });
+        if (!res.ok) throw new Error('failed');
+        await loadResponsesAndRender();
+      } catch {
+        draft.message = '送信に失敗しました';
+        renderRow(row);
+      }
+    });
+  }
+
+  async function loadResponsesAndRender() {
+    try {
+      const res = await fetch(APP_API_BASE + '/api/responses', { cache: 'no-store' });
+      allResponses = res.ok ? await res.json() : [];
+    } catch {
+      allResponses = [];
+    }
+    eventRows.forEach(renderRow);
+  }
+
+  eventRows.forEach((row) => {
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'rsvp-toggle';
+    toggle.textContent = '出欠を回答する';
+
+    const countTag = document.createElement('span');
+    countTag.className = 'event-rsvp-count';
+
+    const meta = row.querySelector('.event-meta');
+    if (meta) meta.appendChild(countTag);
+
+    const body = document.createElement('div');
+    body.className = 'event-rsvp-body';
+    body.hidden = true;
+
+    const link = row.querySelector('.event-link');
+    link.insertAdjacentElement('afterend', body);
+    link.insertAdjacentElement('afterend', toggle);
+
+    toggle.addEventListener('click', () => {
+      body.hidden = !body.hidden;
+      toggle.textContent = body.hidden ? '出欠を回答する' : '閉じる';
+    });
+  });
+
+  loadResponsesAndRender();
+}
 
 // Maker: category tabs switch which items are offered for placement
 const makerTabs = document.querySelectorAll('.maker-tab');
@@ -164,7 +351,7 @@ if (signupOverlay) {
     e.preventDefault();
     errorEl.hidden = true;
 
-    if (!MEMBERS_API_BASE) {
+    if (!APP_API_BASE) {
       errorEl.textContent = '現在申し込みフォームは準備中です。お手数ですがLINEまたはInstagramからご連絡ください。';
       errorEl.hidden = false;
       return;
@@ -180,7 +367,7 @@ if (signupOverlay) {
     submitBtn.disabled = true;
     submitBtn.textContent = '送信中…';
     try {
-      const res = await fetch(`${MEMBERS_API_BASE}/api/members`, {
+      const res = await fetch(`${APP_API_BASE}/api/members`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

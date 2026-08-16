@@ -295,6 +295,36 @@ a { color: inherit; }
 }
 .event-link:hover { background: var(--sage); color: var(--paper); }
 
+.event-rsvp-count { color: var(--sage-deep); font-weight: 500; }
+
+.rsvp-toggle {
+  display: block;
+  margin-top: 12px;
+  background: none; border: none; padding: 0; cursor: pointer;
+  font-family: "Space Mono", monospace; font-size: 11px; letter-spacing: 0.04em;
+  color: var(--ink-soft); text-decoration: underline; text-underline-offset: 3px;
+}
+.rsvp-toggle:hover { color: var(--sage-deep); }
+
+.event-rsvp-body { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); max-width: 360px; }
+.event-rsvp-body .field-input { margin-bottom: 14px; }
+.rsvp-hint { font-size: 11px; color: #e3a58a; margin: -6px 0 10px; }
+.rsvp-status-row { display: flex; gap: 8px; margin-bottom: 14px; }
+.rsvp-status-btn {
+  flex: 1; text-align: center; padding: 10px 0;
+  background: var(--paper); border: 1px solid var(--line-strong); color: var(--ink-soft);
+  font-family: inherit; font-size: 12.5px; cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.rsvp-status-btn.is-selected { background: var(--sage); border-color: var(--sage); color: var(--paper); }
+.rsvp-status-btn[disabled] { opacity: 0.35; cursor: not-allowed; }
+.rsvp-submit {
+  width: 100%; padding: 12px 0; background: transparent; border: 1px solid var(--sage);
+  color: var(--sage-deep); font-family: inherit; font-size: 13px; letter-spacing: 0.02em;
+  cursor: pointer; transition: background 0.2s, color 0.2s;
+}
+.rsvp-submit:hover { background: var(--sage); color: var(--paper); }
+.rsvp-closed { color: var(--muted); font-size: 13px; }
+
 /* PAST EVENTS */
 .past-event-block { margin-bottom: 8px; }
 .past-event-title {

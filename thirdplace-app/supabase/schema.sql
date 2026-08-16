@@ -27,14 +27,17 @@ create unique index if not exists responses_event_occdate_device_key
 -- 認証を追加する場合はここを見直すこと（要件定義書 9章 参照）。
 alter table responses enable row level security;
 
+drop policy if exists "public can read responses" on responses;
 create policy "public can read responses"
   on responses for select
   using (true);
 
+drop policy if exists "public can insert responses" on responses;
 create policy "public can insert responses"
   on responses for insert
   with check (true);
 
+drop policy if exists "public can update own-name responses" on responses;
 create policy "public can update own-name responses"
   on responses for update
   using (true);
@@ -58,6 +61,7 @@ create table if not exists members (
 -- （運営はSupabaseダッシュボードのTable Editor、または後述のAPIから確認する）。
 alter table members enable row level security;
 
+drop policy if exists "public can submit membership applications" on members;
 create policy "public can submit membership applications"
   on members for insert
   with check (true);

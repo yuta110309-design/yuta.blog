@@ -11,6 +11,25 @@ const observer = new IntersectionObserver((entries) => {
 
 reveals.forEach((el) => observer.observe(el));
 
+// Header: hide on scroll down, show on scroll up. A plain sticky header
+// permanently covers whatever content the page happens to be scrolled to,
+// which can leave buttons right at the top of the viewport unreachable.
+const siteHeader = document.querySelector('.site-header');
+let lastScrollY = window.scrollY;
+window.addEventListener(
+  'scroll',
+  () => {
+    const currentY = window.scrollY;
+    if (currentY <= siteHeader.offsetHeight || currentY < lastScrollY) {
+      siteHeader.classList.remove('is-hidden');
+    } else if (currentY > lastScrollY) {
+      siteHeader.classList.add('is-hidden');
+    }
+    lastScrollY = currentY;
+  },
+  { passive: true }
+);
+
 // Maker: category tabs switch which items are offered for placement
 const makerTabs = document.querySelectorAll('.maker-tab');
 makerTabs.forEach((tab) => {

@@ -54,6 +54,11 @@ a { color: inherit; }
   background: rgba(11, 22, 19, 0.86);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
+  transition: transform 0.25s ease;
+}
+.site-header.is-hidden { transform: translateY(-100%); }
+@media (prefers-reduced-motion: reduce) {
+  .site-header { transition: none; }
 }
 .header-inner {
   max-width: var(--max);
@@ -287,6 +292,18 @@ a { color: inherit; }
   transition: background 0.2s, color 0.2s;
 }
 .event-link:hover { background: var(--sage); color: var(--paper); }
+
+/* PAST EVENTS */
+.past-event-block { margin-bottom: 8px; }
+.past-event-title {
+  font-family: "Shippori Mincho", serif; font-size: 16px; font-weight: 600;
+  margin-bottom: 16px;
+}
+.past-event-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.past-event-grid img {
+  width: 100%; height: 100%; object-fit: cover; aspect-ratio: 3 / 4;
+  border: 1px solid var(--line); display: block;
+}
 
 /* MEMBERSHIP */
 .plan-grid { display: grid; grid-template-columns: 1fr; gap: 20px; align-items: stretch; margin-bottom: 36px; }

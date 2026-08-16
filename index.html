@@ -285,28 +285,23 @@
     <h2 class="section-title">いつか、日本地図が塗りつぶされる日まで。</h2>
     <p class="body-copy">恵比寿は最初の1マス。ここから、47都道府県それぞれに自立したサードプレイスを。</p>
     <div class="map-figure" aria-hidden="true">
-      <svg viewBox="0 0 300 140" preserveAspectRatio="xMidYMid meet">
-        <circle cx="18" cy="118" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="28" cy="92" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="40" cy="88" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="52" cy="84" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="64" cy="80" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="76" cy="82" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="88" cy="76" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="100" cy="70" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="112" cy="66" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="122" cy="70" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="134" cy="60" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="146" cy="56" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="156" cy="50" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="166" cy="46" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="176" cy="48" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="186" cy="38" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="196" cy="34" r="4.2" fill="var(--sage)"/>
-        <circle cx="206" cy="26" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="214" cy="30" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="222" cy="14" r="2.6" fill="var(--muted-pale)"/>
-        <circle cx="40" cy="134" r="2.6" fill="var(--muted-pale)"/>
+      <svg viewBox="0 0 200 300" preserveAspectRatio="xMidYMid meet">
+        <!-- Hokkaido -->
+        <path class="jp-land" d="M132,10 C148,9 163,17 168,30 C172,41 168,52 158,58 C150,63 138,64 128,60 C116,55 106,47 105,35 C104,23 116,11 132,10 Z" />
+        <!-- Honshu -->
+        <path class="jp-land" d="M120,52 C128,58 133,66 138,76 C144,88 150,98 149,110 C148,120 141,127 143,138 C145,148 152,154 149,163 C147,170 138,173 134,180 C130,188 132,196 126,202 C119,209 108,206 101,212 C94,218 95,227 87,232 C78,237 66,234 58,239 C50,244 48,252 40,255 C33,258 28,253 32,246 C37,238 47,236 52,229 C46,223 40,225 36,219 C33,214 37,208 43,206 C51,203 57,208 63,203 C68,198 65,190 71,186 C78,181 86,185 92,180 C98,175 96,167 101,161 C107,154 116,157 121,150 C126,143 121,135 124,127 C127,118 136,116 137,107 C138,97 128,92 126,83 C124,75 128,68 122,62 C117,57 108,58 106,51 C104,44 110,38 116,42 C118,44 118,48 120,52 Z" />
+        <!-- Shikoku -->
+        <path class="jp-land" d="M58,238 C64,236 72,238 76,243 C79,247 76,252 70,253 C64,254 57,251 55,246 C54,243 55,240 58,238 Z" />
+        <!-- Kyushu -->
+        <path class="jp-land" d="M42,248 C50,246 59,249 62,257 C64,263 60,269 63,276 C65,281 61,286 55,284 C50,282 50,275 45,272 C39,268 32,269 29,263 C26,257 30,251 36,249 C38,248 40,248 42,248 Z" />
+        <!-- Okinawa (small distant islands) -->
+        <circle class="jp-land" cx="18" cy="292" r="2.4" />
+        <circle class="jp-land" cx="26" cy="284" r="2" />
+        <circle class="jp-land" cx="14" cy="280" r="1.6" />
+        <!-- Ebisu / Tokyo marker -->
+        <circle class="jp-marker-ring" cx="146" cy="112" r="7" />
+        <circle class="jp-marker-dot" cx="146" cy="112" r="3.4" />
+        <text class="jp-marker-label" x="154" y="115">EBISU</text>
       </svg>
     </div>
     <div class="map-counter">

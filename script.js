@@ -1,7 +1,4 @@
-// thirdplace-app を Vercel にデプロイしたら、そのURLに差し替える
-// （例: 'https://thirdplace-app.vercel.app'）。空のままだと申し込みフォームは
-// エラーメッセージを表示するだけで、既存の他の機能には影響しない。
-const MEMBERS_API_BASE = '';
+const MEMBERS_API_BASE = 'https://yuta-blog.vercel.app';
 
 const reveals = document.querySelectorAll('.reveal');
 

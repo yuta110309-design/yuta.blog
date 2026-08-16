@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { EVENTS, formatLabel } from '@/lib/events';
+import { notionRequest } from '@/lib/notion';
 
 const STATUS_LABEL: Record<string, string> = { go: '参加', maybe: '未定', no: '不参加' };
 
@@ -60,10 +61,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500, headers: CORS_HEADERS });
   }
 
+  const eventCfg = EVENTS.find((e) => e.id === eventId);
+  const eventTitle = eventCfg?.title ?? eventId;
+  const dateLabel = occDate ? formatLabel(new Date(`${occDate}T00:00:00`)) : eventCfg?.dateLabelOverride ?? '';
+
   // emailはpublicにSELECT可能なresponsesテーブルには保存せず、確認メール送信にのみ使う。
   if (email) {
-    await sendConfirmationEmail({ to: email, name, eventId, occDate, status });
+    await sendConfirmationEmail({ to: email, name, eventTitle, dateLabel, status });
   }
+  await syncResponseToNotion({ eventId, eventTitle, occDate: occDate ?? '', dateLabel, name, status, deviceId });
 
   return NextResponse.json({ result: 'success' }, { headers: CORS_HEADERS });
 }
@@ -71,14 +77,14 @@ export async function POST(req: NextRequest) {
 async function sendConfirmationEmail({
   to,
   name,
-  eventId,
-  occDate,
+  eventTitle,
+  dateLabel,
   status
 }: {
   to: string;
   name: string;
-  eventId: string;
-  occDate?: string;
+  eventTitle: string;
+  dateLabel: string;
   status: string;
 }) {
   const apiKey = process.env.RESEND_API_KEY;
@@ -87,10 +93,6 @@ async function sendConfirmationEmail({
     console.warn('RESEND_API_KEY が未設定のため、出欠確認メールをスキップしました。');
     return;
   }
-
-  const eventCfg = EVENTS.find((e) => e.id === eventId);
-  const eventTitle = eventCfg?.title ?? eventId;
-  const dateLabel = occDate ? formatLabel(new Date(`${occDate}T00:00:00`)) : eventCfg?.dateLabelOverride ?? '';
 
   try {
     await fetch('https://api.resend.com/emails', {
@@ -121,5 +123,69 @@ async function sendConfirmationEmail({
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('出欠確認メールの送信に失敗しました:', err);
+  }
+}
+
+// 出欠をNotionデータベースにも記録する。同じ回答者（event_id + occ_date + deviceId）の
+// 既存ページがあれば新規作成せず更新する（回答を変更するたびに行が増えないように）。
+// NOTION_API_KEY / NOTION_RESPONSES_DB_ID が未設定なら何もしない。
+async function syncResponseToNotion({
+  eventId,
+  eventTitle,
+  occDate,
+  dateLabel,
+  name,
+  status,
+  deviceId
+}: {
+  eventId: string;
+  eventTitle: string;
+  occDate: string;
+  dateLabel: string;
+  name: string;
+  status: string;
+  deviceId?: string;
+}) {
+  const dbId = process.env.NOTION_RESPONSES_DB_ID;
+  if (!dbId) {
+    // eslint-disable-next-line no-console
+    console.warn('NOTION_RESPONSES_DB_ID が未設定のため、Notion連携をスキップしました。');
+    return;
+  }
+
+  const matchKey = `${eventId}|${occDate}|${deviceId ?? ''}`;
+  const properties = {
+    名前: { title: [{ text: { content: name } }] },
+    イベント: { select: { name: eventTitle } },
+    開催日: { rich_text: dateLabel ? [{ text: { content: dateLabel } }] : [] },
+    出欠: { select: { name: STATUS_LABEL[status] ?? status } },
+    更新日時: { date: { start: new Date().toISOString() } },
+    回答ID: { rich_text: [{ text: { content: matchKey } }] }
+  };
+
+  try {
+    const queryRes = await notionRequest(`/databases/${dbId}/query`, {
+      method: 'POST',
+      body: JSON.stringify({
+        filter: { property: '回答ID', rich_text: { equals: matchKey } }
+      })
+    });
+    const queryJson = queryRes ? await queryRes.json() : null;
+    const existingPageId = queryJson?.results?.[0]?.id;
+
+    if (existingPageId) {
+      await notionRequest(`/pages/${existingPageId}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ properties })
+      });
+    } else {
+      await notionRequest('/pages', {
+        method: 'POST',
+        body: JSON.stringify({ parent: { database_id: dbId }, properties })
+      });
+    }
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('Notionへの出欠データ連携に失敗しました:', err);
   }
 }

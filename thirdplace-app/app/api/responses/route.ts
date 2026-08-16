@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { EVENTS, formatLabel } from '@/lib/events';
-import { notionRequest, formatJst } from '@/lib/notion';
+import { notionRequest, logIfNotionError, formatJst } from '@/lib/notion';
 
 const STATUS_LABEL: Record<string, string> = { go: '参加', maybe: '未定', no: '不参加' };
 
@@ -170,19 +170,22 @@ async function syncResponseToNotion({
         filter: { property: '回答ID', rich_text: { equals: matchKey } }
       })
     });
-    const queryJson = queryRes ? await queryRes.json() : null;
+    await logIfNotionError(queryRes, '出欠データ検索');
+    const queryJson = queryRes?.ok ? await queryRes.json() : null;
     const existingPageId = queryJson?.results?.[0]?.id;
 
     if (existingPageId) {
-      await notionRequest(`/pages/${existingPageId}`, {
+      const res = await notionRequest(`/pages/${existingPageId}`, {
         method: 'PATCH',
         body: JSON.stringify({ properties })
       });
+      await logIfNotionError(res, '出欠データ更新');
     } else {
-      await notionRequest('/pages', {
+      const res = await notionRequest('/pages', {
         method: 'POST',
         body: JSON.stringify({ parent: { database_id: dbId }, properties })
       });
+      await logIfNotionError(res, '出欠データ作成');
     }
   } catch (err) {
     // eslint-disable-next-line no-console

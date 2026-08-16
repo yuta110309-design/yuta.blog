@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
-import { notionRequest, formatJst } from '@/lib/notion';
+import { notionRequest, logIfNotionError, formatJst } from '@/lib/notion';
 
 // ランディングページ（GitHub Pages・別オリジン）から呼ばれるため CORS を許可する。
 // insert のみを受け付ける公開フォームのエンドポイントなので、オリジンは絞らずワイルドカードにしている。
@@ -70,7 +70,7 @@ async function syncMemberToNotion({
   }
 
   try {
-    await notionRequest('/pages', {
+    const res = await notionRequest('/pages', {
       method: 'POST',
       body: JSON.stringify({
         parent: { database_id: dbId },
@@ -83,6 +83,7 @@ async function syncMemberToNotion({
         }
       })
     });
+    await logIfNotionError(res, '会員データ作成');
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('Notionへの会員データ連携に失敗しました:', err);

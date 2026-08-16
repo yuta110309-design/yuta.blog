@@ -17,6 +17,18 @@ export async function notionRequest(path: string, init: RequestInit): Promise<Re
 }
 
 /**
+ * NotionはHTTPエラー（400など）でもfetch自体は例外を投げないため、
+ * 呼び出し側で明示的にチェックしないと失敗が握りつぶされてログにも残らない。
+ * 失敗時はNotion側のエラーメッセージ本文をログに出す。
+ */
+export async function logIfNotionError(res: Response | null, context: string): Promise<void> {
+  if (!res || res.ok) return;
+  const body = await res.text();
+  // eslint-disable-next-line no-console
+  console.error(`Notion API エラー（${context}）: ${res.status} ${body}`);
+}
+
+/**
  * Notion側のデータベース列はすべて「テキスト」型で統一している
  * （セレクト・日付型だと列の型を手動で選ぶ手間が増えるため）。
  * 日時もテキストとして書き込むので、読みやすい文字列に整形する。

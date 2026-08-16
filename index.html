@@ -7,7 +7,8 @@
 <meta name="description" content="仕事でも家でもない、第三の場所。恵比寿・代官山・広尾を拠点に、ランニング・ヨガ・サウナ・フットサルなど部活動を通じてつながる、30〜40代のための会員制コミュニティ。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap"></noscript>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -314,12 +315,12 @@
   </div>
 </section>
 
-<!-- MAKER TEASER -->
+<!-- MAKER -->
 <section class="section" id="maker">
   <div class="container reveal">
     <p class="eyebrow">The Thirdplace Maker — Prototype</p>
     <h2 class="section-title">あなたの理想の"落ち着ける場所"を作ってみませんか。</h2>
-    <p class="section-intro">アイテムをタップして置き場に配置する、参加型のミニツールを準備中です。置かれた数が、そのままみんなが求めているもののヒントになります。</p>
+    <p class="section-intro">アイテムをタップして、置き場に配置してみてください。置かれた数が、そのままみんなが求めているもののヒントになります。<br><span class="proto-note">※ プロトタイプ版：現在はこの端末・このセッションだけで完結する体験です。参加者全員の配置を集計する機能は今後追加予定です。</span></p>
 
     <div class="maker-card">
       <div class="maker-tabs" role="tablist">
@@ -328,14 +329,44 @@
         <button class="maker-tab" data-cat="outdoor" type="button">🔥 アウトドア</button>
         <button class="maker-tab" data-cat="social" type="button">🧴 交流</button>
       </div>
-      <div class="maker-emoji-row" data-cat-panel="recovery">💡 ☁️ 🛌 🧘 ♨️ 📖</div>
-      <div class="maker-emoji-row" data-cat-panel="challenge" hidden>🐐 🏅 🎯 💪</div>
-      <div class="maker-emoji-row" data-cat-panel="outdoor" hidden>🔥 🏕️ 🚵 🌲</div>
-      <div class="maker-emoji-row" data-cat-panel="social" hidden>🧴 🍽️ ☕ 🗣️</div>
-      <div class="maker-dropzone">
-        <div>
-          <span class="badge">近日公開</span>
-          <p>ここをタップして配置（Coming Soon）</p>
+
+      <div class="maker-item-row" data-cat-panel="recovery">
+        <button class="maker-item" type="button" data-item="💡" data-label="ひらめき">💡<span>ひらめき</span></button>
+        <button class="maker-item" type="button" data-item="☁️" data-label="のんびり">☁️<span>のんびり</span></button>
+        <button class="maker-item" type="button" data-item="🛌" data-label="睡眠">🛌<span>睡眠</span></button>
+        <button class="maker-item" type="button" data-item="🧘" data-label="瞑想">🧘<span>瞑想</span></button>
+        <button class="maker-item" type="button" data-item="♨️" data-label="サウナ・温泉">♨️<span>サウナ・温泉</span></button>
+        <button class="maker-item" type="button" data-item="📖" data-label="読書">📖<span>読書</span></button>
+      </div>
+      <div class="maker-item-row" data-cat-panel="challenge" hidden>
+        <button class="maker-item" type="button" data-item="🐐" data-label="挑戦">🐐<span>挑戦</span></button>
+        <button class="maker-item" type="button" data-item="🏅" data-label="達成">🏅<span>達成</span></button>
+        <button class="maker-item" type="button" data-item="🎯" data-label="目標">🎯<span>目標</span></button>
+        <button class="maker-item" type="button" data-item="💪" data-label="トレーニング">💪<span>トレーニング</span></button>
+      </div>
+      <div class="maker-item-row" data-cat-panel="outdoor" hidden>
+        <button class="maker-item" type="button" data-item="🔥" data-label="焚き火">🔥<span>焚き火</span></button>
+        <button class="maker-item" type="button" data-item="🏕️" data-label="キャンプ">🏕️<span>キャンプ</span></button>
+        <button class="maker-item" type="button" data-item="🚵" data-label="アウトドア運動">🚵<span>アウトドア運動</span></button>
+        <button class="maker-item" type="button" data-item="🌲" data-label="自然">🌲<span>自然</span></button>
+      </div>
+      <div class="maker-item-row" data-cat-panel="social" hidden>
+        <button class="maker-item" type="button" data-item="🧴" data-label="セルフケア">🧴<span>セルフケア</span></button>
+        <button class="maker-item" type="button" data-item="🍽️" data-label="食事会">🍽️<span>食事会</span></button>
+        <button class="maker-item" type="button" data-item="☕" data-label="カフェ">☕<span>カフェ</span></button>
+        <button class="maker-item" type="button" data-item="🗣️" data-label="会話">🗣️<span>会話</span></button>
+      </div>
+
+      <div class="maker-dropzone" id="maker-dropzone">
+        <p class="maker-dropzone-empty" id="maker-dropzone-empty">上のアイテムをタップすると、ここに置かれます</p>
+        <div class="maker-placed" id="maker-placed"></div>
+      </div>
+      <p class="maker-count"><span id="maker-count">0</span>個 配置済み</p>
+
+      <div class="maker-ranking">
+        <p class="maker-ranking-title">人気ランキング（今のセッション）</p>
+        <div id="maker-ranking-list">
+          <p class="empty">まだ何も配置されていません</p>
         </div>
       </div>
     </div>

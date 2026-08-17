@@ -140,3 +140,31 @@ export function recurrenceLabel(recurrence: Recurrence): string {
 export function occurrenceKey(ev: EventConfig, occurrence: Date | null): string {
   return occurrence ? dateKey(occurrence) : '';
 }
+
+/**
+ * 「来週は無理だが再来週は行きたい」のように先の回にも予約できるよう、
+ * 直近の occurrence だけでなく、その先何回分かをまとめて返す。
+ */
+export function computeUpcomingOccurrences(recurrence: Recurrence, from: Date, count: number): Date[] {
+  const list: Date[] = [];
+  let cursor = from;
+  for (let i = 0; i < count; i++) {
+    const occ = computeOccurrence(recurrence, cursor);
+    if (!occ) break;
+    list.push(occ);
+    cursor = new Date(occ.getTime() + 1);
+  }
+  return list;
+}
+
+/**
+ * 当日締切（0日前）の場合、日付だけで区切ると開始時刻を過ぎても
+ * 「その日はまだ23:59:59まで受付中」になってしまうため、開始時刻そのものを締切にする。
+ */
+export function occurrenceDeadline(occurrence: Date | null, deadlineDaysBefore: number | null | undefined): Date | null {
+  if (!occurrence || deadlineDaysBefore == null) return null;
+  if (deadlineDaysBefore === 0) return occurrence;
+  const deadline = new Date(occurrence.getTime() - deadlineDaysBefore * 86400000);
+  deadline.setHours(23, 59, 59, 999);
+  return deadline;
+}

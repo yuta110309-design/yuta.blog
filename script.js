@@ -101,6 +101,16 @@ if (eventRows.length && APP_API_BASE) {
     const occurrence = rsvpComputeOccurrence(cfg.recurrence, now);
     const occDate = occurrence ? rsvpDateKey(occurrence) : '';
 
+    // 定例（毎週）イベントは開催日が固定文言だと過去日のまま残ってしまうため、
+    // 次回の開催日を毎回計算して表示を更新する（単発イベントは元の表記のまま）。
+    if (cfg.recurrence.mode === 'weekly' && occurrence) {
+      const dateEl = row.querySelector('.event-date');
+      const firstNode = dateEl && dateEl.firstChild;
+      if (firstNode && firstNode.nodeType === Node.TEXT_NODE) {
+        firstNode.textContent = String(occurrence.getDate());
+      }
+    }
+
     let deadline = null;
     if (occurrence && cfg.deadlineDaysBefore != null) {
       deadline = new Date(occurrence.getTime() - cfg.deadlineDaysBefore * 86400000);

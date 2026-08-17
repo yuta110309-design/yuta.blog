@@ -380,7 +380,8 @@ a { color: inherit; }
   margin-bottom: 16px;
 }
 .past-event-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.past-event-grid img {
+.past-event-grid img,
+.past-event-grid video {
   width: 100%; height: 100%; object-fit: cover; aspect-ratio: 3 / 4;
   border: 1px solid var(--line); display: block;
 }

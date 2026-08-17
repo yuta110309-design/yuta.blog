@@ -83,6 +83,23 @@ function rsvpComputeOccurrence(recurrence, from) {
   }
   return null;
 }
+// 「来週は無理だが再来週は行きたい」のように先の回にも予約できるよう、
+// 直近の occurrence だけでなく、その先何回分かをまとめて返す。
+function rsvpUpcomingOccurrences(recurrence, from, count) {
+  const list = [];
+  let cursor = from;
+  for (let i = 0; i < count; i++) {
+    const occ = rsvpComputeOccurrence(recurrence, cursor);
+    if (!occ) break;
+    list.push(occ);
+    cursor = new Date(occ.getTime() + 1);
+  }
+  return list;
+}
+const RSVP_WEEKDAY_KANJI = ['日', '月', '火', '水', '木', '金', '土'];
+function rsvpFormatDateLabel(d) {
+  return (d.getMonth() + 1) + '/' + d.getDate() + '(' + RSVP_WEEKDAY_KANJI[d.getDay()] + ')';
+}
 
 const eventRows = document.querySelectorAll('.event-row[data-event-id]');
 if (eventRows.length && APP_API_BASE) {
@@ -98,44 +115,102 @@ if (eventRows.length && APP_API_BASE) {
     if (!cfg) return;
 
     const now = new Date();
-    const occurrence = rsvpComputeOccurrence(cfg.recurrence, now);
-    const occDate = occurrence ? rsvpDateKey(occurrence) : '';
+    const isWeekly = cfg.recurrence.mode === 'weekly';
+    // 「来週は無理だが再来週は行きたい」に対応するため、定例イベントは直近5回分から
+    // 開催日を選べるようにする（単発イベントは従来通り1回だけ）。
+    const occurrenceOptions = isWeekly
+      ? rsvpUpcomingOccurrences(cfg.recurrence, now, 5)
+      : [rsvpComputeOccurrence(cfg.recurrence, now)].filter(Boolean);
+    const nextOccurrence = occurrenceOptions[0] || null;
 
     // 定例（毎週）イベントは開催日が固定文言だと過去日のまま残ってしまうため、
     // 次回の開催日を毎回計算して表示を更新する（単発イベントは元の表記のまま）。
-    if (cfg.recurrence.mode === 'weekly' && occurrence) {
+    if (isWeekly && nextOccurrence) {
       const dateEl = row.querySelector('.event-date');
       const firstNode = dateEl && dateEl.firstChild;
       if (firstNode && firstNode.nodeType === Node.TEXT_NODE) {
-        firstNode.textContent = String(occurrence.getDate());
+        firstNode.textContent = String(nextOccurrence.getDate());
       }
     }
 
-    let deadline = null;
-    if (occurrence && cfg.deadlineDaysBefore != null) {
-      deadline = new Date(occurrence.getTime() - cfg.deadlineDaysBefore * 86400000);
+    function isPastDeadline(occ) {
+      if (!occ || cfg.deadlineDaysBefore == null) return false;
+      const deadline = new Date(occ.getTime() - cfg.deadlineDaysBefore * 86400000);
       deadline.setHours(23, 59, 59, 999);
+      return now > deadline;
     }
-    const pastDeadline = deadline ? now > deadline : false;
+
+    // 折りたたみ時のバッジは、常に直近開催分の人数を表示する
+    const nextOccDate = nextOccurrence ? rsvpDateKey(nextOccurrence) : '';
+    const nextGoCount = allResponses.filter(
+      (r) => r.event_id === eventId && (r.occ_date || '') === nextOccDate && r.status === 'go'
+    ).length;
+    const countTag = row.querySelector('.event-rsvp-count');
+    if (countTag) countTag.textContent = '👥 参加 ' + nextGoCount + '/' + cfg.capacity + '名';
+
+    const body = row.querySelector('.event-rsvp-body');
+    if (!body) return;
+    const draft = row._rsvpDraft || { name: '', email: '', status: null, occDate: null };
+    row._rsvpDraft = draft;
+
+    // フォーム内で選択中の開催日（未選択、または選び直しで無効になった場合は
+    // 締切前の一番近い回にフォールバックする）
+    let selected = occurrenceOptions.find((o) => rsvpDateKey(o) === draft.occDate);
+    if (!selected) {
+      selected = occurrenceOptions.find((o) => !isPastDeadline(o)) || nextOccurrence;
+      draft.occDate = selected ? rsvpDateKey(selected) : '';
+    }
+    const occDate = draft.occDate;
+    const selectedPastDeadline = isPastDeadline(selected);
 
     const list = allResponses.filter((r) => r.event_id === eventId && (r.occ_date || '') === occDate);
     const goCount = list.filter((r) => r.status === 'go').length;
     const full = cfg.capacity != null && goCount >= cfg.capacity;
+    const alreadyGoing = list.some((r) => r.device_id === RSVP_DEVICE_ID && r.status === 'go');
 
-    const countTag = row.querySelector('.event-rsvp-count');
-    if (countTag) countTag.textContent = '👥 参加 ' + goCount + '/' + cfg.capacity + '名';
+    const datePickerHtml =
+      isWeekly && occurrenceOptions.length > 1
+        ? '<label class="field-label">開催日</label><div class="rsvp-date-row">' +
+          occurrenceOptions
+            .map((o) => {
+              const key = rsvpDateKey(o);
+              const closed = isPastDeadline(o);
+              return (
+                '<button type="button" class="rsvp-date-btn' +
+                (key === occDate ? ' is-selected' : '') +
+                '"' +
+                (closed ? ' disabled' : '') +
+                ' data-occdate="' +
+                key +
+                '">' +
+                rsvpFormatDateLabel(o) +
+                '</button>'
+              );
+            })
+            .join('') +
+          '</div>'
+        : '';
 
-    const body = row.querySelector('.event-rsvp-body');
-    if (!body) return;
-    const draft = row._rsvpDraft || { name: '', email: '', status: null };
-    row._rsvpDraft = draft;
+    function bindDatePicker() {
+      body.querySelectorAll('[data-occdate]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (btn.disabled) return;
+          draft.occDate = btn.dataset.occdate;
+          renderRow(row);
+        });
+      });
+    }
 
-    if (pastDeadline) {
-      body.innerHTML = '<p class="rsvp-closed">募集を締め切りました</p>';
+    if (selectedPastDeadline) {
+      body.innerHTML =
+        datePickerHtml +
+        '<p class="rsvp-closed">' +
+        (occurrenceOptions.length > 1 ? 'この日程の募集は締め切りました。別の日程を選んでください。' : '募集を締め切りました') +
+        '</p>';
+      bindDatePicker();
       return;
     }
 
-    const alreadyGoing = list.some((r) => r.device_id === RSVP_DEVICE_ID && r.status === 'go');
     const options = [
       { value: 'go', label: '参加' },
       { value: 'maybe', label: '未定' },
@@ -143,6 +218,7 @@ if (eventRows.length && APP_API_BASE) {
     ];
 
     body.innerHTML =
+      datePickerHtml +
       '<label class="field-label" for="rsvp-name-' +
       eventId +
       '">お名前</label>' +
@@ -180,6 +256,7 @@ if (eventRows.length && APP_API_BASE) {
       '</div>' +
       '<button type="button" class="rsvp-submit">' + (draft.message || '送信する') + '</button>';
 
+    bindDatePicker();
     body.querySelector('#rsvp-name-' + eventId).addEventListener('input', (e) => {
       draft.name = e.target.value;
     });

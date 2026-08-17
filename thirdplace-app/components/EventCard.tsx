@@ -26,11 +26,15 @@ export default function EventCard({
   const dateLabel = event.dateLabelOverride || (occurrence ? formatLabel(occurrence) : '日程未定');
   const timeLabel = event.timeLabelOverride || (event.recurrence?.time ? `${event.recurrence.time}〜` : '');
 
+  // 当日締切（0日前）の場合、日付だけで区切ると開始時刻を過ぎても
+  // 「その日はまだ23:59:59まで受付中」になってしまうため、開始時刻そのものを締切にする。
   const deadline =
     occurrence && event.deadlineDaysBefore != null
-      ? new Date(occurrence.getTime() - event.deadlineDaysBefore * 86400000)
+      ? event.deadlineDaysBefore === 0
+        ? occurrence
+        : new Date(occurrence.getTime() - event.deadlineDaysBefore * 86400000)
       : null;
-  if (deadline) deadline.setHours(23, 59, 59, 999);
+  if (deadline && event.deadlineDaysBefore !== 0) deadline.setHours(23, 59, 59, 999);
   const deadlineLabel = deadline ? `${formatLabel(deadline)}締切` : '日程確定後に設定';
   const pastDeadline = deadline ? new Date() > deadline : false;
 

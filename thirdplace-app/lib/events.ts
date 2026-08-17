@@ -26,7 +26,7 @@ export const EVENTS: EventConfig[] = [
       '恵比寿ガーデンプレイスを起点に、ゆるいペースで夜の街を走ります。タイムを追うことより、会話を楽しむことを大切に。初参加・お一人参加も大歓迎です。',
     recurrence: { mode: 'weekly', weekday: 1, time: '20:00' },
     timeLabelOverride: '20:00〜21:00',
-    deadlineDaysBefore: 1,
+    deadlineDaysBefore: 0,
     capacity: 10
   },
   {

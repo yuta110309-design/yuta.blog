@@ -51,7 +51,7 @@ const RSVP_DEVICE_ID = getDeviceId();
 // Event RSVP: mirrors thirdplace-app's lib/events.ts recurrence config so
 // occ_date bucketing lines up with the same Supabase responses rows.
 const RSVP_EVENTS = {
-  yoruran: { recurrence: { mode: 'weekly', weekday: 1, time: '20:00' }, deadlineDaysBefore: 1, capacity: 10 },
+  yoruran: { recurrence: { mode: 'weekly', weekday: 1, time: '20:00' }, deadlineDaysBefore: 0, capacity: 10 },
   'karuizawa-tour': { recurrence: { mode: 'once', dateISO: null }, deadlineDaysBefore: null, capacity: 12 },
   futsal: { recurrence: { mode: 'once', dateISO: '2026-09-21T19:00:00' }, deadlineDaysBefore: 7, capacity: 25 }
 };
@@ -135,6 +135,9 @@ if (eventRows.length && APP_API_BASE) {
 
     function isPastDeadline(occ) {
       if (!occ || cfg.deadlineDaysBefore == null) return false;
+      // 当日締切（0日前）の場合、日付だけで区切ると開始時刻を過ぎても
+      // 「その日はまだ23:59:59まで受付中」になってしまうため、開始時刻そのものを締切にする。
+      if (cfg.deadlineDaysBefore === 0) return now > occ;
       const deadline = new Date(occ.getTime() - cfg.deadlineDaysBefore * 86400000);
       deadline.setHours(23, 59, 59, 999);
       return now > deadline;

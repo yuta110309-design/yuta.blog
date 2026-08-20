@@ -443,7 +443,7 @@ a { color: inherit; }
   transition: border-color 0.2s;
 }
 .team-card:hover { border-color: var(--sage); }
-.team-avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--sage-pale), var(--paper-alt)); margin-bottom: 16px; }
+.team-avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--sage-pale), var(--paper-alt)); margin-bottom: 16px; object-fit: cover; display: block; }
 .team-card h3 { font-family: "Shippori Mincho", serif; font-size: 16px; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
 .team-card .role { color: var(--muted-pale); font-size: 12px; margin-bottom: 10px; }
 .team-handle { font-family: "Space Mono", monospace; font-size: 11px; color: var(--sage-deep); }

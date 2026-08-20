@@ -40,6 +40,39 @@ window.addEventListener(
   { passive: true }
 );
 
+// ナビ: 右上のハンバーガーアイコンをタップすると項目一覧が開閉する。
+const navToggle = document.getElementById('nav-toggle');
+const navPanel = document.getElementById('nav-panel');
+if (navToggle && navPanel) {
+  function closeNavPanel() {
+    navPanel.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.setAttribute('aria-label', 'メニューを開く');
+  }
+  function openNavPanel() {
+    navPanel.classList.add('open');
+    navToggle.setAttribute('aria-expanded', 'true');
+    navToggle.setAttribute('aria-label', 'メニューを閉じる');
+  }
+  navToggle.addEventListener('click', () => {
+    if (navPanel.classList.contains('open')) closeNavPanel();
+    else openNavPanel();
+  });
+  navPanel.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeNavPanel));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navPanel.classList.contains('open')) closeNavPanel();
+  });
+  document.addEventListener('click', (e) => {
+    if (
+      navPanel.classList.contains('open') &&
+      !navPanel.contains(e.target) &&
+      !navToggle.contains(e.target)
+    ) {
+      closeNavPanel();
+    }
+  });
+}
+
 // 同姓同名の別人を誤って同一回答者として扱わないよう、端末ごとのIDで判定する
 // （名前の文字列一致ではない）。thirdplace-app側（lib/deviceId.ts）と同じ考え方。
 function getDeviceId() {

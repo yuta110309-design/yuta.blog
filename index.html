@@ -9,16 +9,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap"></noscript>
-<link rel="stylesheet" href="style.css?v=18">
+<link rel="stylesheet" href="style.css?v=19">
 </head>
 <body>
 
 <header class="site-header">
   <div class="header-inner">
     <span class="logo">THE THIRD<span class="place">PLACE</span> EBISU</span>
-    <a class="btn-nav" href="#membership">入会案内を見る</a>
+    <div class="header-actions">
+      <a class="btn-nav" href="#membership">入会案内を見る</a>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="nav-panel">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+    </div>
   </div>
-  <nav class="nav-tabs">
+  <nav class="nav-panel" id="nav-panel">
     <a href="#concept">コンセプト</a>
     <a href="#clubs">部活動</a>
     <a href="#event">イベント</a>
@@ -109,46 +115,48 @@
     <h2 class="section-title">部活は、まだ5つ。<br class="mobile-break">次はあなたがつくる番。</h2>
     <p class="section-intro">興味のある部活から、気軽に顔を出せます。なければ、自分で新しい部活を立ち上げることもできます。掛け持ちも歓迎。</p>
 
-    <div class="club-row has-photo">
-      <p class="kanji serif">走</p>
-      <div>
-        <h3>ランニング部</h3>
-        <span class="tag">Running</span>
-        <p>代官山〜中目黒〜恵比寿ガーデンプレイスを巡る、ゆるペースの夜ラン・朝ラン。おしゃべりしながら走る、がコンセプト。</p>
+    <div class="scroll-row">
+      <div class="club-card">
+        <img class="club-card-img" src="images/events/yoruran-01.jpg" alt="夜ランの様子">
+        <div class="club-card-body">
+          <p class="kanji serif">走</p>
+          <h3>ランニング部</h3>
+          <span class="tag">Running</span>
+          <p>代官山〜中目黒〜恵比寿ガーデンプレイスを巡る、ゆるペースの夜ラン・朝ラン。おしゃべりしながら走る、がコンセプト。</p>
+        </div>
       </div>
-      <img class="club-thumb" src="images/events/yoruran-01.jpg" alt="夜ランの様子">
-    </div>
-    <div class="club-row has-photo">
-      <p class="kanji serif">整</p>
-      <div>
-        <h3>ウェルネス部</h3>
-        <span class="tag">Yoga / Pilates</span>
-        <p>スタジオ×屋外×サウナを組み合わせた、心身を整える時間。ヨガ・ピラティスを軸に不定期開催。</p>
+      <div class="club-card">
+        <img class="club-card-img" src="images/clubs-wellness-gym.jpg" alt="Rootsパーソナルジム 代官山">
+        <div class="club-card-body">
+          <p class="kanji serif">整</p>
+          <h3>ウェルネス部</h3>
+          <span class="tag">Yoga / Pilates</span>
+          <p>スタジオ×屋外×サウナを組み合わせた、心身を整える時間。ヨガ・ピラティスを軸に不定期開催。</p>
+        </div>
       </div>
-      <img class="club-thumb" src="images/clubs-wellness-gym.jpg" alt="Rootsパーソナルジム 代官山">
-    </div>
-    <div class="club-row">
-      <p class="kanji serif">食</p>
-      <div>
-        <h3>食部</h3>
-        <span class="tag">Nutrition</span>
-        <p>恵比寿の質の高いレストランと連携した、栄養ランチ会・料理ワークショップ。</p>
+      <div class="club-card">
+        <div class="club-card-body">
+          <p class="kanji serif">食</p>
+          <h3>食部</h3>
+          <span class="tag">Nutrition</span>
+          <p>恵比寿の質の高いレストランと連携した、栄養ランチ会・料理ワークショップ。</p>
+        </div>
       </div>
-    </div>
-    <div class="club-row">
-      <p class="kanji serif">憩</p>
-      <div>
-        <h3>リカバリー部</h3>
-        <span class="tag">Recovery</span>
-        <p>サウナ・シーシャ・ストレッチ・睡眠。「落ち着ける環境」を提供する場所であれば拠点は問わない、都市生活者のためのリカバリー体験。</p>
+      <div class="club-card">
+        <div class="club-card-body">
+          <p class="kanji serif">憩</p>
+          <h3>リカバリー部</h3>
+          <span class="tag">Recovery</span>
+          <p>サウナ・シーシャ・ストレッチ・睡眠。「落ち着ける環境」を提供する場所であれば拠点は問わない、都市生活者のためのリカバリー体験。</p>
+        </div>
       </div>
-    </div>
-    <div class="club-row">
-      <p class="kanji serif">語</p>
-      <div>
-        <h3>知的部</h3>
-        <span class="tag">Salon</span>
-        <p>読書会やゲストを招いたトーク。仕事でも家でもない、知的な交流の場。</p>
+      <div class="club-card">
+        <div class="club-card-body">
+          <p class="kanji serif">語</p>
+          <h3>知的部</h3>
+          <span class="tag">Salon</span>
+          <p>読書会やゲストを招いたトーク。仕事でも家でもない、知的な交流の場。</p>
+        </div>
       </div>
     </div>
   </div>
@@ -161,6 +169,7 @@
     <h2 class="section-title">直近のイベント</h2>
     <p class="section-intro">参加者は先着順・定員制です。「出欠を回答する」からこのページ上で回答できます。参加費のお支払いはPayPal・PayPay・現金に対応しています。詳細はInstagramもあわせてご覧ください。</p>
 
+    <div class="scroll-row">
     <div class="event-row" data-event-id="yoruran">
       <div class="event-date serif">8<span class="sub">Mon Round</span></div>
       <div>
@@ -200,6 +209,7 @@
         </div>
         <a class="event-link" href="https://www.instagram.com/the.thirdplace.ebisu?igsh=MTFuY2RzZWJjZzlnZA==" target="_blank" rel="noopener noreferrer">Instagramで詳細を見る ↗</a>
       </div>
+    </div>
     </div>
   </div>
 </section>
@@ -299,18 +309,30 @@
     <h2 class="section-title">協賛企業・提携店舗</h2>
     <p class="section-intro">恵比寿エリアの店舗との提携や、協賛企業様のご紹介を準備中です。会員特典としての優待も検討しています。</p>
     <div class="why-grid">
-      <div class="why-item">
-        <span class="coming-soon-tag">Coming Soon</span>
-        <h3>協賛企業様一覧</h3>
-        <p>現在、協賛いただく企業様を募集中です。掲載準備が整い次第、こちらでご紹介します。</p>
-        <p class="why-item-link"><button type="button" class="link-arrow" data-open-inquiry="sponsor">協賛にご興味のある企業様はこちら ↗</button></p>
-      </div>
-      <div class="why-item">
-        <span class="coming-soon-tag">Coming Soon</span>
-        <h3>提携店舗様一覧（シーシャ・カフェ・サウナ）</h3>
-        <p>会員限定の優待（10%OFFなど）を検討中です。提携内容が固まり次第、公開します。</p>
-        <p class="why-item-link"><button type="button" class="link-arrow" data-open-inquiry="partner">提携をご希望の店舗様はこちら ↗</button></p>
-      </div>
+      <details class="why-item partner-accordion">
+        <summary>
+          <div>
+            <span class="coming-soon-tag">Coming Soon</span>
+            <h3>協賛企業様一覧</h3>
+          </div>
+        </summary>
+        <div class="partner-accordion-body">
+          <p>現在、協賛いただく企業様を募集中です。掲載準備が整い次第、こちらでご紹介します。</p>
+          <p class="why-item-link"><button type="button" class="link-arrow" data-open-inquiry="sponsor">協賛にご興味のある企業様はこちら ↗</button></p>
+        </div>
+      </details>
+      <details class="why-item partner-accordion">
+        <summary>
+          <div>
+            <span class="coming-soon-tag">Coming Soon</span>
+            <h3>提携店舗様一覧（シーシャ・カフェ・サウナ）</h3>
+          </div>
+        </summary>
+        <div class="partner-accordion-body">
+          <p>会員限定の優待（10%OFFなど）を検討中です。提携内容が固まり次第、公開します。</p>
+          <p class="why-item-link"><button type="button" class="link-arrow" data-open-inquiry="partner">提携をご希望の店舗様はこちら ↗</button></p>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -598,6 +620,6 @@
   </div>
 </div>
 
-<script src="script.js?v=10"></script>
+<script src="script.js?v=11"></script>
 </body>
 </html>

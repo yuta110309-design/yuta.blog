@@ -65,19 +65,31 @@ a { color: inherit; }
   margin: 0 auto;
   padding: 20px 28px;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
   gap: 10px 16px;
 }
+.logo { flex: 1 1 auto; min-width: 0; }
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+.logo-mark { width: 22px; height: 17px; flex-shrink: 0; overflow: visible; }
+.logo-mark circle { fill: none; stroke: var(--ink-soft); stroke-width: 1.2; opacity: 0.7; }
+.logo-mark .logo-mark-accent { fill: var(--sage); fill-opacity: 0.35; stroke: var(--sage-deep); opacity: 1; }
+.logo-word {
   font-family: "Shippori Mincho", serif;
-  font-size: clamp(12px, 3.6vw, 15px);
+  font-size: clamp(11px, 3.4vw, 15px);
   font-weight: 600;
   letter-spacing: 0.02em;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.logo .place { color: var(--sage); }
+.logo-word .place { color: var(--sage); }
 .btn-nav {
   font-family: "Space Mono", monospace;
   font-size: 10.5px;
@@ -380,6 +392,7 @@ button.link-arrow { background: none; border: none; border-bottom: 1px solid var
   border: 1px solid var(--line);
   border-top: 1px solid var(--line);
   padding: 24px 22px;
+  background: radial-gradient(circle at 100% 100%, rgba(121, 173, 141, 0.16), transparent 62%), var(--paper);
 }
 .scroll-row .event-row:last-child { border-bottom: 1px solid var(--line); }
 
@@ -651,6 +664,10 @@ button.link-arrow { background: none; border: none; border-bottom: 1px solid var
   .section { padding: 72px 0; }
   .hero { padding: 56px 0 64px; }
   .header-inner { padding: 16px 20px; }
+  .logo { gap: 6px; }
+  .logo-mark { width: 18px; height: 14px; }
+  .logo-word { font-size: 11px; }
+  .btn-nav { padding: 9px 14px; font-size: 9.5px; }
   .event-row { grid-template-columns: minmax(44px, auto) minmax(0, 1fr); gap: 14px; }
   .scroll-row { gap: 14px; margin: 0 -28px; padding-left: 28px; padding-right: 28px; }
   .club-card { width: 220px; }

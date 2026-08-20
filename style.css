@@ -170,20 +170,7 @@ a { color: inherit; }
   max-width: 46ch;
   margin-bottom: 32px;
 }
-.tag-strip {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 20px;
-  margin-bottom: 40px;
-}
-.tag-strip span {
-  font-family: "Space Mono", monospace;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-  text-transform: uppercase;
-}
-.hero-cta { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; }
+.hero-cta { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; margin-top: 8px; }
 
 /* BUTTONS */
 .btn {
@@ -514,23 +501,6 @@ button.link-arrow { background: none; border: none; border-bottom: 1px solid var
 
 /* IG FEED */
 .feed-label { font-family: "Shippori Mincho", serif; font-size: 16px; font-weight: 600; margin-bottom: 18px; }
-.feed-label-ig { display: flex; align-items: center; gap: 8px; color: var(--ink); }
-.feed-label-ig .ig-icon { width: 18px; height: 18px; color: var(--sage-deep); flex-shrink: 0; }
-.feed-label-ig a { color: inherit; text-decoration: none; }
-.feed-label-ig a:hover { color: var(--sage-deep); }
-.feed-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
-.feed-card { border: 1px solid var(--line); padding: 16px; min-height: 120px; display: flex; flex-direction: column; justify-content: flex-end; }
-.feed-card .stamp { font-family: "Space Mono", monospace; font-size: 9.5px; color: var(--sage); letter-spacing: 0.04em; margin-bottom: 8px; }
-.feed-card p { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
-.feed-card .icon { font-size: 20px; opacity: 0.35; margin-bottom: auto; }
-.feed-note { font-size: 11px; color: var(--muted-pale); line-height: 1.8; margin-bottom: 36px; }
-
-.link-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.link-card { border: 1px solid var(--line); padding: 20px; text-decoration: none; display: block; transition: border-color 0.2s; }
-.link-card.is-active:hover { border-color: var(--sage); }
-.link-card.is-disabled { cursor: default; }
-.link-card h4 { font-family: "Shippori Mincho", serif; font-size: 15px; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
-.link-card p { font-size: 12px; color: var(--muted-pale); }
 
 /* NORTH STAR */
 .north-star { text-align: left; }
@@ -650,9 +620,8 @@ button.link-arrow { background: none; border: none; border-bottom: 1px solid var
 /* MOBILE */
 @media (max-width: 640px) {
   .mobile-break { display: inline; }
+  #concept .section-title { font-size: 17px; letter-spacing: 0; white-space: nowrap; }
   .why-grid { grid-template-columns: 1fr; gap: 36px; }
-  .feed-grid { grid-template-columns: 1fr; }
-  .link-cards { grid-template-columns: 1fr; }
   .section { padding: 72px 0; }
   .hero { padding: 56px 0 64px; }
   .header-inner { padding: 16px 20px; }

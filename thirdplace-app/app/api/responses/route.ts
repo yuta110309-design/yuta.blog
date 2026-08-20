@@ -185,7 +185,7 @@ async function syncResponseToNotion({
   status: string;
   deviceId?: string;
   extra?: Record<string, string>;
-  extraFields?: { key: string; label: string }[];
+  extraFields?: { key: string; label: string; notionProperty?: string }[];
 }) {
   const dbId = process.env.NOTION_RESPONSES_DB_ID;
   if (!dbId) {
@@ -195,39 +195,44 @@ async function syncResponseToNotion({
   }
 
   const matchKey = `${eventId}|${occDate}|${deviceId ?? ''}`;
-  const note = (extraFields ?? [])
-    .map((f) => (extra?.[f.key] ? `${f.label}: ${extra[f.key]}` : null))
-    .filter(Boolean)
-    .join(' / ');
-  const properties = {
+  const baseProperties = {
     名前: { title: [{ text: { content: name } }] },
     イベント: { rich_text: [{ text: { content: eventTitle } }] },
     開催日: { rich_text: dateLabel ? [{ text: { content: dateLabel } }] : [] },
     出欠: { rich_text: [{ text: { content: STATUS_LABEL[status] ?? status } }] },
     更新日時: { rich_text: [{ text: { content: formatJst(new Date()) } }] },
-    回答ID: { rich_text: [{ text: { content: matchKey } }] },
-    ...(note ? { 備考: { rich_text: [{ text: { content: note } }] } } : {})
+    回答ID: { rich_text: [{ text: { content: matchKey } }] }
   };
+  // 追加質問（紹介者名など）は、イベントごとに指定されたNotionのプロパティ名に
+  // それぞれ個別に書き込む（未指定ならlabelをそのままプロパティ名として使う）。
+  const extraProperties: Record<string, unknown> = {};
+  for (const f of extraFields ?? []) {
+    const value = extra?.[f.key];
+    if (!value) continue;
+    extraProperties[f.notionProperty || f.label] = { rich_text: [{ text: { content: value } }] };
+  }
+  const properties = { ...baseProperties, ...extraProperties };
+  const hasExtra = Object.keys(extraProperties).length > 0;
 
-  // 備考プロパティがNotion側のデータベースに存在しない場合、Notion APIは
-  // ページ全体の作成・更新を400エラーで拒否する（他の項目も含めて丸ごと失敗する）。
-  // その場合は備考を諦めて再送し、名前・イベント・出欠などの基本情報だけは必ず反映されるようにする。
+  // extraPropertiesの列がNotion側のデータベースにまだ作成されていない場合、
+  // Notion APIはページ全体の作成・更新を400エラーで拒否する（基本情報も含めて丸ごと失敗する）。
+  // その場合はextraPropertiesを諦めて再送し、名前・イベント・出欠などの基本情報だけは必ず反映されるようにする。
   async function upsertNotionPage(existingPageId: string | undefined) {
     const path = existingPageId ? `/pages/${existingPageId}` : '/pages';
     const method = existingPageId ? 'PATCH' : 'POST';
     const body = existingPageId ? { properties } : { parent: { database_id: dbId }, properties };
     const res = await notionRequest(path, { method, body: JSON.stringify(body) });
-    if (res && !res.ok && '備考' in properties) {
+    if (res && !res.ok && hasExtra) {
       const bodyText = await res.text();
       // eslint-disable-next-line no-console
-      console.error(`Notion API エラー（出欠データ${existingPageId ? '更新' : '作成'}・備考なしで再送します）: ${res.status} ${bodyText}`);
-      const fallbackProperties: Record<string, unknown> = { ...properties };
-      delete fallbackProperties['備考'];
+      console.error(
+        `Notion API エラー（出欠データ${existingPageId ? '更新' : '作成'}・追加項目[${Object.keys(extraProperties).join('、')}]なしで再送します）: ${res.status} ${bodyText}`
+      );
       const fallbackBody = existingPageId
-        ? { properties: fallbackProperties }
-        : { parent: { database_id: dbId }, properties: fallbackProperties };
+        ? { properties: baseProperties }
+        : { parent: { database_id: dbId }, properties: baseProperties };
       const retryRes = await notionRequest(path, { method, body: JSON.stringify(fallbackBody) });
-      await logIfNotionError(retryRes, `出欠データ${existingPageId ? '更新' : '作成'}（備考なし再送）`);
+      await logIfNotionError(retryRes, `出欠データ${existingPageId ? '更新' : '作成'}（追加項目なし再送）`);
       return;
     }
     await logIfNotionError(res, `出欠データ${existingPageId ? '更新' : '作成'}`);

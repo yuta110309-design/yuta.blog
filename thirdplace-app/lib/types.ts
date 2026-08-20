@@ -13,6 +13,8 @@ export interface ExtraField {
   label: string;
   type: 'text' | 'select';
   options?: string[];
+  /** Notion側のプロパティ名（未指定ならlabelをそのまま使う） */
+  notionProperty?: string;
 }
 
 export interface EventConfig {

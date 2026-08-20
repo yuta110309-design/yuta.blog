@@ -40,9 +40,9 @@ export const EVENTS: EventConfig[] = [
     deadlineDaysBefore: 7,
     capacity: 25,
     extraFields: [
-      { key: 'referrer', label: '紹介者のお名前（いれば）', type: 'text' },
-      { key: 'payment', label: '当日決済方法', type: 'select', options: ['現金', 'PayPay'] },
-      { key: 'job', label: 'お仕事', type: 'text' }
+      { key: 'referrer', label: '紹介者のお名前（いれば）', type: 'text', notionProperty: '紹介者名' },
+      { key: 'payment', label: '当日決済方法', type: 'select', options: ['現金', 'PayPay'], notionProperty: '決済方法' },
+      { key: 'job', label: 'お仕事', type: 'text', notionProperty: 'お仕事' }
     ]
   },
   {

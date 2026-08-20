@@ -334,7 +334,7 @@ button.link-arrow { background: none; border: none; border-bottom: 1px solid var
 /* EVENTS */
 .event-row {
   display: grid;
-  grid-template-columns: minmax(56px, auto) 1fr;
+  grid-template-columns: minmax(56px, auto) minmax(0, 1fr);
   gap: 20px;
   padding: 28px 0;
   border-top: 1px solid var(--line);
@@ -354,11 +354,12 @@ button.link-arrow { background: none; border: none; border-bottom: 1px solid var
   letter-spacing: 0.08em;
   color: var(--muted);
   margin-top: 6px;
+  white-space: nowrap;
   text-transform: uppercase;
 }
 .event-title { font-family: "Shippori Mincho", serif; font-size: 17px; font-weight: 600; margin-bottom: 10px; }
 .event-meta { display: flex; flex-wrap: wrap; gap: 6px 16px; color: var(--ink-soft); font-size: 13px; margin-bottom: 14px; }
-.event-meta span { white-space: nowrap; }
+.event-meta span { white-space: normal; }
 .event-link {
   display: inline-block;
   font-family: "Space Mono", monospace;
@@ -633,10 +634,11 @@ button.link-arrow { background: none; border: none; border-bottom: 1px solid var
   .section { padding: 72px 0; }
   .hero { padding: 56px 0 64px; }
   .header-inner { padding: 16px 20px; }
-  .event-row { grid-template-columns: minmax(44px, auto) 1fr; gap: 14px; }
+  .event-row { grid-template-columns: minmax(44px, auto) minmax(0, 1fr); gap: 14px; }
   .scroll-row { gap: 14px; margin: 0 -28px; padding-left: 28px; padding-right: 28px; }
   .club-card { width: 220px; }
   .scroll-row .why-item { width: 210px; padding: 20px 18px; }
   .scroll-row .team-card { width: 170px; }
+  .team-card .role { font-size: 11px; }
   .scroll-row .event-row { width: 270px; padding: 20px 18px; }
 }

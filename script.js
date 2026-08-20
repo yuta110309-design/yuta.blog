@@ -76,6 +76,47 @@ if (navToggle && navPanel) {
   });
 }
 
+// North Starの地図: 恵比寿・軽井沢のマーカーをタップすると、その土地の紹介文を表示する。
+const MAP_PLACES = {
+  ebisu: {
+    label: 'EBISU — 東京',
+    text: '洗練されたジムやカフェが並ぶ、大人の街。THE THIRDPLACE EBISUの拠点であり、47都道府県へ広がっていく最初の1マス。'
+  },
+  karuizawa: {
+    label: 'KARUIZAWA — 長野',
+    text: '避暑地として愛されてきた、緑と静けさに満ちた高原リゾート。都会の喧騒を離れ、サウナと語らいを楽しむ、2マス目の拠点。'
+  }
+};
+const mapMarkers = document.querySelectorAll('.jp-marker');
+const mapInfo = document.getElementById('map-info');
+const mapInfoPlace = document.getElementById('map-info-place');
+const mapInfoText = document.getElementById('map-info-text');
+if (mapMarkers.length && mapInfo && mapInfoPlace && mapInfoText) {
+  function showMapPlace(marker) {
+    const isActive = marker.getAttribute('aria-pressed') === 'true';
+    mapMarkers.forEach((m) => m.setAttribute('aria-pressed', 'false'));
+    if (isActive) {
+      mapInfo.hidden = true;
+      return;
+    }
+    const place = MAP_PLACES[marker.dataset.place];
+    if (!place) return;
+    marker.setAttribute('aria-pressed', 'true');
+    mapInfoPlace.textContent = place.label;
+    mapInfoText.textContent = place.text;
+    mapInfo.hidden = false;
+  }
+  mapMarkers.forEach((marker) => {
+    marker.addEventListener('click', () => showMapPlace(marker));
+    marker.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        showMapPlace(marker);
+      }
+    });
+  });
+}
+
 // 同姓同名の別人を誤って同一回答者として扱わないよう、端末ごとのIDで判定する
 // （名前の文字列一致ではない）。thirdplace-app側（lib/deviceId.ts）と同じ考え方。
 function getDeviceId() {

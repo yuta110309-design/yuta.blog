@@ -503,15 +503,27 @@ button.link-arrow { background: none; border: none; border-bottom: 1px solid var
 .map-figure { position: relative; height: 280px; margin: 40px 0 8px; }
 .map-figure svg { height: 100%; overflow: visible; display: block; margin: 0 auto; }
 .jp-land { fill: var(--muted-pale); stroke: var(--muted-pale); stroke-width: 0.6; }
-.jp-marker-ring { fill: none; stroke: var(--sage); stroke-width: 3; opacity: 0.5; }
+.jp-marker-ring { fill: none; stroke: var(--sage); stroke-width: 3; opacity: 0.5; transition: opacity 0.2s, stroke-width 0.2s; }
 .jp-marker-dot { fill: var(--sage-deep); }
 .jp-marker-label {
   font-family: "Space Mono", monospace; font-size: 17px; letter-spacing: 0.06em;
   fill: var(--sage-deep); dominant-baseline: middle;
 }
+.jp-marker { cursor: pointer; }
+.jp-marker:hover .jp-marker-ring, .jp-marker:focus-visible .jp-marker-ring { opacity: 0.9; }
+.jp-marker[aria-pressed="true"] .jp-marker-ring { opacity: 1; stroke-width: 4; }
+.jp-marker:focus-visible { outline: none; }
+.jp-marker:focus-visible .jp-marker-ring { outline: 2px solid var(--sage); outline-offset: 2px; }
 .map-counter { display: flex; align-items: baseline; gap: 6px; margin-top: 12px; }
 .map-counter .n { font-family: "Shippori Mincho", serif; font-size: 44px; font-weight: 700; color: var(--sage-deep); }
 .map-counter .d { font-family: "Space Mono", monospace; font-size: 16px; color: var(--muted-pale); }
+.map-info { border: 1px solid var(--line); padding: 20px 22px; margin-top: 24px; }
+.map-info[hidden] { display: none; }
+.map-info-place {
+  font-family: "Space Mono", monospace; font-size: 11px; letter-spacing: 0.1em;
+  color: var(--sage); margin-bottom: 8px; text-transform: uppercase;
+}
+.map-info-text { color: var(--ink-soft); font-size: 14px; line-height: 1.75; }
 
 /* FAQ (reused pattern) */
 .faq-list { display: flex; flex-direction: column; }

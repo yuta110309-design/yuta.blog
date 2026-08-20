@@ -263,6 +263,16 @@ a { color: inherit; }
   margin-bottom: 12px;
 }
 .why-item p { color: var(--ink-soft); font-size: 14px; line-height: 1.8; }
+.coming-soon-tag {
+  display: inline-block;
+  font-family: "Space Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  padding: 3px 10px;
+  margin-bottom: 16px;
+}
 
 /* CLUBS */
 .club-row {

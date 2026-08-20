@@ -4,12 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>THE THIRDPLACE EBISU</title>
+<script>
+(function () {
+  // ブラウザの自動スクロール復元（リロード時に前回のスクロール位置へ戻る挙動）を止め、
+  // リロード時は常にページ先頭から始まるようにする。ハッシュ付きの新規訪問（共有リンク等）は
+  // 対象外にし、そちらは通常通りそのセクションまでジャンプさせる。
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  var navEntries = window.performance && performance.getEntriesByType ? performance.getEntriesByType('navigation') : [];
+  var isReload = navEntries.length > 0 && navEntries[0].type === 'reload';
+  if (isReload) {
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    window.scrollTo(0, 0);
+  }
+})();
+</script>
 <meta name="description" content="仕事でも家でもない、第三の場所。恵比寿・代官山・広尾を拠点に、ランニング・ヨガ・サウナ・フットサルなど部活動を通じてつながる、30〜40代のための会員制コミュニティ。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap"></noscript>
-<link rel="stylesheet" href="style.css?v=26">
+<link rel="stylesheet" href="style.css?v=27">
 </head>
 <body>
 
@@ -227,7 +245,7 @@
   <div class="container reveal">
     <p class="eyebrow">Track Record</p>
     <h2 class="section-title">これまでの開催実績</h2>
-    <p class="section-intro">実際に集まった様子から。開催のたびに、ここに増えていきます。</p>
+    <p class="section-intro">実際に集まった様子から。<br class="mobile-break">開催のたびに、ここに増えていきます。</p>
 
     <div class="past-event-block">
       <p class="past-event-title">夜ラン — 恵比寿ガーデンプレイス</p>
@@ -258,7 +276,7 @@
   <div class="container reveal">
     <p class="eyebrow">Membership</p>
     <h2 class="section-title">会員プラン</h2>
-    <p class="section-intro">会員制の本格稼働時期は未定です。まずは無料イベントから、是非ご参加ください。</p>
+    <p class="section-intro">会員制の本格稼働時期は未定です。<br class="mobile-break">まずは無料イベントから、是非ご参加ください。</p>
 
     <div class="plan-grid">
       <div class="plan-card">
@@ -267,9 +285,9 @@
         <p class="plan-cap">登録人数制限なし</p>
         <ul class="plan-features">
           <li>SNS・LINEでのイベント情報受信</li>
-          <li>ランニングなど、無料で参加できるイベントもあり</li>
-          <li>一般公開イベントへの参加（1回¥3,000〜5,000）</li>
-          <li>コミュニティの雰囲気をまず体験したい方に</li>
+          <li>ランニングなど、無料イベントもあり</li>
+          <li>一般公開イベント参加（¥3,000〜5,000）</li>
+          <li>コミュニティをまず体験したい方に</li>
         </ul>
         <a class="btn btn-outline" href="https://line.me/ti/g2/qDymAJY28KLoy_T2bjAWbS3ZixI-SohbiUrRHQ?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" rel="noopener noreferrer">オープンチャットに参加する</a>
       </div>
@@ -393,7 +411,7 @@
 <section class="section section-alt north-star" id="north-star">
   <div class="container reveal">
     <p class="eyebrow">North Star — 47 Prefectures</p>
-    <h2 class="section-title">いつか、日本地図が塗りつぶされる日まで。</h2>
+    <h2 class="section-title">全国にサードプレイスを。</h2>
     <p class="body-copy">恵比寿は最初の1マス。ここから、47都道府県それぞれに自立したサードプレイスを。</p>
     <div class="map-figure" aria-hidden="true">
       <!-- 実際の都道府県境界データ（47都道府県分のパス）を結合した日本地図 -->
@@ -603,6 +621,6 @@
   </div>
 </div>
 
-<script src="script.js?v=13"></script>
+<script src="script.js?v=14"></script>
 </body>
 </html>

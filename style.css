@@ -601,13 +601,25 @@ button.link-arrow { background: none; border: none; border-bottom: 1px solid var
   transition: transform 0.95s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
 }
 .eyebrow.text-reveal > span { transition-delay: 0s; }
-.section-title.text-reveal > span,
-.hero-body.text-reveal > span { transition-delay: 0.12s; }
+.section-title.text-reveal > span { transition-delay: 0.12s; }
 .reveal.visible .text-reveal > span { transform: translateY(0); opacity: 1; }
+
+/* HERO LEDE — 「仕事でも家でもない、第三の場所。」だけ左から右へ流れ出るように現れる */
+.hero-lede {
+  display: inline-block;
+  font-family: "Shippori Mincho", serif;
+  font-size: clamp(20px, 4.4vw, 25px);
+  font-weight: 600;
+  color: var(--ink);
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible .hero-lede { clip-path: inset(0 0 0 0); }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   .text-reveal > span { transform: none; opacity: 1; transition: none; }
+  .hero-lede { clip-path: inset(0 0 0 0); transition: none; }
 }
 
 .mobile-break { display: none; }
@@ -616,6 +628,7 @@ button.link-arrow { background: none; border: none; border-bottom: 1px solid var
 @media (max-width: 640px) {
   .mobile-break { display: inline; }
   #concept .section-title { font-size: 17px; letter-spacing: 0; white-space: nowrap; }
+  .quote-block p { font-size: 16px; }
   .why-grid { grid-template-columns: 1fr; gap: 36px; }
   .section { padding: 72px 0; }
   .hero { padding: 56px 0 64px; }

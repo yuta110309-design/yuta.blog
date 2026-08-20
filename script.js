@@ -1,5 +1,13 @@
 const APP_API_BASE = 'https://yuta-blog.vercel.app';
 
+// 見出し・リード文を下から静かに立ち上げるアニメーション用に、
+// テキストを1枚のspanで包む（overflow:hiddenでマスクして動かすため）。
+// .reveal（セクションのコンテナ）が visible になった瞬間にCSS側で発火する。
+document.querySelectorAll('.eyebrow:not(#signup-plan-label), .section-title, .hero-body').forEach((el) => {
+  el.classList.add('text-reveal');
+  el.innerHTML = `<span>${el.innerHTML}</span>`;
+});
+
 const reveals = document.querySelectorAll('.reveal');
 
 const observer = new IntersectionObserver((entries) => {

@@ -29,6 +29,8 @@ export interface EventConfig {
   deadlineDaysBefore?: number | null;
   capacity?: number | null;
   extraFields?: ExtraField[];
+  /** 出欠確認メールに載せる、イベント固有の詳細（参加=goの回答時のみ表示） */
+  emailDetails?: { label: string; value: string }[];
 }
 
 export type AttendanceStatus = 'go' | 'maybe' | 'no';

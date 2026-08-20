@@ -15,7 +15,13 @@ export const EVENTS: EventConfig[] = [
     dateLabelOverride: '開催時期は保留中',
     timeLabelOverride: '8:00〜（想定）',
     deadlineDaysBefore: null,
-    capacity: 10
+    capacity: 10,
+    emailDetails: [
+      { label: '集合場所', value: '恵比寿ガーデンプレイス' },
+      { label: '持ち物', value: '動きやすい服装・運動シューズ（貴重品は各自での管理をお願いします）' },
+      { label: '当日の流れ', value: '軽くストレッチ → ゆるいペースでラン → 終了後は希望者で軽く歓談' },
+      { label: '天候について', value: '荒天時は中止となる場合があります。前日〜当日にInstagram（@the.thirdplace.ebisu）でお知らせします。' }
+    ]
   },
   {
     id: 'yoruran',
@@ -27,7 +33,13 @@ export const EVENTS: EventConfig[] = [
     recurrence: { mode: 'weekly', weekday: 1, time: '20:00' },
     timeLabelOverride: '20:00〜21:00',
     deadlineDaysBefore: 0,
-    capacity: 10
+    capacity: 10,
+    emailDetails: [
+      { label: '集合場所', value: '恵比寿ガーデンプレイス' },
+      { label: '持ち物', value: '動きやすい服装・運動シューズ（暗くなる時間帯のため、反射材があると安心です）' },
+      { label: '当日の流れ', value: '軽くストレッチ → ゆるいペースでラン → 終了後は希望者で軽く歓談' },
+      { label: '天候について', value: '荒天時は中止となる場合があります。前日〜当日にInstagram（@the.thirdplace.ebisu）でお知らせします。' }
+    ]
   },
   {
     id: 'futsal',
@@ -43,6 +55,13 @@ export const EVENTS: EventConfig[] = [
       { key: 'referrer', label: '紹介者のお名前（いれば）', type: 'text', notionProperty: '紹介者名' },
       { key: 'payment', label: '当日決済方法', type: 'select', options: ['現金', 'PayPay'], notionProperty: '決済方法' },
       { key: 'job', label: 'お仕事', type: 'text', notionProperty: 'お仕事' }
+    ],
+    emailDetails: [
+      { label: '集合場所', value: '代々木・千駄ヶ谷エリア（会場が確定次第、別途ご案内します）' },
+      { label: '参加費', value: '¥2,000（当日、現金またはPayPayでお支払いください）' },
+      { label: '持ち物', value: '運動できる服装、室内用シューズ（フットサルシューズ推奨）、飲み物' },
+      { label: '当日の流れ', value: '準備運動 → ミニゲーム形式で対戦 → 終了後は希望者で軽く歓談' },
+      { label: 'ひとこと', value: '男女混合・運動が得意でない方も歓迎です。初めましての方もお気軽にどうぞ。' }
     ]
   },
   {
@@ -55,7 +74,13 @@ export const EVENTS: EventConfig[] = [
     recurrence: { mode: 'once', dateISO: '2026-09-17T11:00:00' },
     timeLabelOverride: '11:00〜18:00',
     deadlineDaysBefore: null,
-    capacity: 15
+    capacity: 15,
+    emailDetails: [
+      { label: '集合場所', value: '軽井沢駅（集合後、タクシーで現地へ移動します）' },
+      { label: 'スケジュール', value: '11:00 ヨガ・ピラティス → サウナ → BBQ（18:00頃終了予定）' },
+      { label: '参加費', value: '事前振込 ¥17,500 ／ 当日 ¥18,000（お支払い方法は別途ご案内します）' },
+      { label: '持ち物', value: '水着・タオルなど、サウナに適した持ち物と、動きやすい服装をご準備ください' }
+    ]
   }
 ];
 

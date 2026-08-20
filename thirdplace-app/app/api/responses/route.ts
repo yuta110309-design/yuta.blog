@@ -68,7 +68,17 @@ export async function POST(req: NextRequest) {
 
   // emailはpublicにSELECT可能なresponsesテーブルには保存せず、確認メール送信にのみ使う。
   if (email) {
-    await sendConfirmationEmail({ to: email, name, eventTitle, dateLabel, status });
+    await sendConfirmationEmail({
+      to: email,
+      name,
+      eventTitle,
+      dateLabel,
+      status,
+      location: eventCfg?.location,
+      emailDetails: eventCfg?.emailDetails,
+      extra,
+      extraFields: eventCfg?.extraFields
+    });
   }
   // 前日リマインド用に、参加（go）表明者のメールアドレスだけを別テーブルに保存する
   // （response_emailsは匿名ロールからSELECTできないため、公開responsesテーブルより安全）。
@@ -116,13 +126,21 @@ async function sendConfirmationEmail({
   name,
   eventTitle,
   dateLabel,
-  status
+  status,
+  location,
+  emailDetails,
+  extra,
+  extraFields
 }: {
   to: string;
   name: string;
   eventTitle: string;
   dateLabel: string;
   status: string;
+  location?: string;
+  emailDetails?: { label: string; value: string }[];
+  extra?: Record<string, string>;
+  extraFields?: { key: string; label: string }[];
 }) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
@@ -130,6 +148,39 @@ async function sendConfirmationEmail({
     console.warn('RESEND_API_KEY が未設定のため、出欠確認メールをスキップしました。');
     return;
   }
+
+  const isGoing = status === 'go';
+
+  const answeredExtras = (extraFields ?? [])
+    .map((f) => (extra?.[f.key] ? `${f.label}: ${extra[f.key]}` : null))
+    .filter((v): v is string => Boolean(v));
+
+  const lines = [
+    `${name}様`,
+    ``,
+    `以下の内容で出欠を登録しました。`,
+    ``,
+    `イベント: ${eventTitle}`,
+    dateLabel ? `日程: ${dateLabel}` : null,
+    location ? `場所: ${location}` : null,
+    `回答: ${STATUS_LABEL[status] ?? status}`
+  ];
+
+  if (isGoing && answeredExtras.length > 0) {
+    lines.push(``, `ご回答いただいた内容:`, ...answeredExtras);
+  }
+
+  if (isGoing && emailDetails && emailDetails.length > 0) {
+    lines.push(
+      ``,
+      `──────────────`,
+      `当日のご案内`,
+      `──────────────`,
+      ...emailDetails.map((d) => `${d.label}: ${d.value}`)
+    );
+  }
+
+  lines.push(``, `内容を変更したい場合は、同じページからもう一度回答してください（同じ端末であれば上書きされます）。`);
 
   try {
     await fetch('https://api.resend.com/emails', {
@@ -142,19 +193,9 @@ async function sendConfirmationEmail({
         from: process.env.NOTIFY_EMAIL_FROM || 'THE THIRDPLACE EBISU <onboarding@resend.dev>',
         to,
         subject: `【出欠登録完了】${eventTitle}${dateLabel ? `（${dateLabel}）` : ''}`,
-        text: [
-          `${name}様`,
-          ``,
-          `以下の内容で出欠を登録しました。`,
-          ``,
-          `イベント: ${eventTitle}`,
-          dateLabel ? `日程: ${dateLabel}` : null,
-          `回答: ${STATUS_LABEL[status] ?? status}`,
-          ``,
-          `内容を変更したい場合は、同じページからもう一度回答してください（同じ端末であれば上書きされます）。`
-        ]
-          .filter(Boolean)
-          .join('\n')
+        // .filter(Boolean)だと意図した空行（''）まで消えてしまうため、
+        // null/undefined（該当なしの項目）だけを取り除く。
+        text: lines.filter((l): l is string => l !== null && l !== undefined).join('\n')
       })
     });
   } catch (err) {

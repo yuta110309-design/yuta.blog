@@ -209,6 +209,30 @@ async function syncResponseToNotion({
     ...(note ? { 備考: { rich_text: [{ text: { content: note } }] } } : {})
   };
 
+  // 備考プロパティがNotion側のデータベースに存在しない場合、Notion APIは
+  // ページ全体の作成・更新を400エラーで拒否する（他の項目も含めて丸ごと失敗する）。
+  // その場合は備考を諦めて再送し、名前・イベント・出欠などの基本情報だけは必ず反映されるようにする。
+  async function upsertNotionPage(existingPageId: string | undefined) {
+    const path = existingPageId ? `/pages/${existingPageId}` : '/pages';
+    const method = existingPageId ? 'PATCH' : 'POST';
+    const body = existingPageId ? { properties } : { parent: { database_id: dbId }, properties };
+    const res = await notionRequest(path, { method, body: JSON.stringify(body) });
+    if (res && !res.ok && '備考' in properties) {
+      const bodyText = await res.text();
+      // eslint-disable-next-line no-console
+      console.error(`Notion API エラー（出欠データ${existingPageId ? '更新' : '作成'}・備考なしで再送します）: ${res.status} ${bodyText}`);
+      const fallbackProperties: Record<string, unknown> = { ...properties };
+      delete fallbackProperties['備考'];
+      const fallbackBody = existingPageId
+        ? { properties: fallbackProperties }
+        : { parent: { database_id: dbId }, properties: fallbackProperties };
+      const retryRes = await notionRequest(path, { method, body: JSON.stringify(fallbackBody) });
+      await logIfNotionError(retryRes, `出欠データ${existingPageId ? '更新' : '作成'}（備考なし再送）`);
+      return;
+    }
+    await logIfNotionError(res, `出欠データ${existingPageId ? '更新' : '作成'}`);
+  }
+
   try {
     const queryRes = await notionRequest(`/databases/${dbId}/query`, {
       method: 'POST',
@@ -220,19 +244,7 @@ async function syncResponseToNotion({
     const queryJson = queryRes?.ok ? await queryRes.json() : null;
     const existingPageId = queryJson?.results?.[0]?.id;
 
-    if (existingPageId) {
-      const res = await notionRequest(`/pages/${existingPageId}`, {
-        method: 'PATCH',
-        body: JSON.stringify({ properties })
-      });
-      await logIfNotionError(res, '出欠データ更新');
-    } else {
-      const res = await notionRequest('/pages', {
-        method: 'POST',
-        body: JSON.stringify({ parent: { database_id: dbId }, properties })
-      });
-      await logIfNotionError(res, '出欠データ作成');
-    }
+    await upsertNotionPage(existingPageId);
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('Notionへの出欠データ連携に失敗しました:', err);

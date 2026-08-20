@@ -581,8 +581,11 @@ a { color: inherit; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
+.mobile-break { display: none; }
+
 /* MOBILE */
 @media (max-width: 640px) {
+  .mobile-break { display: inline; }
   .why-grid { grid-template-columns: 1fr; gap: 36px; }
   .feed-grid { grid-template-columns: 1fr; }
   .link-cards { grid-template-columns: 1fr; }

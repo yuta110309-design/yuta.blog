@@ -18,6 +18,10 @@ create table if not exists responses (
 -- 回答者の識別を名前の文字列一致ではなく、端末ごとに割り当てるIDに切り替える。
 alter table responses add column if not exists device_id text;
 
+-- イベントごとに異なる追加質問（紹介者名、当日決済方法など）を、
+-- 列を増やさず柔軟に保存するためのJSONBカラム。
+alter table responses add column if not exists extra jsonb;
+
 alter table responses drop constraint if exists responses_event_id_occ_date_name_key;
 
 create unique index if not exists responses_event_occdate_device_key

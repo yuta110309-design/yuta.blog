@@ -61,17 +61,24 @@ export default function OrganizerPanel({
             .map((r) => (
               <div
                 key={`${r.event_id}-${r.occ_date}-${r.device_id || r.name}`}
-                className="flex justify-between items-center py-2.5 border-b border-white/10 text-[13px] last:border-none"
+                className="py-2.5 border-b border-white/10 text-[13px] last:border-none"
               >
-                <span className="flex items-center gap-2">
-                  <span
-                    className={`inline-block w-1.5 h-1.5 rounded-full ${
-                      r.status === 'go' ? 'bg-sage' : r.status === 'no' ? 'bg-danger' : 'bg-gold'
-                    }`}
-                  />
-                  {r.name}
-                </span>
-                <span>{statusLabel(r.status)}</span>
+                <div className="flex justify-between items-center">
+                  <span className="flex items-center gap-2">
+                    <span
+                      className={`inline-block w-1.5 h-1.5 rounded-full ${
+                        r.status === 'go' ? 'bg-sage' : r.status === 'no' ? 'bg-danger' : 'bg-gold'
+                      }`}
+                    />
+                    {r.name}
+                  </span>
+                  <span>{statusLabel(r.status)}</span>
+                </div>
+                {r.extra && Object.keys(r.extra).length > 0 && (
+                  <p className="text-[11px] text-creamDim mt-1 pl-3.5">
+                    {Object.values(r.extra).filter(Boolean).join(' / ')}
+                  </p>
+                )}
               </div>
             ))}
         </div>

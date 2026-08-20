@@ -8,6 +8,13 @@ export interface Recurrence {
   dateISO?: string | null; // onceのみ
 }
 
+export interface ExtraField {
+  key: string;
+  label: string;
+  type: 'text' | 'select';
+  options?: string[];
+}
+
 export interface EventConfig {
   id: string;
   emoji: string;
@@ -19,6 +26,7 @@ export interface EventConfig {
   timeLabelOverride?: string;
   deadlineDaysBefore?: number | null;
   capacity?: number | null;
+  extraFields?: ExtraField[];
 }
 
 export type AttendanceStatus = 'go' | 'maybe' | 'no';
@@ -31,4 +39,5 @@ export interface ResponseRow {
   device_id?: string | null;
   status: AttendanceStatus;
   updated_at: string;
+  extra?: Record<string, string> | null;
 }

@@ -53,7 +53,16 @@ const RSVP_DEVICE_ID = getDeviceId();
 const RSVP_EVENTS = {
   yoruran: { recurrence: { mode: 'weekly', weekday: 1, time: '20:00' }, deadlineDaysBefore: 0, capacity: 10 },
   'karuizawa-tour': { recurrence: { mode: 'once', dateISO: '2026-09-17T11:00:00' }, deadlineDaysBefore: null, capacity: 15 },
-  futsal: { recurrence: { mode: 'once', dateISO: '2026-09-21T19:00:00' }, deadlineDaysBefore: 7, capacity: 25 }
+  futsal: {
+    recurrence: { mode: 'once', dateISO: '2026-09-21T19:00:00' },
+    deadlineDaysBefore: 7,
+    capacity: 25,
+    extraFields: [
+      { key: 'referrer', label: '紹介者のお名前（いれば）', type: 'text' },
+      { key: 'payment', label: '当日決済方法', type: 'select', options: ['現金', 'PayPay'] },
+      { key: 'job', label: 'お仕事', type: 'text' }
+    ]
+  }
 };
 
 function rsvpPad(n) {
@@ -153,7 +162,7 @@ if (eventRows.length && APP_API_BASE) {
 
     const body = row.querySelector('.event-rsvp-body');
     if (!body) return;
-    const draft = row._rsvpDraft || { name: '', email: '', status: null, occDate: null, saved: false };
+    const draft = row._rsvpDraft || { name: '', email: '', status: null, occDate: null, saved: false, extra: {} };
     row._rsvpDraft = draft;
 
     // フォーム内で選択中の開催日（未選択、または選び直しで無効になった場合は
@@ -221,6 +230,47 @@ if (eventRows.length && APP_API_BASE) {
       { value: 'no', label: '不参加' }
     ];
 
+    const extraFieldsHtml = (cfg.extraFields || [])
+      .map((field) => {
+        const fieldId = 'rsvp-extra-' + field.key + '-' + eventId;
+        if (field.type === 'select') {
+          return (
+            '<label class="field-label">' +
+            field.label +
+            '</label><div class="rsvp-status-row">' +
+            (field.options || [])
+              .map(
+                (opt) =>
+                  '<button type="button" class="rsvp-status-btn' +
+                  (draft.extra[field.key] === opt ? ' is-selected' : '') +
+                  '" data-extra-key="' +
+                  field.key +
+                  '" data-extra-value="' +
+                  opt +
+                  '">' +
+                  opt +
+                  '</button>'
+              )
+              .join('') +
+            '</div>'
+          );
+        }
+        return (
+          '<label class="field-label" for="' +
+          fieldId +
+          '">' +
+          field.label +
+          '</label><input class="field-input" id="' +
+          fieldId +
+          '" type="text" data-extra-key="' +
+          field.key +
+          '" value="' +
+          (draft.extra[field.key] || '').replace(/"/g, '&quot;') +
+          '">'
+        );
+      })
+      .join('');
+
     body.innerHTML =
       datePickerHtml +
       '<label class="field-label" for="rsvp-name-' +
@@ -239,6 +289,7 @@ if (eventRows.length && APP_API_BASE) {
       '" type="email" placeholder="you@example.com" value="' +
       draft.email.replace(/"/g, '&quot;') +
       '">' +
+      extraFieldsHtml +
       (full && !alreadyGoing ? '<p class="rsvp-hint">定員に達しているため「参加」は選択できません</p>' : '') +
       '<div class="rsvp-status-row">' +
       options
@@ -273,6 +324,20 @@ if (eventRows.length && APP_API_BASE) {
       draft.email = e.target.value;
       draft.saved = false;
     });
+    body.querySelectorAll('[data-extra-key]').forEach((el) => {
+      if (el.tagName === 'INPUT') {
+        el.addEventListener('input', (e) => {
+          draft.extra[el.dataset.extraKey] = e.target.value;
+          draft.saved = false;
+        });
+      } else {
+        el.addEventListener('click', () => {
+          draft.extra[el.dataset.extraKey] = el.dataset.extraValue;
+          draft.saved = false;
+          renderRow(row);
+        });
+      }
+    });
     body.querySelectorAll('[data-status]').forEach((btn) => {
       btn.addEventListener('click', () => {
         draft.status = btn.dataset.status;
@@ -300,7 +365,8 @@ if (eventRows.length && APP_API_BASE) {
             name: draft.name.trim(),
             status: draft.status,
             deviceId: RSVP_DEVICE_ID,
-            email: draft.email.trim() || undefined
+            email: draft.email.trim() || undefined,
+            extra: Object.keys(draft.extra).length ? draft.extra : undefined
           })
         });
         if (!res.ok) throw new Error('failed');

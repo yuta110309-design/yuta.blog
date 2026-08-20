@@ -20,6 +20,7 @@ export default function AttendeeForm({
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<AttendanceStatus | null>(null);
+  const [extra, setExtra] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -55,7 +56,8 @@ export default function AttendeeForm({
           name: name.trim(),
           status,
           deviceId,
-          email: email.trim() || undefined
+          email: email.trim() || undefined,
+          extra: Object.keys(extra).length ? extra : undefined
         })
       });
       if (!res.ok) throw new Error('failed');
@@ -102,6 +104,44 @@ export default function AttendeeForm({
         onChange={(e) => setEmail(e.target.value)}
         className="w-full bg-baseDeep border border-gold/40 px-4 py-3 text-cream text-[14.5px] mb-4.5 placeholder:text-cream/30"
       />
+
+      {(event.extraFields ?? []).map((field) => (
+        <div key={field.key}>
+          <label className="block text-[10.5px] text-sage mb-2 font-medium tracking-widest uppercase" htmlFor={`${field.key}-${event.id}`}>
+            {field.label}
+          </label>
+          {field.type === 'select' ? (
+            <div className="flex gap-2 mb-4.5">
+              {(field.options ?? []).map((opt) => (
+                <button
+                  key={opt}
+                  type="button"
+                  onClick={() => {
+                    setExtra((prev) => ({ ...prev, [field.key]: opt }));
+                    setSaved(false);
+                  }}
+                  className={`flex-1 text-center py-3 border text-[12.5px] font-medium tracking-wide transition-all ${
+                    extra[field.key] === opt ? 'bg-sage border-sage text-baseDeep' : 'bg-baseDeep border-gold/40 text-creamDim'
+                  }`}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <input
+              id={`${field.key}-${event.id}`}
+              type="text"
+              value={extra[field.key] ?? ''}
+              onChange={(e) => {
+                setExtra((prev) => ({ ...prev, [field.key]: e.target.value }));
+                setSaved(false);
+              }}
+              className="w-full bg-baseDeep border border-gold/40 px-4 py-3 text-cream text-[14.5px] mb-4.5 placeholder:text-cream/30"
+            />
+          )}
+        </div>
+      ))}
 
       <label className="block text-[10.5px] text-sage mb-2 font-medium tracking-widest uppercase">出欠</label>
       {full && !alreadyGoing && (

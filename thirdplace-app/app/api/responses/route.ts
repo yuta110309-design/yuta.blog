@@ -20,7 +20,7 @@ export async function OPTIONS() {
 export async function GET() {
   const { data, error } = await supabase
     .from('responses')
-    .select('event_id, occ_date, name, device_id, status, updated_at')
+    .select('event_id, occ_date, name, device_id, status, updated_at, extra')
     .order('updated_at', { ascending: false });
 
   if (error) {
@@ -34,7 +34,7 @@ export async function GET() {
 // 同一回答者とみなして上書きする。deviceIdが無い（古いクライアント）場合は毎回新規行になる。
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { eventId, occDate, name, status, deviceId, email } = body;
+  const { eventId, occDate, name, status, deviceId, email, extra } = body;
 
   if (!eventId || !name || !status) {
     return NextResponse.json(
@@ -52,6 +52,7 @@ export async function POST(req: NextRequest) {
         name,
         device_id: deviceId ?? null,
         status,
+        extra: extra ?? null,
         updated_at: new Date().toISOString()
       },
       { onConflict: 'event_id,occ_date,device_id' }
@@ -69,7 +70,17 @@ export async function POST(req: NextRequest) {
   if (email) {
     await sendConfirmationEmail({ to: email, name, eventTitle, dateLabel, status });
   }
-  await syncResponseToNotion({ eventId, eventTitle, occDate: occDate ?? '', dateLabel, name, status, deviceId });
+  await syncResponseToNotion({
+    eventId,
+    eventTitle,
+    occDate: occDate ?? '',
+    dateLabel,
+    name,
+    status,
+    deviceId,
+    extra,
+    extraFields: eventCfg?.extraFields
+  });
 
   return NextResponse.json({ result: 'success' }, { headers: CORS_HEADERS });
 }
@@ -136,7 +147,9 @@ async function syncResponseToNotion({
   dateLabel,
   name,
   status,
-  deviceId
+  deviceId,
+  extra,
+  extraFields
 }: {
   eventId: string;
   eventTitle: string;
@@ -145,6 +158,8 @@ async function syncResponseToNotion({
   name: string;
   status: string;
   deviceId?: string;
+  extra?: Record<string, string>;
+  extraFields?: { key: string; label: string }[];
 }) {
   const dbId = process.env.NOTION_RESPONSES_DB_ID;
   if (!dbId) {
@@ -154,13 +169,18 @@ async function syncResponseToNotion({
   }
 
   const matchKey = `${eventId}|${occDate}|${deviceId ?? ''}`;
+  const note = (extraFields ?? [])
+    .map((f) => (extra?.[f.key] ? `${f.label}: ${extra[f.key]}` : null))
+    .filter(Boolean)
+    .join(' / ');
   const properties = {
     名前: { title: [{ text: { content: name } }] },
     イベント: { rich_text: [{ text: { content: eventTitle } }] },
     開催日: { rich_text: dateLabel ? [{ text: { content: dateLabel } }] : [] },
     出欠: { rich_text: [{ text: { content: STATUS_LABEL[status] ?? status } }] },
     更新日時: { rich_text: [{ text: { content: formatJst(new Date()) } }] },
-    回答ID: { rich_text: [{ text: { content: matchKey } }] }
+    回答ID: { rich_text: [{ text: { content: matchKey } }] },
+    ...(note ? { 備考: { rich_text: [{ text: { content: note } }] } } : {})
   };
 
   try {

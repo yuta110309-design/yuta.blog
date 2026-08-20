@@ -38,7 +38,12 @@ export const EVENTS: EventConfig[] = [
       '初めましての方も歓迎の、男女混合でゆるく楽しむフットサル部活動です。運動が得意でなくても大丈夫。体を動かしながら、仕事でも家でもない新しいつながりをつくる時間にしませんか。',
     recurrence: { mode: 'once', dateISO: '2026-09-21T19:00:00', time: '19:00' },
     deadlineDaysBefore: 7,
-    capacity: 25
+    capacity: 25,
+    extraFields: [
+      { key: 'referrer', label: '紹介者のお名前（いれば）', type: 'text' },
+      { key: 'payment', label: '当日決済方法', type: 'select', options: ['現金', 'PayPay'] },
+      { key: 'job', label: 'お仕事', type: 'text' }
+    ]
   },
   {
     id: 'karuizawa-tour',

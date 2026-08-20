@@ -263,6 +263,7 @@ a { color: inherit; }
   margin-bottom: 12px;
 }
 .why-item p { color: var(--ink-soft); font-size: 14px; line-height: 1.8; }
+.why-item-link { margin-top: 14px; }
 .coming-soon-tag {
   display: inline-block;
   font-family: "Space Mono", monospace;

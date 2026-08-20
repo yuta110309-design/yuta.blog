@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap"></noscript>
-<link rel="stylesheet" href="style.css?v=16">
+<link rel="stylesheet" href="style.css?v=17">
 </head>
 <body>
 
@@ -305,13 +305,13 @@
         <span class="coming-soon-tag">Coming Soon</span>
         <h3>協賛企業様一覧</h3>
         <p>現在、協賛いただく企業様を募集中です。掲載準備が整い次第、こちらでご紹介します。</p>
-        <p class="why-item-link"><a class="link-arrow" href="https://www.instagram.com/the.thirdplace.ebisu?igsh=MTFuY2RzZWJjZzlnZA==" target="_blank" rel="noopener noreferrer">協賛にご興味のある企業様はこちら ↗</a></p>
+        <p class="why-item-link"><button type="button" class="link-arrow" data-open-inquiry="sponsor">協賛にご興味のある企業様はこちら ↗</button></p>
       </div>
       <div class="why-item">
         <span class="coming-soon-tag">Coming Soon</span>
         <h3>提携店舗様一覧（シーシャ・カフェ・サウナ）</h3>
         <p>会員限定の優待（10%OFFなど）を検討中です。提携内容が固まり次第、公開します。</p>
-        <p class="why-item-link"><a class="link-arrow" href="https://www.instagram.com/the.thirdplace.ebisu?igsh=MTFuY2RzZWJjZzlnZA==" target="_blank" rel="noopener noreferrer">提携をご希望の店舗様はこちら ↗</a></p>
+        <p class="why-item-link"><button type="button" class="link-arrow" data-open-inquiry="partner">提携をご希望の店舗様はこちら ↗</button></p>
       </div>
     </div>
   </div>
@@ -542,6 +542,42 @@
   </div>
 </div>
 
-<script src="script.js?v=9"></script>
+<!-- INQUIRY MODAL (協賛・提携) -->
+<div class="modal-overlay" id="inquiry-overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="inquiry-title">
+    <button type="button" class="modal-close" id="inquiry-close" aria-label="閉じる">×</button>
+
+    <div id="inquiry-form-view">
+      <p class="eyebrow" id="inquiry-type-label">Partner</p>
+      <h3 class="modal-title" id="inquiry-title">お問い合わせ</h3>
+
+      <form id="inquiry-form">
+        <label class="field-label" for="inquiry-name">お名前・店舗名</label>
+        <input class="field-input" id="inquiry-name" name="name" type="text" required placeholder="山田 太郎">
+
+        <label class="field-label" for="inquiry-contact">連絡先（メールまたは電話番号）</label>
+        <input class="field-input" id="inquiry-contact" name="contact" type="text" required placeholder="you@example.com">
+
+        <div id="inquiry-message-row">
+          <label class="field-label" for="inquiry-message">メッセージ（任意）</label>
+          <textarea class="field-input" id="inquiry-message" name="message" rows="3" placeholder="ご質問・ご要望があればご記入ください"></textarea>
+        </div>
+
+        <input type="hidden" id="inquiry-type" name="type" value="partner">
+        <p class="field-error" id="inquiry-error" hidden></p>
+        <button type="submit" class="btn btn-primary modal-submit" id="inquiry-submit">送信する</button>
+      </form>
+    </div>
+
+    <div id="inquiry-success-view" hidden>
+      <p class="modal-success-mark">✓</p>
+      <h3 class="modal-title">送信しました</h3>
+      <p class="modal-success-body">お問い合わせありがとうございます。運営メンバーより追ってご連絡します。</p>
+      <button type="button" class="btn btn-outline modal-submit" id="inquiry-done">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js?v=10"></script>
 </body>
 </html>

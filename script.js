@@ -3,7 +3,7 @@ const APP_API_BASE = 'https://yuta-blog.vercel.app';
 // 見出し・リード文を下から静かに立ち上げるアニメーション用に、
 // テキストを1枚のspanで包む（overflow:hiddenでマスクして動かすため）。
 // .reveal（セクションのコンテナ）が visible になった瞬間にCSS側で発火する。
-document.querySelectorAll('.eyebrow:not(#signup-plan-label), .section-title, .hero-body').forEach((el) => {
+document.querySelectorAll('.eyebrow:not(#signup-plan-label):not(#inquiry-type-label), .section-title, .hero-body').forEach((el) => {
   el.classList.add('text-reveal');
   el.innerHTML = `<span>${el.innerHTML}</span>`;
 });
@@ -489,6 +489,88 @@ if (signupOverlay) {
     submitBtn.textContent = '送信中…';
     try {
       const res = await fetch(`${APP_API_BASE}/api/members`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('failed');
+      formView.hidden = true;
+      successView.hidden = false;
+    } catch {
+      errorEl.textContent = '送信に失敗しました。しばらくしてからもう一度お試しください。';
+      errorEl.hidden = false;
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = '送信する';
+    }
+  });
+}
+
+// Inquiry modal (協賛・提携): opened from the Partners section links, posts to thirdplace-app's /api/inquiries
+const INQUIRY_LABELS = { sponsor: '協賛', partner: '提携店舗' };
+
+const inquiryOverlay = document.getElementById('inquiry-overlay');
+if (inquiryOverlay) {
+  const formView = document.getElementById('inquiry-form-view');
+  const successView = document.getElementById('inquiry-success-view');
+  const form = document.getElementById('inquiry-form');
+  const typeLabelEl = document.getElementById('inquiry-type-label');
+  const titleEl = document.getElementById('inquiry-title');
+  const typeInput = document.getElementById('inquiry-type');
+  const errorEl = document.getElementById('inquiry-error');
+  const submitBtn = document.getElementById('inquiry-submit');
+
+  function openInquiry(type) {
+    const label = INQUIRY_LABELS[type] || type;
+    typeInput.value = type;
+    typeLabelEl.textContent = label;
+    titleEl.textContent = `${label}のお問い合わせ`;
+    errorEl.hidden = true;
+    formView.hidden = false;
+    successView.hidden = true;
+    form.reset();
+    typeInput.value = type;
+    inquiryOverlay.hidden = false;
+    document.getElementById('inquiry-name').focus();
+  }
+
+  function closeInquiry() {
+    inquiryOverlay.hidden = true;
+  }
+
+  document.querySelectorAll('[data-open-inquiry]').forEach((btn) => {
+    btn.addEventListener('click', () => openInquiry(btn.dataset.openInquiry));
+  });
+  document.getElementById('inquiry-close').addEventListener('click', closeInquiry);
+  document.getElementById('inquiry-done').addEventListener('click', closeInquiry);
+  inquiryOverlay.addEventListener('click', (e) => {
+    if (e.target === inquiryOverlay) closeInquiry();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !inquiryOverlay.hidden) closeInquiry();
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorEl.hidden = true;
+
+    if (!APP_API_BASE) {
+      errorEl.textContent = '現在お問い合わせフォームは準備中です。お手数ですがInstagramからご連絡ください。';
+      errorEl.hidden = false;
+      return;
+    }
+
+    const payload = {
+      name: document.getElementById('inquiry-name').value.trim(),
+      contact: document.getElementById('inquiry-contact').value.trim(),
+      type: typeInput.value,
+      message: document.getElementById('inquiry-message').value.trim()
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = '送信中…';
+    try {
+      const res = await fetch(`${APP_API_BASE}/api/inquiries`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

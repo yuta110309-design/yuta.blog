@@ -200,6 +200,7 @@ a { color: inherit; }
   transition: color 0.2s, border-color 0.2s;
 }
 .link-arrow:hover { color: var(--sage-deep); border-color: var(--sage-deep); }
+button.link-arrow { background: none; border: none; border-bottom: 1px solid var(--line-strong); font-family: inherit; cursor: pointer; padding: 0 0 2px; }
 
 /* CONCEPT VENN */
 .concept-venn { max-width: 260px; margin: 28px 0 12px; }

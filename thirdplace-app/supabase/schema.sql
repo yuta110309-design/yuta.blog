@@ -50,6 +50,43 @@ create policy "public can update own-name responses"
 create index if not exists responses_event_occdate_idx
   on responses (event_id, occ_date);
 
+-- 前日リマインドメール送信用に、参加（go）回答者のメールアドレスを保持する。
+-- responsesテーブルは匿名ロールにSELECTを許可しているため、そこにメールアドレスを
+-- 保存すると誰でも読み取れてしまう。そのためテーブルを分離し、匿名ロールには
+-- insert/update/delete のみを許可してSELECTは許可しない
+-- （読み取りはVercel Cronがservice roleキーで行う。lib/supabaseAdmin.ts 参照）。
+create table if not exists response_emails (
+  id uuid primary key default gen_random_uuid(),
+  event_id text not null,
+  occ_date text not null default '',
+  device_id text not null,
+  email text not null,
+  updated_at timestamptz not null default now()
+);
+
+create unique index if not exists response_emails_event_occdate_device_key
+  on response_emails (event_id, occ_date, device_id);
+
+create index if not exists response_emails_occdate_idx
+  on response_emails (occ_date);
+
+alter table response_emails enable row level security;
+
+drop policy if exists "public can insert response emails" on response_emails;
+create policy "public can insert response emails"
+  on response_emails for insert
+  with check (true);
+
+drop policy if exists "public can update response emails" on response_emails;
+create policy "public can update response emails"
+  on response_emails for update
+  using (true);
+
+drop policy if exists "public can delete response emails" on response_emails;
+create policy "public can delete response emails"
+  on response_emails for delete
+  using (true);
+
 -- 会員申し込み・お問い合わせ
 create table if not exists members (
   id uuid primary key default gen_random_uuid(),

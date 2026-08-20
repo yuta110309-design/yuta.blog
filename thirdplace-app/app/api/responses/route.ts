@@ -70,6 +70,32 @@ export async function POST(req: NextRequest) {
   if (email) {
     await sendConfirmationEmail({ to: email, name, eventTitle, dateLabel, status });
   }
+  // 前日リマインド用に、参加（go）表明者のメールアドレスだけを別テーブルに保存する
+  // （response_emailsは匿名ロールからSELECTできないため、公開responsesテーブルより安全）。
+  // 参加以外に変わった場合は、翌日以降にリマインドが届かないよう削除する。
+  if (deviceId) {
+    if (status === 'go' && email) {
+      await supabase
+        .from('response_emails')
+        .upsert(
+          {
+            event_id: eventId,
+            occ_date: occDate ?? '',
+            device_id: deviceId,
+            email,
+            updated_at: new Date().toISOString()
+          },
+          { onConflict: 'event_id,occ_date,device_id' }
+        );
+    } else {
+      await supabase
+        .from('response_emails')
+        .delete()
+        .eq('event_id', eventId)
+        .eq('occ_date', occDate ?? '')
+        .eq('device_id', deviceId);
+    }
+  }
   await syncResponseToNotion({
     eventId,
     eventTitle,

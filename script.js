@@ -153,7 +153,7 @@ if (eventRows.length && APP_API_BASE) {
 
     const body = row.querySelector('.event-rsvp-body');
     if (!body) return;
-    const draft = row._rsvpDraft || { name: '', email: '', status: null, occDate: null };
+    const draft = row._rsvpDraft || { name: '', email: '', status: null, occDate: null, saved: false };
     row._rsvpDraft = draft;
 
     // フォーム内で選択中の開催日（未選択、または選び直しで無効になった場合は
@@ -199,6 +199,7 @@ if (eventRows.length && APP_API_BASE) {
         btn.addEventListener('click', () => {
           if (btn.disabled) return;
           draft.occDate = btn.dataset.occdate;
+          draft.saved = false;
           renderRow(row);
         });
       });
@@ -257,18 +258,25 @@ if (eventRows.length && APP_API_BASE) {
         })
         .join('') +
       '</div>' +
-      '<button type="button" class="rsvp-submit">' + (draft.message || '送信する') + '</button>';
+      '<button type="button" class="rsvp-submit' +
+      (draft.saved ? ' is-saved' : '') +
+      '">' +
+      (draft.saved ? '✓ 送信しました' : draft.message || '送信する') +
+      '</button>';
 
     bindDatePicker();
     body.querySelector('#rsvp-name-' + eventId).addEventListener('input', (e) => {
       draft.name = e.target.value;
+      draft.saved = false;
     });
     body.querySelector('#rsvp-email-' + eventId).addEventListener('input', (e) => {
       draft.email = e.target.value;
+      draft.saved = false;
     });
     body.querySelectorAll('[data-status]').forEach((btn) => {
       btn.addEventListener('click', () => {
         draft.status = btn.dataset.status;
+        draft.saved = false;
         renderRow(row);
       });
     });
@@ -296,6 +304,7 @@ if (eventRows.length && APP_API_BASE) {
           })
         });
         if (!res.ok) throw new Error('failed');
+        draft.saved = true;
         await loadResponsesAndRender();
       } catch {
         draft.message = '送信に失敗しました';

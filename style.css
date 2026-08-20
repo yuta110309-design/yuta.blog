@@ -641,5 +641,7 @@ button.link-arrow { background: none; border: none; border-bottom: 1px solid var
   .scroll-row .why-item { width: 210px; padding: 20px 18px; }
   .scroll-row .team-card { width: 170px; }
   .team-card .role { font-size: 11px; }
-  .scroll-row .event-row { width: 270px; padding: 20px 18px; }
+  .team-handle { font-size: 10px; }
+  .scroll-row .event-row { width: 270px; padding: 20px 18px; display: block; }
+  .scroll-row .event-row .event-date { margin-bottom: 16px; }
 }

@@ -630,6 +630,7 @@ button.link-arrow { background: none; border: none; border-bottom: 1px solid var
   .mobile-break { display: inline; }
   #concept .section-title { font-size: 17px; letter-spacing: 0; white-space: nowrap; }
   .quote-block p { font-size: 16px; }
+  .hero-body { font-size: 14px; }
   .why-grid { grid-template-columns: 1fr; gap: 36px; }
   .section { padding: 72px 0; }
   .hero { padding: 56px 0 64px; }

@@ -1,5 +1,16 @@
 const APP_API_BASE = 'https://yuta-blog.vercel.app';
 
+// ページをリロードした時、URLにハッシュ（例: #partners）が残っていると
+// ブラウザ標準の挙動でその位置までスクロールされてしまう。
+// リロード時だけはハッシュを外して先頭に戻す（ナビからのハッシュ付き遷移そのものは維持）。
+if (window.location.hash) {
+  const navEntry = performance.getEntriesByType('navigation')[0];
+  if (navEntry && navEntry.type === 'reload') {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+    window.scrollTo(0, 0);
+  }
+}
+
 // 見出し・リード文を下から静かに立ち上げるアニメーション用に、
 // テキストを1枚のspanで包む（overflow:hiddenでマスクして動かすため）。
 // .reveal（セクションのコンテナ）が visible になった瞬間にCSS側で発火する。

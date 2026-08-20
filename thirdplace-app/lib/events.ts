@@ -46,12 +46,11 @@ export const EVENTS: EventConfig[] = [
     title: '軽井沢ツアー（特別開催）',
     location: '軽井沢駅集合 → タクシーで現地へ',
     description:
-      'ピラティス → サウナ → BBQの特別な一日。日常から少し離れて、心と身体を整える時間を。一般参加費 ¥17,500・限定12名。',
-    recurrence: { mode: 'once', dateISO: null },
-    dateLabelOverride: '9/10 or 9/17（日程調整中）',
+      'ピラティス → サウナ → BBQの特別な一日。軽井沢と都内、それぞれの事業者が力を合わせてお届けするハイブリッドイベントです。日常から少し離れて、心と身体を整える時間を。参加費 事前振込¥17,500・当日¥18,000、限定15名。',
+    recurrence: { mode: 'once', dateISO: '2026-09-17T11:00:00' },
     timeLabelOverride: '11:00〜18:00',
     deadlineDaysBefore: null,
-    capacity: 12
+    capacity: 15
   }
 ];
 

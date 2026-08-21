@@ -256,4 +256,99 @@
       if (reservationForm) reservationForm.reset();
     }
   }
+
+  /* ------------------------------------------------------------------ */
+  /* Plan(料金プラン)タブ切替 + 描画                                        */
+  /* [data-plans-source] 配下の [data-plan-panel="<storeId>"] それぞれに、  */
+  /* data/plans.json のカテゴリ/プランをカード形式で描画する。               */
+  /* プランに "stores" 指定がなければ全タブ共通、指定があればそのタブのみ表示。*/
+  /* ------------------------------------------------------------------ */
+  var planTabs = document.querySelectorAll("[data-plan-tab]");
+  var planPanelsRoot = document.querySelector("[data-plans-source]");
+
+  if (planTabs.length && planPanelsRoot) {
+    function formatYen(amount) {
+      return "¥" + amount.toLocaleString("ja-JP");
+    }
+
+    function buildPlanCardHtml(plan) {
+      var priceHtml;
+      if (plan.price === null || plan.price === undefined) {
+        priceHtml = '<span class="plan-card-price-main plan-card-price-tbd">' + (plan.note || "料金未定") + "</span>";
+      } else {
+        priceHtml =
+          '<span class="plan-card-price-main">' + formatYen(plan.price) +
+          '<span class="plan-card-price-unit">/' + plan.priceUnit + "</span></span>" +
+          (plan.unitPrice
+            ? '<span class="plan-card-price-sub">単価 ' + formatYen(plan.unitPrice) + "</span>"
+            : "");
+      }
+
+      return (
+        '<div class="plan-card">' +
+          '<div class="plan-card-head">' +
+            '<span class="plan-card-name">' + plan.name + "</span>" +
+            (plan.frequency ? '<span class="plan-card-freq">' + plan.frequency + "</span>" : "") +
+          "</div>" +
+          '<div class="plan-card-price">' + priceHtml + "</div>" +
+          (plan.note && plan.price !== null && plan.price !== undefined
+            ? '<p class="plan-card-note">' + plan.note + "</p>"
+            : "") +
+        "</div>"
+      );
+    }
+
+    function planAppliesToStore(plan, storeId) {
+      return !plan.stores || plan.stores.indexOf(storeId) !== -1;
+    }
+
+    function buildPanelHtml(categories, storeId) {
+      var html = "";
+      categories.forEach(function (category) {
+        var plans = category.plans.filter(function (plan) {
+          return planAppliesToStore(plan, storeId);
+        });
+        if (!plans.length) return;
+        html +=
+          '<div class="plan-category">' +
+            '<h3 class="plan-category-title">' + category.name + "</h3>" +
+            '<div class="plan-cards">' + plans.map(buildPlanCardHtml).join("") + "</div>" +
+          "</div>";
+      });
+      return html || '<p class="plan-loading">現在この店舗のプランは準備中です。</p>';
+    }
+
+    fetch(planPanelsRoot.getAttribute("data-plans-source"))
+      .then(function (res) {
+        return res.ok ? res.json() : { categories: [] };
+      })
+      .then(function (data) {
+        var categories = data.categories || [];
+        planPanelsRoot.querySelectorAll("[data-plan-panel]").forEach(function (panel) {
+          var storeId = panel.getAttribute("data-plan-panel");
+          panel.innerHTML = buildPanelHtml(categories, storeId);
+        });
+      })
+      .catch(function () {
+        planPanelsRoot.querySelectorAll("[data-plan-panel]").forEach(function (panel) {
+          panel.innerHTML = '<p class="plan-loading">料金プランの読み込みに失敗しました。</p>';
+        });
+      });
+
+    planTabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        var target = tab.getAttribute("data-plan-tab");
+
+        planTabs.forEach(function (t) {
+          var isActive = t === tab;
+          t.classList.toggle("is-active", isActive);
+          t.setAttribute("aria-selected", isActive ? "true" : "false");
+        });
+
+        planPanelsRoot.querySelectorAll("[data-plan-panel]").forEach(function (panel) {
+          panel.hidden = panel.getAttribute("data-plan-panel") !== target;
+        });
+      });
+    });
+  }
 })();

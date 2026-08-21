@@ -813,6 +813,151 @@ a.news-card:hover {
   }
 }
 
+/* ==========================================================================
+   Plan(料金プラン)
+   ========================================================================== */
+.plan-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid rgba(46, 61, 40, 0.15);
+  overflow-x: auto;
+}
+
+.plan-tab {
+  flex-shrink: 0;
+  padding: 10px 4px;
+  margin-right: 20px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  color: var(--color-text-soft);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.plan-tab.is-active {
+  color: var(--color-deep-green);
+  border-bottom-color: var(--color-terracotta);
+}
+
+.plan-loading {
+  color: var(--color-text-soft);
+  font-size: 0.85rem;
+}
+
+.plan-category {
+  margin-bottom: 40px;
+}
+
+.plan-category:last-child {
+  margin-bottom: 0;
+}
+
+.plan-category-title {
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: var(--color-deep-green);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(46, 61, 40, 0.12);
+}
+
+.plan-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.plan-card {
+  background: var(--color-white);
+  border: 1px solid rgba(46, 61, 40, 0.1);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.plan-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.plan-card-name {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+}
+
+.plan-card-freq {
+  font-size: 0.78rem;
+  color: var(--color-text-soft);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.plan-card-price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.plan-card-price-main {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+  color: var(--color-terracotta);
+}
+
+.plan-card-price-main.plan-card-price-tbd {
+  font-size: 0.95rem;
+  color: var(--color-text-soft);
+}
+
+.plan-card-price-unit {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--color-text-soft);
+  margin-left: 2px;
+}
+
+.plan-card-price-sub {
+  font-size: 0.78rem;
+  color: var(--color-text-soft);
+}
+
+.plan-card-note {
+  margin: 8px 0 0;
+  font-size: 0.78rem;
+  color: var(--color-text-soft);
+}
+
+.plan-actions {
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+}
+
+@media (min-width: 640px) {
+  .plan-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .plan-cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 /* Page (別ページ用) 共通ヒーロー簡易版 */
 .page-hero {
   padding: calc(var(--header-height) + 64px) 0 64px;

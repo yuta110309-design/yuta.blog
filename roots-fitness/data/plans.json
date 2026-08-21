@@ -1,0 +1,98 @@
+{
+  "_comment": "料金プランデータ。各プランの stores を指定しなければ、代官山・軽井沢・オンラインの全タブに表示される。店舗ごとに提供プランが異なることが確定したら、該当プランに \"stores\": [\"daikanyama\", \"karuizawa\"] のように対象店舗idの配列を追加する(値は data/stores.json の id と対応させる)。現時点では適用店舗が未確認のため、全タブ共通の内容にしている。",
+  "categories": [
+    {
+      "id": "personal",
+      "name": "パーソナル",
+      "plans": [
+        {
+          "id": "personal-weekly1",
+          "name": "週1回コース",
+          "frequency": "月4回",
+          "price": 52000,
+          "priceUnit": "月",
+          "unitPrice": 13000,
+          "note": ""
+        },
+        {
+          "id": "personal-weekly2",
+          "name": "週2回コース",
+          "frequency": "月8回",
+          "price": 88000,
+          "priceUnit": "月",
+          "unitPrice": 11000,
+          "note": ""
+        },
+        {
+          "id": "personal-unlimited",
+          "name": "通い放題",
+          "frequency": "無制限(休館日以外・週3日目安)",
+          "price": 108000,
+          "priceUnit": "月",
+          "unitPrice": 9000,
+          "note": ""
+        },
+        {
+          "id": "personal-single",
+          "name": "単発(都度)",
+          "frequency": "1回",
+          "price": 13000,
+          "priceUnit": "回",
+          "unitPrice": null,
+          "note": "会員以外・都度利用向け"
+        }
+      ]
+    },
+    {
+      "id": "semi-personal",
+      "name": "セミパーソナル",
+      "plans": [
+        {
+          "id": "semi-unlimited",
+          "name": "通い放題",
+          "frequency": "無制限",
+          "price": 33000,
+          "priceUnit": "月",
+          "unitPrice": null,
+          "note": ""
+        },
+        {
+          "id": "semi-ticket4",
+          "name": "チケット4回",
+          "frequency": "4回(2ヶ月有効)",
+          "price": 28000,
+          "priceUnit": "回券",
+          "unitPrice": 7000,
+          "note": ""
+        },
+        {
+          "id": "semi-ticket16",
+          "name": "チケット16回",
+          "frequency": "16回(4ヶ月有効)",
+          "price": 80000,
+          "priceUnit": "回券",
+          "unitPrice": 5000,
+          "note": ""
+        },
+        {
+          "id": "semi-ticket24",
+          "name": "チケット24回",
+          "frequency": "24回(6ヶ月有効)",
+          "price": 96000,
+          "priceUnit": "回券",
+          "unitPrice": 4000,
+          "note": ""
+        },
+        {
+          "id": "semi-pair",
+          "name": "ペアレッスン",
+          "frequency": "",
+          "price": null,
+          "priceUnit": "",
+          "unitPrice": null,
+          "note": "料金未定。確定後に差し替え"
+        }
+      ]
+    }
+  ]
+}

@@ -209,9 +209,33 @@
   <div class="container">
     <span class="section-eyebrow">Plan</span>
     <h2 class="section-title">料金プラン</h2>
-    <div class="section-placeholder">
-      <strong>次回実装予定:</strong> 代官山 / 軽井沢 / オンライン のタブ切替で、パーソナル・セミパーソナルの料金表を表示。
-      末尾に副CTA(LINE相談)を配置予定。
+
+    <!-- TODO: パーソナル/セミパーソナルの適用店舗は要確認。確認が取れるまでは
+         全タブ(代官山/軽井沢/オンライン)に同じ内容を表示している。
+         店舗ごとに提供プランが異なることが分かった場合は data/plans.json の
+         各プランに "stores": ["daikanyama","karuizawa"] のように対象店舗を
+         追加すれば、コード修正なしで出し分けできる。 -->
+    <div class="plan-tabs" role="tablist" aria-label="店舗を選択">
+      <button type="button" class="plan-tab is-active" role="tab" aria-selected="true" data-plan-tab="daikanyama">代官山</button>
+      <button type="button" class="plan-tab" role="tab" aria-selected="false" data-plan-tab="karuizawa">軽井沢</button>
+      <button type="button" class="plan-tab" role="tab" aria-selected="false" data-plan-tab="online">オンライン</button>
+    </div>
+
+    <div class="plan-panels" data-plans-source="data/plans.json">
+      <div class="plan-panel is-active" data-plan-panel="daikanyama">
+        <p class="plan-loading">読み込み中…</p>
+      </div>
+      <div class="plan-panel" data-plan-panel="karuizawa" hidden>
+        <p class="plan-loading">読み込み中…</p>
+      </div>
+      <div class="plan-panel" data-plan-panel="online" hidden>
+        <p class="plan-loading">読み込み中…</p>
+      </div>
+    </div>
+
+    <div class="plan-actions">
+      <button type="button" class="btn btn-primary" data-open-reservation>体験予約はこちら</button>
+      <a href="#" class="link-line" data-line-cta target="_blank" rel="noopener noreferrer">まずは情報だけ知りたい方はLINEで</a>
     </div>
   </div>
 </section>

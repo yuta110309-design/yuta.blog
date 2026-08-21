@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お知らせ一覧 | Roots Fitness</title>
+<meta name="description" content="Roots Fitnessからのお知らせ一覧です。">
+<link rel="canonical" href="https://roots-fitness.com/news.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"></noscript>
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body data-stores-json="data/stores.json">
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="Roots Fitness ホームへ">
+      <svg class="logo-mark" viewBox="0 0 34 26" aria-hidden="true">
+        <circle cx="11" cy="9" r="8" />
+        <circle cx="23" cy="9" r="8" />
+        <circle class="logo-mark-accent" cx="17" cy="17" r="8" />
+      </svg>
+      <span class="logo-word">ROOTS FITNESS</span>
+    </a>
+    <div class="header-actions">
+      <a href="index.html#plan" class="btn btn-primary header-cta">体験予約はこちら</a>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="nav-panel">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-panel" id="nav-panel" aria-label="グローバルナビゲーション">
+  <ul class="nav-panel-list">
+    <li><a href="index.html#concept">Concept<span class="nav-item-arrow">コンセプト</span></a></li>
+    <li><a href="index.html#news">News<span class="nav-item-arrow">お知らせ</span></a></li>
+    <li><a href="index.html#plan">Plan<span class="nav-item-arrow">料金プラン</span></a></li>
+    <li><a href="index.html#trainer">Trainer<span class="nav-item-arrow">トレーナー</span></a></li>
+    <li><a href="online-training.html">Online Training<span class="nav-item-arrow">オンライン</span></a></li>
+    <li><a href="voice.html">お客様の声<span class="nav-item-arrow">Voice</span></a></li>
+    <li><a href="recruit.html">採用情報<span class="nav-item-arrow">Recruit</span></a></li>
+    <li><a href="index.html#faq">FAQ<span class="nav-item-arrow">よくある質問</span></a></li>
+  </ul>
+  <div class="nav-panel-foot">
+    <a href="#" class="btn btn-secondary" data-line-cta target="_blank" rel="noopener noreferrer">まずは情報だけ知りたい方はLINEで</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="section-eyebrow">News</span>
+    <h1 class="section-title">お知らせ一覧</h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-placeholder">
+      <strong>次回実装予定:</strong> <code>data/news.json</code> を読み込み、全件を一覧カード表示。
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer" id="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <a href="index.html" class="footer-logo">ROOTS FITNESS</a>
+        <p style="max-width: 28em; opacity: .75;">代官山・軽井沢、そしてオンラインで。<br>本質を見つめ、整える習慣を。</p>
+      </div>
+      <div class="footer-nav">
+        <div class="footer-nav-col">
+          <span class="footer-nav-col-title">Menu</span>
+          <ul>
+            <li><a href="index.html#concept">Concept</a></li>
+            <li><a href="index.html#plan">Plan</a></li>
+            <li><a href="index.html#trainer">Trainer</a></li>
+            <li><a href="online-training.html">Online Training</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <span class="footer-nav-col-title">About</span>
+          <ul>
+            <li><a href="voice.html">お客様の声</a></li>
+            <li><a href="recruit.html">採用情報</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
+            <li><a href="index.html#access">Access</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <span class="footer-nav-col-title">Instagram</span>
+          <ul>
+            <li><a href="#" target="_blank" rel="noopener noreferrer">代官山店</a></li>
+            <li><a href="#" target="_blank" rel="noopener noreferrer">軽井沢店</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Roots Fitness</span>
+      <span></span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

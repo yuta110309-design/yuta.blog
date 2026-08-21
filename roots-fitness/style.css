@@ -688,10 +688,12 @@ a.news-card:hover {
 }
 
 .founder-message-lead {
-  font-size: 0.92rem;
+  font-family: var(--font-signature);
+  font-size: 1.15rem;
+  letter-spacing: 0.03em;
   color: var(--color-text);
-  line-height: 1.95;
-  margin: 0 0 24px;
+  line-height: 2.1;
+  margin: 0 0 28px;
 }
 
 .founder-message-list {

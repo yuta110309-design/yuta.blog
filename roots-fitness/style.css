@@ -610,9 +610,10 @@ a.news-card:hover {
 }
 
 .concept-subline {
-  font-size: 0.82rem;
-  color: var(--color-text-soft);
-  letter-spacing: 0.04em;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  color: var(--color-deep-green);
+  letter-spacing: 0.05em;
   margin-bottom: 48px;
 }
 

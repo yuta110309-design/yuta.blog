@@ -477,6 +477,120 @@ body.nav-open {
   color: var(--color-deep-green);
 }
 
+/* ==========================================================================
+   News
+   ========================================================================== */
+.news-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.news-grid-full {
+  gap: 16px;
+}
+
+.news-card {
+  display: block;
+  background: var(--color-white);
+  border: 1px solid rgba(46, 61, 40, 0.1);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: border-color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+a.news-card:hover {
+  border-color: var(--color-terracotta);
+  transform: translateY(-2px);
+}
+
+.news-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+.news-card-date {
+  color: var(--color-text-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.news-card-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--color-bg-alt);
+  color: var(--color-moss);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+}
+
+.news-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.news-card-body {
+  font-size: 0.88rem;
+  color: var(--color-text-soft);
+  line-height: 1.85;
+  margin: 0;
+}
+
+.news-card-arrow {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: var(--color-terracotta);
+}
+
+.news-empty {
+  color: var(--color-text-soft);
+  font-size: 0.9rem;
+}
+
+.news-actions {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+}
+
+.link-line {
+  font-size: 0.85rem;
+  color: var(--color-deep-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(46, 61, 40, 0.35);
+}
+
+.link-line:hover {
+  text-decoration-color: currentColor;
+}
+
+@media (min-width: 640px) {
+  .news-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .news-grid-full {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .news-grid-full {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /* Page (別ページ用) 共通ヒーロー簡易版 */
 .page-hero {
   padding: calc(var(--header-height) + 64px) 0 64px;

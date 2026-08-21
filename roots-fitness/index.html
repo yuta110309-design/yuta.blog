@@ -87,9 +87,12 @@
   <div class="container">
     <span class="section-eyebrow">News</span>
     <h2 class="section-title">お知らせ</h2>
-    <div class="section-placeholder">
-      <strong>次回実装予定:</strong> 最新2〜3件をカード表示 + 「すべて見る」で news.html(一覧)へ。
-      データは <code>data/news.json</code> を編集するだけで反映(コード修正不要)。
+    <div class="news-grid" id="news-list-top" data-news-source="data/news.json" data-news-limit="3">
+      <noscript><p>最新のお知らせは <a href="news.html">お知らせ一覧</a> をご覧ください。</p></noscript>
+    </div>
+    <div class="news-actions">
+      <a href="news.html" class="btn btn-line btn-small">すべて見る</a>
+      <a href="#" class="link-line" data-line-cta target="_blank" rel="noopener noreferrer">まずは情報だけ知りたい方はLINEで</a>
     </div>
   </div>
 </section>

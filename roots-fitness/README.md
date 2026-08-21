@@ -51,9 +51,10 @@ CTAボタンには `data-store-cta="daikanyama"` のように店舗IDを指定�
 - 軽井沢店・オンラインの FitKarte予約URL(`data/stores.json`、`apps-script/onFormSubmit.gs`)
 - 公式LINE URL(`data/stores.json` の `line.url`)
 - Instagram実アカウントURL(代官山・軽井沢)
-- **店舗住所・電話番号・正式な営業時間**(Accessセクションは枠組みを実装済み。`index.html` の `id="access"` 内、各店舗の「確認中」を実数に差し替える。住所が確定したら、head内の構造化データ(LocalBusiness/ExerciseGym)も追加する)
 - **Googleマップ埋め込み**: 現在は店舗名検索による暫定embed(`https://maps.google.com/maps?q=店舗名&output=embed`、APIキー不要の簡易方式)。正式にはGoogleビジネスプロフィールの「地図を共有→地図を埋め込む」から発行される公式embedコードに差し替えるのが望ましい
-- Hero・その他セクションの実写真素材(Locationセクションは代官山・軽井沢ともに外観+店内の実写真を反映済み: `images/daikanyama-exterior.jpg`、`images/daikanyama-interior.jpg`、`images/karuizawa-exterior.jpg`、`images/karuizawa-interior.jpg`。Heroなど他セクションの実写真はまだ未反映。住所・営業時間は「記載してOK」と確認済みなので、情報が揃い次第Accessセクションに反映する)
+- **電話番号が代官山・軽井沢で同一**(090-8443-5501)になっている点は、意図した共通の代表電話か確認したい(店舗ごとに直通番号を分ける予定がないか)
+- **軽井沢店の紹介文**: Googleビジネスプロフィールに「トレーニング・コワーキング・エステ完備の複合型フィットネス施設」という記載があった。単なるジムではなく複合施設という要素をLocationやServiceのコピーに反映すべきか確認したい
+- Hero・その他セクションの実写真素材(Locationセクションは代官山・軽井沢ともに外観+店内の実写真、住所・電話・営業時間も反映済み。Heroなど他セクションの実写真はまだ未反映)
 - セミパーソナルのペアレッスン料金
 - 体験予約フォームのGoogleフォーム本体の作成・`data/reservation-form.json` の設定・Apps Scriptの設置(`docs/reservation-form-setup.md` の手順を実施)
 

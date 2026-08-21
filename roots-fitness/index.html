@@ -16,7 +16,66 @@
 <meta property="og:image" content="https://roots-fitness.com/images/ogp.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
-<!-- TODO: 構造化データ(LocalBusiness/ExerciseGym)は住所・電話番号・営業時間が確定次第、Accessセクション実装時に追加する -->
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "ExerciseGym",
+    "name": "Roots Fitness DAIKANYAMA",
+    "url": "https://roots-fitness.com/#location",
+    "telephone": "+81-90-8443-5501",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "代官山町20-23 フォレストゲート代官山 2階",
+      "addressLocality": "渋谷区",
+      "addressRegion": "東京都",
+      "postalCode": "150-0034",
+      "addressCountry": "JP"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "09:00",
+        "closes": "20:00"
+      }
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "reviewCount": "41"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ExerciseGym",
+    "name": "Roots FITNESS LOUNGE KARUIZAWA",
+    "url": "https://roots-fitness.com/#location",
+    "telephone": "+81-90-8443-5501",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "長倉字大道南2477-1 202",
+      "addressLocality": "北佐久郡軽井沢町",
+      "addressRegion": "長野県",
+      "postalCode": "389-0111",
+      "addressCountry": "JP"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "09:00",
+        "closes": "21:00"
+      }
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "reviewCount": "45"
+    }
+  }
+]
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -434,18 +493,16 @@
     <span class="section-eyebrow">Access</span>
     <h2 class="section-title">アクセス</h2>
 
-    <!-- TODO: 住所・電話番号・正式な営業時間を確認して以下のdd(確認中)を差し替える。
-         地図は店舗名検索による暫定embed(APIキー不要の簡易方式)。確定後は
-         Googleビジネスプロフィールの「地図を埋め込む」から正式なembedコードに
-         差し替えることを推奨。住所が確定次第、構造化データ(LocalBusiness/
-         ExerciseGym、head内にTODO記載済み)もここで実装する。 -->
+    <!-- 地図は店舗名検索による暫定embed(APIキー不要の簡易方式)。将来的には
+         Googleビジネスプロフィールの「地図を埋め込む」から発行される正式な
+         embedコードへの差し替えを推奨。 -->
     <div class="access-grid">
       <div class="access-card">
         <h3 class="access-card-title">代官山</h3>
         <dl class="access-card-info">
-          <div><dt>住所</dt><dd>確認中</dd></div>
-          <div><dt>営業時間</dt><dd>確認中</dd></div>
-          <div><dt>電話番号</dt><dd>確認中</dd></div>
+          <div><dt>住所</dt><dd>〒150-0034<br>東京都渋谷区代官山町20-23<br>フォレストゲート代官山 2階</dd></div>
+          <div><dt>営業時間</dt><dd>9:00〜20:00(年中無休)</dd></div>
+          <div><dt>電話番号</dt><dd><a href="tel:090-8443-5501">090-8443-5501</a></dd></div>
         </dl>
         <div class="access-map">
           <iframe src="https://maps.google.com/maps?q=Roots+Fitness+DAIKANYAMA&output=embed" loading="lazy" title="代官山店の地図"></iframe>
@@ -454,9 +511,9 @@
       <div class="access-card">
         <h3 class="access-card-title">軽井沢</h3>
         <dl class="access-card-info">
-          <div><dt>住所</dt><dd>確認中</dd></div>
-          <div><dt>営業時間</dt><dd>確認中</dd></div>
-          <div><dt>電話番号</dt><dd>確認中</dd></div>
+          <div><dt>住所</dt><dd>〒389-0111<br>長野県北佐久郡軽井沢町長倉<br>字大道南2477-1 202</dd></div>
+          <div><dt>営業時間</dt><dd>9:00〜21:00(水曜定休)</dd></div>
+          <div><dt>電話番号</dt><dd><a href="tel:090-8443-5501">090-8443-5501</a></dd></div>
         </dl>
         <div class="access-map">
           <iframe src="https://maps.google.com/maps?q=Roots+FITNESS+LOUNGE+KARUIZAWA&output=embed" loading="lazy" title="軽井沢店の地図"></iframe>

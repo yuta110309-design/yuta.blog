@@ -93,6 +93,12 @@ button {
   border: 0;
 }
 
+@media (min-width: 640px) {
+  .mobile-break {
+    display: none;
+  }
+}
+
 /* ==========================================================================
    Buttons / CTA
    ========================================================================== */
@@ -597,41 +603,67 @@ a.news-card:hover {
 /* ==========================================================================
    Concept
    ========================================================================== */
-.concept-layout {
+.concept-headline {
+  font-size: clamp(1.9rem, 7vw, 3.2rem);
+  margin-bottom: 14px;
+}
+
+.concept-subline {
+  font-size: 0.82rem;
+  color: var(--color-text-soft);
+  letter-spacing: 0.04em;
+  margin-bottom: 48px;
+}
+
+.concept-pillars {
+  list-style: none;
+  margin: 0 0 48px;
+  padding: 0;
   display: grid;
   grid-template-columns: 1fr;
   gap: 32px;
 }
 
-.concept-quote {
+.concept-pillar-index {
+  display: block;
   font-family: var(--font-heading);
-  font-size: 1.3rem;
-  letter-spacing: 0.06em;
-  line-height: 1.7;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  color: var(--color-terracotta);
+  margin-bottom: 12px;
+}
+
+.concept-pillar-statement {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+  line-height: 1.6;
   color: var(--color-deep-green);
-  margin-top: 8px;
-  padding-left: 20px;
-  border-left: 2px solid var(--color-terracotta);
+  margin: 0 0 10px;
 }
 
-.concept-body {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  font-size: 0.92rem;
+.concept-pillar-body {
+  font-size: 0.85rem;
   color: var(--color-text-soft);
-  max-width: 34em;
-}
-
-.concept-body p {
+  line-height: 1.85;
   margin: 0;
 }
 
-@media (min-width: 860px) {
-  .concept-layout {
-    grid-template-columns: minmax(240px, 380px) 1fr;
-    gap: 64px;
-    align-items: start;
+.concept-closing {
+  font-size: 0.9rem;
+  color: var(--color-text-soft);
+  max-width: 30em;
+}
+
+@media (min-width: 760px) {
+  .concept-pillars {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .concept-pillars li:not(:last-child) {
+    border-right: 1px solid rgba(46, 61, 40, 0.15);
+    padding-right: 28px;
   }
 }
 

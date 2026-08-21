@@ -690,11 +690,18 @@ a.news-card:hover {
 
 .founder-message-lead {
   font-family: var(--font-signature);
-  font-size: 1.15rem;
+  font-size: 1.02rem;
   letter-spacing: 0.03em;
   color: var(--color-text);
-  line-height: 2.1;
+  line-height: 1.9;
   margin: 0 0 28px;
+}
+
+@media (min-width: 640px) {
+  .founder-message-lead {
+    font-size: 1.15rem;
+    line-height: 2.1;
+  }
 }
 
 .founder-message-list {
@@ -713,12 +720,20 @@ a.news-card:hover {
 }
 
 .founder-message-term {
-  display: inline-block;
-  min-width: 7.5em;
+  display: block;
   font-family: var(--font-heading);
   letter-spacing: 0.04em;
   color: var(--color-deep-green);
-  margin-right: 4px;
+  margin-bottom: 2px;
+}
+
+@media (min-width: 640px) {
+  .founder-message-term {
+    display: inline-block;
+    min-width: 7.5em;
+    margin-bottom: 0;
+    margin-right: 4px;
+  }
 }
 
 .founder-message-name {

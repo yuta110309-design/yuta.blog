@@ -491,4 +491,37 @@
       });
     }
   }
+
+  /* ------------------------------------------------------------------ */
+  /* FAQ(アコーディオン)                                                  */
+  /* [data-faq-source] に data/faq.json を読み込み、ネイティブの                */
+  /* <details>/<summary> でアコーディオン表示する。                          */
+  /* 質問の追加・編集は data/faq.json を編集するだけでよい。                   */
+  /* ------------------------------------------------------------------ */
+  var faqList = document.querySelector("[data-faq-source]");
+
+  if (faqList) {
+    fetch(faqList.getAttribute("data-faq-source"))
+      .then(function (res) {
+        return res.ok ? res.json() : { items: [] };
+      })
+      .then(function (data) {
+        var items = data.items || [];
+        faqList.innerHTML = items.length
+          ? items
+              .map(function (item) {
+                return (
+                  '<details class="faq-item">' +
+                    "<summary>" + item.q + "</summary>" +
+                    '<div class="faq-answer">' + item.a + "</div>" +
+                  "</details>"
+                );
+              })
+              .join("")
+          : '<p class="plan-loading">現在準備中です。</p>';
+      })
+      .catch(function () {
+        faqList.innerHTML = '<p class="plan-loading">FAQの読み込みに失敗しました。</p>';
+      });
+  }
 })();

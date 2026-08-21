@@ -1334,6 +1334,57 @@ a.news-card:hover {
   }
 }
 
+/* ==========================================================================
+   FAQ(アコーディオン)
+   ========================================================================== */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(46, 61, 40, 0.15);
+}
+
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 4px;
+  font-family: var(--font-heading);
+  font-size: 0.98rem;
+  letter-spacing: 0.03em;
+  color: var(--color-deep-green);
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: "+";
+  flex-shrink: 0;
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  color: var(--color-terracotta);
+  transition: transform 0.25s var(--ease);
+}
+
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  padding: 0 4px 22px;
+  font-size: 0.86rem;
+  color: var(--color-text-soft);
+  line-height: 1.9;
+}
+
 /* Page (別ページ用) 共通ヒーロー簡易版 */
 .page-hero {
   padding: calc(var(--header-height) + 64px) 0 64px;

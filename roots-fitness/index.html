@@ -409,8 +409,15 @@
   <div class="container">
     <span class="section-eyebrow">FAQ</span>
     <h2 class="section-title">よくある質問</h2>
-    <div class="section-placeholder">
-      <strong>次回実装予定:</strong> アコーディオン形式のFAQ。末尾に副CTA(LINE相談)を配置予定。
+
+    <!-- TODO: 支払い方法・キャンセル/休会ポリシーなど運用ルールに関わるFAQは、
+         方針確認後に data/faq.json へ追加する。 -->
+    <div class="faq-list" data-faq-source="data/faq.json">
+      <p class="plan-loading">読み込み中…</p>
+    </div>
+
+    <div class="plan-actions">
+      <a href="#" class="link-line" data-line-cta target="_blank" rel="noopener noreferrer">まずは情報だけ知りたい方はLINEで</a>
     </div>
   </div>
 </section>

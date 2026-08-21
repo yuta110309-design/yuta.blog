@@ -304,8 +304,52 @@
   <div class="container">
     <span class="section-eyebrow">Results</span>
     <h2 class="section-title">実績</h2>
-    <div class="section-placeholder">
-      <strong>次回実装予定:</strong> お客様の実績・変化のダイジェストをトップページ内に表示(詳細は voice.html)。
+
+    <!-- 共有のバッジ用SVGシンボル定義(1回だけ定義し、下の3つのバッジで使い回す) -->
+    <svg width="0" height="0" style="position: absolute;" aria-hidden="true">
+      <defs>
+        <symbol id="wreath" viewBox="0 0 120 110">
+          <ellipse cx="24" cy="90" rx="6" ry="2.5" transform="rotate(-60 24 90)" />
+          <ellipse cx="19" cy="78" rx="6" ry="2.5" transform="rotate(-40 19 78)" />
+          <ellipse cx="17" cy="64" rx="6" ry="2.5" transform="rotate(-15 17 64)" />
+          <ellipse cx="18" cy="50" rx="6" ry="2.5" transform="rotate(15 18 50)" />
+          <ellipse cx="23" cy="37" rx="6" ry="2.5" transform="rotate(40 23 37)" />
+          <ellipse cx="31" cy="27" rx="6" ry="2.5" transform="rotate(65 31 27)" />
+          <ellipse cx="41" cy="20" rx="6" ry="2.5" transform="rotate(85 41 20)" />
+          <ellipse cx="96" cy="90" rx="6" ry="2.5" transform="rotate(60 96 90)" />
+          <ellipse cx="101" cy="78" rx="6" ry="2.5" transform="rotate(40 101 78)" />
+          <ellipse cx="103" cy="64" rx="6" ry="2.5" transform="rotate(15 103 64)" />
+          <ellipse cx="102" cy="50" rx="6" ry="2.5" transform="rotate(-15 102 50)" />
+          <ellipse cx="97" cy="37" rx="6" ry="2.5" transform="rotate(-40 97 37)" />
+          <ellipse cx="89" cy="27" rx="6" ry="2.5" transform="rotate(-65 89 27)" />
+          <ellipse cx="79" cy="20" rx="6" ry="2.5" transform="rotate(-85 79 20)" />
+        </symbol>
+      </defs>
+    </svg>
+
+    <!-- TODO: 累計セッション実績・Google口コミ件数・評価・集計時点は川島さんに確認して実数へ差し替える -->
+    <div class="results-badges">
+      <div class="results-badge">
+        <svg class="results-badge-wreath" viewBox="0 0 120 110" aria-hidden="true"><use href="#wreath"></use></svg>
+        <span class="results-badge-value">---</span>
+        <span class="results-badge-label">累計セッション実績</span>
+      </div>
+      <div class="results-badge">
+        <svg class="results-badge-wreath" viewBox="0 0 120 110" aria-hidden="true"><use href="#wreath"></use></svg>
+        <span class="results-badge-value">---</span>
+        <span class="results-badge-label">Google口コミ累計</span>
+      </div>
+      <div class="results-badge">
+        <svg class="results-badge-wreath" viewBox="0 0 120 110" aria-hidden="true"><use href="#wreath"></use></svg>
+        <span class="results-badge-value">★---</span>
+        <span class="results-badge-label">Google口コミ評価</span>
+      </div>
+    </div>
+    <p class="results-note">※数値は確定次第公開します</p>
+
+    <div class="results-voice-teaser">
+      <p class="results-voice-text">お客様お一人おひとりの変化については、お客様の声でご紹介しています。</p>
+      <a href="voice.html" class="btn btn-line btn-small">お客様の声を見る</a>
     </div>
   </div>
 </section>

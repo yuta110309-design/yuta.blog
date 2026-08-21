@@ -1097,6 +1097,79 @@ a.news-card:hover {
   }
 }
 
+/* ==========================================================================
+   Results(実績バッジ)
+   ========================================================================== */
+.results-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.results-badge {
+  position: relative;
+  width: 160px;
+  height: 148px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.results-badge-wreath {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: var(--color-moss);
+  opacity: 0.55;
+}
+
+.results-badge-value {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-heading);
+  font-size: 1.7rem;
+  letter-spacing: 0.02em;
+  color: var(--color-deep-green);
+}
+
+.results-badge-label {
+  position: relative;
+  z-index: 1;
+  font-size: 0.76rem;
+  color: var(--color-text-soft);
+  letter-spacing: 0.04em;
+  text-align: center;
+  max-width: 110px;
+  margin-top: 6px;
+}
+
+.results-note {
+  text-align: center;
+  font-size: 0.76rem;
+  color: var(--color-text-soft);
+  margin-bottom: 48px;
+}
+
+.results-voice-teaser {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(46, 61, 40, 0.12);
+}
+
+.results-voice-text {
+  font-size: 0.88rem;
+  color: var(--color-text-soft);
+  margin: 0;
+}
+
 /* Page (別ページ用) 共通ヒーロー簡易版 */
 .page-hero {
   padding: calc(var(--header-height) + 64px) 0 64px;

@@ -1518,6 +1518,23 @@ a.news-card:hover {
   font-size: 0.95rem;
 }
 
+.recruit-store-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.recruit-store-nav .btn-line {
+  color: var(--color-white);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.recruit-store-nav .btn-line:hover {
+  background: var(--color-white);
+  color: var(--color-deep-green);
+}
+
 /* ==========================================================================
    Footer
    ========================================================================== */

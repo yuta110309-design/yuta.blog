@@ -110,6 +110,8 @@ button {
   transition: background-color 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
   border: 1px solid transparent;
   white-space: nowrap;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .btn-primary {
@@ -300,7 +302,8 @@ button {
   align-self: flex-start;
 }
 
-body.nav-open {
+body.nav-open,
+body.reservation-open {
   overflow: hidden;
 }
 
@@ -663,4 +666,166 @@ a.news-card:hover {
   justify-content: space-between;
   gap: 12px;
   opacity: 0.7;
+}
+
+/* ==========================================================================
+   Reservation modal (体験予約フォーム)
+   ========================================================================== */
+.reservation-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 24px 16px;
+}
+
+.reservation-modal.is-open {
+  display: flex;
+}
+
+.reservation-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(27, 33, 21, 0.55);
+}
+
+.reservation-modal-panel {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: auto;
+  background: var(--color-bg);
+  border-radius: 8px;
+  padding: 40px 28px 32px;
+  box-shadow: 0 20px 60px rgba(20, 26, 16, 0.3);
+}
+
+.reservation-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(46, 61, 40, 0.2);
+  background: transparent;
+  color: var(--color-deep-green);
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reservation-modal-lead {
+  font-size: 0.88rem;
+  color: var(--color-text-soft);
+  margin: 4px 0 28px;
+}
+
+#reservation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+.form-field > span,
+.form-field-radio legend {
+  color: var(--color-deep-green);
+  letter-spacing: 0.02em;
+}
+
+.form-field em,
+.form-field-radio em {
+  color: var(--color-terracotta);
+  font-style: normal;
+  margin-left: 2px;
+}
+
+.form-field input,
+.form-field select {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 12px 14px;
+  border: 1px solid rgba(46, 61, 40, 0.25);
+  border-radius: var(--radius);
+  background: var(--color-white);
+  color: var(--color-text);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+  outline: 2px solid var(--color-terracotta);
+  outline-offset: 1px;
+}
+
+.form-field-radio {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-field-radio legend {
+  padding: 0;
+  margin-bottom: 2px;
+}
+
+.form-field-radio-options {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.form-field-radio-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.92rem;
+  color: var(--color-text);
+}
+
+.reservation-form-note {
+  font-size: 0.78rem;
+  color: var(--color-text-soft);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.reservation-form-error {
+  font-size: 0.8rem;
+  color: var(--color-terracotta-dark);
+  margin: 0;
+}
+
+.reservation-submit {
+  margin-top: 4px;
+  width: 100%;
+}
+
+.reservation-modal-success p {
+  font-size: 0.9rem;
+  color: var(--color-text-soft);
+  margin: 4px 0 24px;
+  line-height: 1.9;
+}
+
+@media (min-width: 500px) {
+  .reservation-modal-panel {
+    padding: 48px 40px 40px;
+  }
 }

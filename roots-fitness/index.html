@@ -34,7 +34,7 @@
       <span class="logo-word">ROOTS FITNESS</span>
     </a>
     <div class="header-actions">
-      <a href="index.html#plan" class="btn btn-primary header-cta">体験予約はこちら</a>
+      <button type="button" class="btn btn-primary header-cta" data-open-reservation>体験予約はこちら</button>
       <button type="button" class="nav-toggle" id="nav-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="nav-panel">
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
@@ -71,7 +71,7 @@
       代官山・軽井沢、そしてオンラインで。整える習慣を、あなたの日常に。
     </p>
     <div class="hero-cta">
-      <a href="#plan" class="btn btn-primary">体験予約はこちら</a>
+      <button type="button" class="btn btn-primary" data-open-reservation>体験予約はこちら</button>
       <a href="#" class="btn btn-secondary" data-line-cta target="_blank" rel="noopener noreferrer">LINEで気軽に相談する</a>
     </div>
     <p class="hero-locations">
@@ -251,6 +251,65 @@
     </div>
   </div>
 </footer>
+
+<!-- ==================== RESERVATION MODAL(体験予約フォーム) ==================== -->
+<div class="reservation-modal" id="reservation-modal" aria-hidden="true">
+  <div class="reservation-modal-backdrop" data-close-reservation></div>
+  <div class="reservation-modal-panel" role="dialog" aria-modal="true" aria-labelledby="reservation-modal-title">
+    <button type="button" class="reservation-modal-close" data-close-reservation aria-label="閉じる">×</button>
+
+    <div data-reservation-step="form">
+      <span class="section-eyebrow">Reservation</span>
+      <h2 id="reservation-modal-title" class="section-title">体験予約はこちら</h2>
+      <p class="reservation-modal-lead">下記フォームにご記入ください。ご入力いただいたメールアドレス宛に、選択した店舗のご案内をお送りします。</p>
+      <form id="reservation-form" novalidate>
+        <label class="form-field">
+          <span>お名前<em>*</em></span>
+          <input type="text" name="name" required autocomplete="name">
+        </label>
+        <label class="form-field">
+          <span>ご年齢<em>*</em></span>
+          <input type="number" name="age" min="10" max="99" inputmode="numeric" required>
+        </label>
+        <fieldset class="form-field form-field-radio">
+          <legend>店舗選択<em>*</em></legend>
+          <div class="form-field-radio-options">
+            <label><input type="radio" name="store" value="代官山" required> 代官山</label>
+            <label><input type="radio" name="store" value="軽井沢"> 軽井沢</label>
+          </div>
+        </fieldset>
+        <label class="form-field">
+          <span>メールアドレス<em>*</em></span>
+          <input type="email" name="email" required autocomplete="email">
+        </label>
+        <label class="form-field">
+          <span>お電話番号<em>*</em></span>
+          <input type="tel" name="phone" required autocomplete="tel">
+        </label>
+        <label class="form-field">
+          <span>知ったキッカケ</span>
+          <select name="source">
+            <option value="">選択してください</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Google検索">Google検索</option>
+            <option value="ご紹介">ご紹介</option>
+            <option value="その他">その他</option>
+          </select>
+        </label>
+        <p class="reservation-form-error" role="alert"></p>
+        <p class="reservation-form-note">送信後、選択した店舗の担当より、体験予約(フィットカルテ)のご案内をメールでお送りします。</p>
+        <button type="submit" class="btn btn-primary reservation-submit">送信する</button>
+      </form>
+    </div>
+
+    <div class="reservation-modal-success" data-reservation-step="success" hidden>
+      <span class="section-eyebrow">Reservation</span>
+      <h2 class="section-title">送信しました</h2>
+      <p>ご入力ありがとうございます。まもなく選択した店舗より確認メールをお送りします。届かない場合は公式LINEからもお気軽にご連絡ください。</p>
+      <a href="#" class="btn btn-line" data-line-cta target="_blank" rel="noopener noreferrer">LINEで相談する</a>
+    </div>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>

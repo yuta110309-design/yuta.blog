@@ -10,9 +10,21 @@
 - `recruit.html` — 採用ページ(独立ページ)
 - `news.html` — お知らせ一覧(独立ページ)
 - `style.css` — 全ページ共通スタイル
-- `script.js` — ハンバーガーメニュー制御 / 店舗リンクの動的差し込み
+- `script.js` — ハンバーガーメニュー制御 / 店舗リンクの動的差し込み / News描画 / 体験予約フォーム(モーダル)
 - `data/stores.json` — 店舗ごとのFitKarte予約URL・公式LINE URLの設定ファイル
 - `data/news.json` — お知らせの投稿データ
+- `data/reservation-form.json` — 体験予約フォームの送信先(Googleフォーム)設定
+- `apps-script/onFormSubmit.gs` — 店舗別の自動返信メールを送るGoogle Apps Script
+- `docs/reservation-form-setup.md` — 体験予約フォームの設定手順書
+
+## 体験予約フォーム(「体験予約はこちら」ボタン)
+
+ヘッダー・Heroの主CTA「体験予約はこちら」は、FitKarteへの直接遷移ではなく、**ページ内モーダルの独自フォーム**を開く仕様に変更しました(お名前・ご年齢・店舗選択・メール・電話番号・知ったキッカケを入力)。
+
+- 送信すると、フォームの内容をGoogleフォームへ裏側で送信します(画面遷移なし)
+- Googleフォームに連携した Apps Script(`apps-script/onFormSubmit.gs`)が、選択された店舗(代官山/軽井沢)に応じて**異なる本文の確認メール**(その店舗のFitKarte予約URLを含む)を、入力されたメールアドレス宛に自動送信します
+- FitKarteの予約URLは店舗ごとに異なるため、店舗名をキーにした振り分けを Apps Script 側で行っています
+- 設定手順は `docs/reservation-form-setup.md` を参照してください。設定が完了するまでは `data/reservation-form.json` がプレースホルダーのままのため、実際の送信は行われず(コンソールに警告が出るのみ)、UIの動作確認のみ可能です
 
 ## 店舗リンクの管理方法(コード変更なしで店舗追加)
 
@@ -36,9 +48,10 @@ CTAボタンには `data-store-cta="daikanyama"` のように店舗IDを指定�
 
 ## 未確定・要確認事項(プレースホルダーのまま)
 
-- 軽井沢店・オンラインの FitKarte予約URL(`data/stores.json`)
+- 軽井沢店・オンラインの FitKarte予約URL(`data/stores.json`、`apps-script/onFormSubmit.gs`)
 - 公式LINE URL(`data/stores.json` の `line.url`)
 - Instagram実アカウントURL(代官山・軽井沢)
 - 店舗住所・電話番号・営業時間(Accessセクション実装時に構造化データとあわせて追加)
 - Hero・各セクションの実写真素材
 - セミパーソナルのペアレッスン料金
+- 体験予約フォームのGoogleフォーム本体の作成・`data/reservation-form.json` の設定・Apps Scriptの設置(`docs/reservation-form-setup.md` の手順を実施)

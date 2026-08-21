@@ -147,4 +147,113 @@
         el.innerHTML = '<p class="news-empty">お知らせの読み込みに失敗しました。</p>';
       });
   });
+
+  /* ------------------------------------------------------------------ */
+  /* 体験予約フォーム(モーダル)                                            */
+  /* [data-open-reservation] クリックでモーダルを開き、送信時は             */
+  /* data/reservation-form.json の設定に従ってGoogleフォームへPOSTする。    */
+  /* 設定手順: docs/reservation-form-setup.md                             */
+  /* ------------------------------------------------------------------ */
+  var reservationModal = document.getElementById("reservation-modal");
+
+  if (reservationModal) {
+    var reservationForm = document.getElementById("reservation-form");
+    var reservationFormStep = reservationModal.querySelector('[data-reservation-step="form"]');
+    var reservationSuccessStep = reservationModal.querySelector('[data-reservation-step="success"]');
+    var reservationErrorEl = reservationModal.querySelector(".reservation-form-error");
+    var reservationConfig = null;
+    var reservationConfigUrl =
+      document.body.getAttribute("data-reservation-json") || "data/reservation-form.json";
+
+    fetch(reservationConfigUrl)
+      .then(function (res) {
+        return res.ok ? res.json() : null;
+      })
+      .then(function (config) {
+        reservationConfig = config;
+      })
+      .catch(function () {
+        /* 設定が読み込めない場合はプレースホルダーのまま(送信時に警告) */
+      });
+
+    function openReservationModal() {
+      reservationModal.classList.add("is-open");
+      document.body.classList.add("reservation-open");
+      if (reservationFormStep) reservationFormStep.hidden = false;
+      if (reservationSuccessStep) reservationSuccessStep.hidden = true;
+    }
+
+    function closeReservationModal() {
+      reservationModal.classList.remove("is-open");
+      document.body.classList.remove("reservation-open");
+    }
+
+    document.querySelectorAll("[data-open-reservation]").forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        openReservationModal();
+      });
+    });
+
+    reservationModal.querySelectorAll("[data-close-reservation]").forEach(function (el) {
+      el.addEventListener("click", closeReservationModal);
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && reservationModal.classList.contains("is-open")) {
+        closeReservationModal();
+      }
+    });
+
+    if (reservationForm) {
+      reservationForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        if (reservationErrorEl) reservationErrorEl.textContent = "";
+
+        if (!reservationForm.reportValidity()) {
+          return;
+        }
+
+        if (
+          !reservationConfig ||
+          !reservationConfig.actionUrl ||
+          reservationConfig.actionUrl.indexOf("REPLACE_ME") !== -1
+        ) {
+          console.warn(
+            "data/reservation-form.json が未設定のため、実際の送信は行われていません(docs/reservation-form-setup.md を参照)。"
+          );
+          showReservationSuccess();
+          return;
+        }
+
+        var formData = new FormData();
+        var fields = reservationConfig.fields;
+        new FormData(reservationForm).forEach(function (value, key) {
+          if (fields[key]) {
+            formData.append(fields[key], value);
+          }
+        });
+
+        fetch(reservationConfig.actionUrl, {
+          method: "POST",
+          mode: "no-cors",
+          body: formData
+        })
+          .then(showReservationSuccess)
+          .catch(function () {
+            if (reservationErrorEl) {
+              reservationErrorEl.textContent =
+                "送信に失敗しました。通信環境をご確認のうえ再度お試しください。";
+            }
+          });
+      });
+    }
+
+    function showReservationSuccess() {
+      if (reservationFormStep) reservationFormStep.hidden = true;
+      if (reservationSuccessStep) reservationSuccessStep.hidden = false;
+      if (reservationForm) reservationForm.reset();
+    }
+  }
 })();

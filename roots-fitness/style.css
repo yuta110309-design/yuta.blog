@@ -1400,6 +1400,12 @@ a.news-card:hover {
   gap: 32px;
 }
 
+.access-card {
+  background: var(--color-bg-alt);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+}
+
 .access-card-title {
   font-size: 1.05rem;
   letter-spacing: 0.04em;
@@ -1446,6 +1452,12 @@ a.news-card:hover {
 .access-map-link:hover {
   background: var(--color-deep-green);
   color: var(--color-white);
+}
+
+@media (min-width: 700px) {
+  .access-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (min-width: 760px) {

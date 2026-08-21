@@ -28,7 +28,9 @@
 
 ## 店舗リンクの管理方法(コード変更なしで店舗追加)
 
-CTAボタンには `data-store-cta="daikanyama"` のように店舗IDを指定しておき、`script.js` が起動時に `data/stores.json` を読み込んで `href` を自動設定します。店舗を増やす場合は `data/stores.json` の `stores` 配列にオブジェクトを追加するだけで、HTML/CSS/JSの修正は不要です。
+`data/stores.json` の `line.url`(公式LINE)は `data-line-cta` を持つ全ボタンに自動反映されます(現在サイト全体のLINE関連ボタンで使用中)。
+
+店舗ごとのFitKarte予約URL(`fitkarteUrl`)は、現状は体験予約モーダル経由(Apps Scriptの自動返信メール内)でのみ使用しています。トップの主CTA「体験予約はこちら」は現在すべてモーダルを開く仕様(`data-open-reservation`)に統一されているため、`data-store-cta="daikanyama"` のような店舗別直リンク用の属性(`script.js`に実装済み)は現時点でどのページにも設置していません。将来、店舗ページ等で直接FitKarteへ飛ばすボタンが必要になった場合は、その要素に `data-store-cta="<storeId>"` を付けるだけで動作します。店舗を増やす場合は `data/stores.json` の `stores` 配列にオブジェクトを追加するだけで、HTML/CSS/JSの修正は不要です。
 
 軽井沢店・オンラインの `fitkarteUrl` は現時点でプレースホルダー(`REPLACE_ME_...`)です。URLが確定次第、`data/stores.json` の該当箇所を差し替えてください。
 

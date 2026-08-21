@@ -697,6 +697,14 @@ a.news-card:hover {
   margin: 0 0 28px;
 }
 
+.founder-message-lead p {
+  margin: 0 0 0.9em;
+}
+
+.founder-message-lead p:last-child {
+  margin-bottom: 0;
+}
+
 @media (min-width: 640px) {
   .founder-message-lead {
     font-size: 1.15rem;

@@ -51,7 +51,7 @@ CTAボタンには `data-store-cta="daikanyama"` のように店舗IDを指定�
 - 軽井沢店・オンラインの FitKarte予約URL(`data/stores.json`、`apps-script/onFormSubmit.gs`)
 - 公式LINE URL(`data/stores.json` の `line.url`)
 - Instagram実アカウントURL(代官山・軽井沢)
-- **Googleマップ埋め込み**: 現在は店舗名検索による暫定embed(`https://maps.google.com/maps?q=店舗名&output=embed`、APIキー不要の簡易方式)。正式にはGoogleビジネスプロフィールの「地図を共有→地図を埋め込む」から発行される公式embedコードに差し替えるのが望ましい
+- **Googleマップ**: APIキー不要のiframe埋め込み(`output=embed`)は実機検証したところ表示されなかったため撤回し、「Googleマップで見る」という新規タブで開くリンク形式に変更した(確実に動作する)。インライン地図表示にしたい場合は、Google Cloud で Maps Embed API キーを発行してもらう必要がある(`docs/`に手順を追記可能)
 - **電話番号が代官山・軽井沢で同一**(090-8443-5501)になっている点は、意図した共通の代表電話か確認したい(店舗ごとに直通番号を分ける予定がないか)
 - **軽井沢店の紹介文**: Googleビジネスプロフィールに「トレーニング・コワーキング・エステ完備の複合型フィットネス施設」という記載があった。単なるジムではなく複合施設という要素をLocationやServiceのコピーに反映すべきか確認したい
 - Hero・その他セクションの実写真素材(Locationセクションは代官山・軽井沢ともに外観+店内の実写真、住所・電話・営業時間も反映済み。Heroなど他セクションの実写真はまだ未反映)

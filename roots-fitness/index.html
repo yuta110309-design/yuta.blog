@@ -493,9 +493,10 @@
     <span class="section-eyebrow">Access</span>
     <h2 class="section-title">アクセス</h2>
 
-    <!-- 地図は店舗名検索による暫定embed(APIキー不要の簡易方式)。将来的には
-         Googleビジネスプロフィールの「地図を埋め込む」から発行される正式な
-         embedコードへの差し替えを推奨。 -->
+    <!-- TODO: 地図の埋め込み(iframe)はGoogle側の仕様変更でAPIキーなしでは表示できないことを確認した。
+         現在は確実に機能するリンク形式(新しいタブでGoogleマップを開く)にしている。
+         インライン埋め込みにしたい場合は、Google Cloud で Maps Embed API キーを発行し、
+         https://www.google.com/maps/embed/v1/place?key=APIキー&q=店舗名 の形式に差し替える。 -->
     <div class="access-grid">
       <div class="access-card">
         <h3 class="access-card-title">代官山</h3>
@@ -504,9 +505,7 @@
           <div><dt>営業時間</dt><dd>9:00〜20:00(年中無休)</dd></div>
           <div><dt>電話番号</dt><dd><a href="tel:090-8443-5501">090-8443-5501</a></dd></div>
         </dl>
-        <div class="access-map">
-          <iframe src="https://maps.google.com/maps?q=Roots+Fitness+DAIKANYAMA&output=embed" loading="lazy" title="代官山店の地図"></iframe>
-        </div>
+        <a class="access-map-link" href="https://www.google.com/maps/search/?api=1&query=Roots+Fitness+DAIKANYAMA" target="_blank" rel="noopener noreferrer">Googleマップで見る ↗</a>
       </div>
       <div class="access-card">
         <h3 class="access-card-title">軽井沢</h3>
@@ -515,9 +514,7 @@
           <div><dt>営業時間</dt><dd>9:00〜21:00(水曜定休)</dd></div>
           <div><dt>電話番号</dt><dd><a href="tel:090-8443-5501">090-8443-5501</a></dd></div>
         </dl>
-        <div class="access-map">
-          <iframe src="https://maps.google.com/maps?q=Roots+FITNESS+LOUNGE+KARUIZAWA&output=embed" loading="lazy" title="軽井沢店の地図"></iframe>
-        </div>
+        <a class="access-map-link" href="https://maps.app.goo.gl/e9aqUPDxMSjd637TA" target="_blank" rel="noopener noreferrer">Googleマップで見る ↗</a>
       </div>
     </div>
   </div>

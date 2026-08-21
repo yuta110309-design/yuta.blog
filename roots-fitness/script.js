@@ -408,4 +408,87 @@
       });
     }
   }
+
+  /* ------------------------------------------------------------------ */
+  /* Trainer                                                               */
+  /* [data-trainers-source] に data/trainers.json を読み込みカード表示。      */
+  /* カードをタップすると経歴・実績・想いをモーダル展開する。                    */
+  /* トレーナーの追加・編集は data/trainers.json を編集するだけでよい。        */
+  /* ------------------------------------------------------------------ */
+  var trainerGrid = document.querySelector("[data-trainers-source]");
+
+  if (trainerGrid) {
+    var trainerById = {};
+
+    function buildTrainerCardHtml(trainer) {
+      trainerById[trainer.id] = trainer;
+      return (
+        '<button type="button" class="trainer-card" data-trainer-detail="' + trainer.id + '">' +
+          '<span class="trainer-card-photo">' + (trainer.photoNote || "トレーナー写真") + "</span>" +
+          '<span class="trainer-card-body">' +
+            '<span class="trainer-card-name">' + trainer.name + "</span>" +
+            '<span class="trainer-card-role">' + trainer.role + "</span>" +
+            '<span class="trainer-card-summary">' + trainer.summary + "</span>" +
+            '<span class="trainer-card-link">タップして詳細を見る →</span>' +
+          "</span>" +
+        "</button>"
+      );
+    }
+
+    fetch(trainerGrid.getAttribute("data-trainers-source"))
+      .then(function (res) {
+        return res.ok ? res.json() : { trainers: [] };
+      })
+      .then(function (data) {
+        var trainers = data.trainers || [];
+        trainerGrid.innerHTML = trainers.length
+          ? trainers.map(buildTrainerCardHtml).join("")
+          : '<p class="plan-loading">現在準備中です。</p>';
+      })
+      .catch(function () {
+        trainerGrid.innerHTML = '<p class="plan-loading">トレーナー情報の読み込みに失敗しました。</p>';
+      });
+
+    var trainerDetailModal = document.getElementById("trainer-detail-modal");
+    var trainerDetailBody = document.getElementById("trainer-detail-modal-body");
+
+    if (trainerDetailModal && trainerDetailBody) {
+      function openTrainerDetailModal(trainer) {
+        trainerDetailBody.innerHTML =
+          '<span class="section-eyebrow">Trainer</span>' +
+          '<h2 id="trainer-detail-modal-title" class="section-title">' + trainer.name + "</h2>" +
+          '<p class="trainer-detail-role">' + trainer.role + "</p>" +
+          '<div class="plan-detail-photo">' + (trainer.photoNote || "トレーナー写真") + "</div>" +
+          '<h3 class="plan-detail-subhead">経歴・実績</h3>' +
+          '<p class="plan-detail-recommend">' + trainer.career + "</p>" +
+          '<h3 class="plan-detail-subhead" style="margin-top: 20px;">トレーナーとしての想い</h3>' +
+          '<p class="plan-detail-recommend">' + trainer.message + "</p>";
+
+        trainerDetailModal.classList.add("is-open");
+        document.body.classList.add("reservation-open");
+      }
+
+      function closeTrainerDetailModal() {
+        trainerDetailModal.classList.remove("is-open");
+        document.body.classList.remove("reservation-open");
+      }
+
+      trainerGrid.addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-trainer-detail]");
+        if (!btn) return;
+        var trainer = trainerById[btn.getAttribute("data-trainer-detail")];
+        if (trainer) openTrainerDetailModal(trainer);
+      });
+
+      trainerDetailModal.querySelectorAll("[data-close-trainer-detail]").forEach(function (el) {
+        el.addEventListener("click", closeTrainerDetailModal);
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && trainerDetailModal.classList.contains("is-open")) {
+          closeTrainerDetailModal();
+        }
+      });
+    }
+  }
 })();

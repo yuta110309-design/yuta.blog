@@ -1186,6 +1186,99 @@ a.news-card:hover {
   margin: 0;
 }
 
+/* ==========================================================================
+   Trainer
+   ========================================================================== */
+.trainer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.trainer-card {
+  display: block;
+  width: 100%;
+  background: var(--color-white);
+  border: 1px solid rgba(46, 61, 40, 0.1);
+  border-radius: var(--radius);
+  padding: 0;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.trainer-card:hover {
+  border-color: var(--color-terracotta);
+  transform: translateY(-2px);
+}
+
+.trainer-card-photo {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #33422c 0%, #2e3d28 60%, #232f1e 100%);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+  padding: 12px;
+}
+
+.trainer-card-body {
+  padding: 20px;
+}
+
+.trainer-card-name {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.trainer-card-role {
+  font-size: 0.76rem;
+  color: var(--color-text-soft);
+  margin-bottom: 12px;
+}
+
+.trainer-card-summary {
+  font-size: 0.85rem;
+  color: var(--color-text-soft);
+  line-height: 1.8;
+  margin: 0 0 14px;
+}
+
+.trainer-card-link {
+  font-size: 0.76rem;
+  color: var(--color-terracotta);
+  letter-spacing: 0.02em;
+}
+
+.trainer-detail-role {
+  font-size: 0.85rem;
+  color: var(--color-text-soft);
+  margin: 4px 0 20px;
+}
+
+@media (min-width: 640px) {
+  .trainer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .trainer-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /* Page (別ページ用) 共通ヒーロー簡易版 */
 .page-hero {
   padding: calc(var(--header-height) + 64px) 0 64px;

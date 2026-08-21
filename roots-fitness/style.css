@@ -14,6 +14,7 @@
 
   --font-heading: "Shippori Mincho", serif;
   --font-body: "Zen Kaku Gothic New", sans-serif;
+  --font-signature: "Yuji Syuku", "Shippori Mincho", serif;
 
   --header-height: 72px;
   --container-max: 1120px;
@@ -718,12 +719,27 @@ a.news-card:hover {
 }
 
 .founder-message-name {
-  font-size: 0.85rem;
-  letter-spacing: 0.04em;
-  color: var(--color-deep-green);
   margin: 0;
   padding-top: 20px;
   border-top: 1px solid rgba(46, 61, 40, 0.12);
+}
+
+.founder-message-role {
+  display: block;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text-soft);
+  margin-bottom: 6px;
+}
+
+.founder-message-signature {
+  display: inline-block;
+  font-family: var(--font-signature);
+  font-size: 1.9rem;
+  letter-spacing: 0.06em;
+  color: var(--color-deep-green);
+  transform: rotate(-2deg);
+  transform-origin: left center;
 }
 
 /* ==========================================================================

@@ -1454,6 +1454,53 @@ a.news-card:hover {
   }
 }
 
+/* ==========================================================================
+   Recruit(採用ページ)
+   ========================================================================== */
+.recruit-info {
+  margin: 0 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.recruit-info > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(46, 61, 40, 0.12);
+}
+
+.recruit-info dt {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: var(--color-deep-green);
+}
+
+.recruit-info dd {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--color-text-soft);
+  line-height: 1.9;
+}
+
+@media (min-width: 700px) {
+  .recruit-info > div {
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .recruit-info dt {
+    flex: 0 0 9em;
+  }
+
+  .recruit-info dd {
+    flex: 1;
+  }
+}
+
 /* Page (別ページ用) 共通ヒーロー簡易版 */
 .page-hero {
   padding: calc(var(--header-height) + 64px) 0 64px;

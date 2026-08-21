@@ -1279,6 +1279,67 @@ a.news-card:hover {
   }
 }
 
+/* ==========================================================================
+   Location
+   ========================================================================== */
+.location-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.location-card {
+  background: var(--color-white);
+  border: 1px solid rgba(46, 61, 40, 0.1);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.location-card-photo {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #33422c 0%, #2e3d28 60%, #232f1e 100%);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+  padding: 12px;
+}
+
+.location-card-body {
+  padding: 24px;
+}
+
+.location-card-eyebrow {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--color-terracotta);
+  margin-bottom: 10px;
+}
+
+.location-card-title {
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+  margin-bottom: 10px;
+}
+
+.location-card-text {
+  font-size: 0.86rem;
+  color: var(--color-text-soft);
+  line-height: 1.85;
+  margin: 0;
+}
+
+@media (min-width: 700px) {
+  .location-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* Page (別ページ用) 共通ヒーロー簡易版 */
 .page-hero {
   padding: calc(var(--header-height) + 64px) 0 64px;

@@ -189,19 +189,10 @@ button {
 }
 
 .logo-mark {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   flex-shrink: 0;
-}
-
-.logo-mark circle {
-  fill: none;
-  stroke: var(--color-deep-green);
-  stroke-width: 1.4;
-}
-
-.logo-mark .logo-mark-accent {
-  stroke: var(--color-terracotta);
+  border-radius: 50%;
 }
 
 .logo-word {

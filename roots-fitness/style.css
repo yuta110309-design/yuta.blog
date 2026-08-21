@@ -667,6 +667,65 @@ a.news-card:hover {
   }
 }
 
+/* 代表メッセージ(別枠) */
+.founder-message {
+  margin-top: 56px;
+  padding: 32px 24px;
+  background: var(--color-white);
+  border: 1px solid rgba(46, 61, 40, 0.12);
+  border-radius: 8px;
+  max-width: 42em;
+}
+
+.founder-message-eyebrow {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-terracotta);
+  margin-bottom: 16px;
+}
+
+.founder-message-lead {
+  font-size: 0.92rem;
+  color: var(--color-text);
+  line-height: 1.95;
+  margin: 0 0 24px;
+}
+
+.founder-message-list {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.founder-message-list li {
+  font-size: 0.85rem;
+  color: var(--color-text-soft);
+  line-height: 1.8;
+}
+
+.founder-message-term {
+  display: inline-block;
+  min-width: 7.5em;
+  font-family: var(--font-heading);
+  letter-spacing: 0.04em;
+  color: var(--color-deep-green);
+  margin-right: 4px;
+}
+
+.founder-message-name {
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: var(--color-deep-green);
+  margin: 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(46, 61, 40, 0.12);
+}
+
 /* ==========================================================================
    Why Roots
    ========================================================================== */

@@ -1,5 +1,5 @@
 {
-  "_comment": "料金プランデータ。各プランの stores を指定しなければ、代官山・軽井沢・オンラインの全タブに表示される。店舗ごとに提供プランが異なることが確定したら、該当プランに \"stores\": [\"daikanyama\", \"karuizawa\"] のように対象店舗idの配列を追加する(値は data/stores.json の id と対応させる)。現時点では適用店舗が未確認のため、全タブ共通の内容にしている。",
+  "_comment": "料金プランデータ。代官山・軽井沢は共通の categories(パーソナル/セミパーソナル)を使用する。各プランに stores を指定しなければ両店舗に表示され、店舗ごとに提供プランが異なることが確定したら該当プランに \"stores\": [\"daikanyama\", \"karuizawa\"] のように対象店舗idの配列を追加すればよい(値は data/stores.json の id と対応)。オンラインは代官山/軽井沢と価格体系が異なる(一律月額)ため、online に独立したカテゴリを持たせている。recommendedFor は「どんな人におすすめか」、photoNote はセッション風景写真の差し替え待ちプレースホルダー(プラン詳細モーダルで表示)。",
   "categories": [
     {
       "id": "personal",
@@ -12,7 +12,9 @@
           "price": 52000,
           "priceUnit": "月",
           "unitPrice": 13000,
-          "note": ""
+          "note": "",
+          "recommendedFor": "運動を習慣として始めたい方、まずは無理なくペースをつかみたい方に。",
+          "photoNote": "週1回コースのセッション風景"
         },
         {
           "id": "personal-weekly2",
@@ -21,7 +23,9 @@
           "price": 88000,
           "priceUnit": "月",
           "unitPrice": 11000,
-          "note": ""
+          "note": "",
+          "recommendedFor": "着実に変化を感じたい方、目的に向けて集中して取り組みたい方に。",
+          "photoNote": "週2回コースのセッション風景"
         },
         {
           "id": "personal-unlimited",
@@ -30,7 +34,9 @@
           "price": 108000,
           "priceUnit": "月",
           "unitPrice": 9000,
-          "note": ""
+          "note": "",
+          "recommendedFor": "頻度を気にせず、生活の一部としてトレーニングを続けたい方に。",
+          "photoNote": "通い放題(パーソナル)のセッション風景"
         },
         {
           "id": "personal-single",
@@ -39,7 +45,9 @@
           "price": 13000,
           "priceUnit": "回",
           "unitPrice": null,
-          "note": "会員以外・都度利用向け"
+          "note": "会員以外・都度利用向け",
+          "recommendedFor": "まずは1回試してみたい方、出張や旅行のタイミングで単発利用したい方に。",
+          "photoNote": "単発利用時のセッション風景"
         }
       ]
     },
@@ -54,7 +62,9 @@
           "price": 33000,
           "priceUnit": "月",
           "unitPrice": null,
-          "note": ""
+          "note": "",
+          "recommendedFor": "同じ場所に通う仲間と、無理なく続けていきたい方に。",
+          "photoNote": "セミパーソナル通い放題のセッション風景"
         },
         {
           "id": "semi-ticket4",
@@ -63,7 +73,9 @@
           "price": 28000,
           "priceUnit": "回券",
           "unitPrice": 7000,
-          "note": ""
+          "note": "",
+          "recommendedFor": "まずは少ない回数から試してみたい方に。",
+          "photoNote": "セミパーソナルのセッション風景"
         },
         {
           "id": "semi-ticket16",
@@ -72,7 +84,9 @@
           "price": 80000,
           "priceUnit": "回券",
           "unitPrice": 5000,
-          "note": ""
+          "note": "",
+          "recommendedFor": "数ヶ月かけて、習慣として定着させていきたい方に。",
+          "photoNote": "セミパーソナルのセッション風景"
         },
         {
           "id": "semi-ticket24",
@@ -81,7 +95,9 @@
           "price": 96000,
           "priceUnit": "回券",
           "unitPrice": 4000,
-          "note": ""
+          "note": "",
+          "recommendedFor": "半年単位で、じっくり腰を据えて取り組みたい方に。",
+          "photoNote": "セミパーソナルのセッション風景"
         },
         {
           "id": "semi-pair",
@@ -90,9 +106,32 @@
           "price": null,
           "priceUnit": "",
           "unitPrice": null,
-          "note": "料金未定。確定後に差し替え"
+          "note": "料金未定。確定後に差し替え",
+          "recommendedFor": "ご家族やご友人と、一緒に体を動かしたい方に。",
+          "photoNote": "ペアレッスンのセッション風景(詳細確定後に追加)"
         }
       ]
     }
-  ]
+  ],
+  "online": {
+    "categories": [
+      {
+        "id": "online",
+        "name": "オンライン",
+        "plans": [
+          {
+            "id": "online-monthly",
+            "name": "オンラインプラン",
+            "frequency": "月額",
+            "price": 3000,
+            "priceUnit": "月",
+            "unitPrice": null,
+            "note": "",
+            "recommendedFor": "全国どこからでも、自宅で本質に向き合う習慣をつくりたい方に。",
+            "photoNote": "オンラインセッションの様子"
+          }
+        ]
+      }
+    ]
+  }
 }

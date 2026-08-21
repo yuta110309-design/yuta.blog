@@ -938,6 +938,65 @@ a.news-card:hover {
   color: var(--color-text-soft);
 }
 
+.plan-card-detail-btn {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid rgba(46, 61, 40, 0.2);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--color-deep-green);
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+.plan-card-detail-btn:hover {
+  background: var(--color-deep-green);
+  color: var(--color-white);
+  border-color: var(--color-deep-green);
+}
+
+.plan-detail-price {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--color-terracotta);
+  margin: 4px 0 20px;
+}
+
+.plan-detail-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
+  margin-bottom: 24px;
+  background: linear-gradient(160deg, #33422c 0%, #2e3d28 60%, #232f1e 100%);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius);
+  text-align: center;
+  padding: 12px;
+}
+
+.plan-detail-subhead {
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: var(--color-deep-green);
+  margin-bottom: 8px;
+}
+
+.plan-detail-recommend {
+  font-size: 0.9rem;
+  color: var(--color-text-soft);
+  line-height: 1.85;
+  margin: 0;
+}
+
 .plan-actions {
   margin-top: 40px;
   display: flex;

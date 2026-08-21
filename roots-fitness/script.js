@@ -262,16 +262,23 @@
   /* [data-plans-source] 配下の [data-plan-panel="<storeId>"] それぞれに、  */
   /* data/plans.json のカテゴリ/プランをカード形式で描画する。               */
   /* プランに "stores" 指定がなければ全タブ共通、指定があればそのタブのみ表示。*/
+  /* storeId が "online" の場合は data.online.categories(一律月額プラン)を  */
+  /* 使う。各カードの「詳細を見る」ボタンは、おすすめの人・セッション風景を    */
+  /* plan-detail-modal に表示する。                                        */
   /* ------------------------------------------------------------------ */
   var planTabs = document.querySelectorAll("[data-plan-tab]");
   var planPanelsRoot = document.querySelector("[data-plans-source]");
 
   if (planTabs.length && planPanelsRoot) {
+    var planById = {};
+
     function formatYen(amount) {
       return "¥" + amount.toLocaleString("ja-JP");
     }
 
     function buildPlanCardHtml(plan) {
+      planById[plan.id] = plan;
+
       var priceHtml;
       if (plan.price === null || plan.price === undefined) {
         priceHtml = '<span class="plan-card-price-main plan-card-price-tbd">' + (plan.note || "料金未定") + "</span>";
@@ -294,6 +301,7 @@
           (plan.note && plan.price !== null && plan.price !== undefined
             ? '<p class="plan-card-note">' + plan.note + "</p>"
             : "") +
+          '<button type="button" class="plan-card-detail-btn" data-plan-detail="' + plan.id + '">詳細を見る</button>' +
         "</div>"
       );
     }
@@ -323,9 +331,12 @@
         return res.ok ? res.json() : { categories: [] };
       })
       .then(function (data) {
-        var categories = data.categories || [];
+        var defaultCategories = data.categories || [];
+        var onlineCategories = data.online && data.online.categories ? data.online.categories : defaultCategories;
+
         planPanelsRoot.querySelectorAll("[data-plan-panel]").forEach(function (panel) {
           var storeId = panel.getAttribute("data-plan-panel");
+          var categories = storeId === "online" ? onlineCategories : defaultCategories;
           panel.innerHTML = buildPanelHtml(categories, storeId);
         });
       })
@@ -350,5 +361,51 @@
         });
       });
     });
+
+    /* Plan detail modal(どんな人におすすめか / セッション風景) */
+    var planDetailModal = document.getElementById("plan-detail-modal");
+    var planDetailBody = document.getElementById("plan-detail-modal-body");
+
+    if (planDetailModal && planDetailBody) {
+      function openPlanDetailModal(plan) {
+        var priceLine =
+          plan.price === null || plan.price === undefined
+            ? plan.note || "料金未定"
+            : formatYen(plan.price) + " / " + plan.priceUnit + (plan.unitPrice ? "(単価 " + formatYen(plan.unitPrice) + ")" : "");
+
+        planDetailBody.innerHTML =
+          '<span class="section-eyebrow">Plan Detail</span>' +
+          '<h2 id="plan-detail-modal-title" class="section-title">' + plan.name + "</h2>" +
+          '<p class="plan-detail-price">' + priceLine + "</p>" +
+          '<div class="plan-detail-photo">' + (plan.photoNote || "セッション風景") + "</div>" +
+          '<h3 class="plan-detail-subhead">こんな方におすすめ</h3>' +
+          '<p class="plan-detail-recommend">' + (plan.recommendedFor || "準備中です。") + "</p>";
+
+        planDetailModal.classList.add("is-open");
+        document.body.classList.add("reservation-open");
+      }
+
+      function closePlanDetailModal() {
+        planDetailModal.classList.remove("is-open");
+        document.body.classList.remove("reservation-open");
+      }
+
+      planPanelsRoot.addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-plan-detail]");
+        if (!btn) return;
+        var plan = planById[btn.getAttribute("data-plan-detail")];
+        if (plan) openPlanDetailModal(plan);
+      });
+
+      planDetailModal.querySelectorAll("[data-close-plan-detail]").forEach(function (el) {
+        el.addEventListener("click", closePlanDetailModal);
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && planDetailModal.classList.contains("is-open")) {
+          closePlanDetailModal();
+        }
+      });
+    }
   }
 })();

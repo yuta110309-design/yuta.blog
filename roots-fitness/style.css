@@ -1391,6 +1391,68 @@ a.news-card:hover {
   line-height: 1.9;
 }
 
+/* ==========================================================================
+   Access
+   ========================================================================== */
+.access-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+.access-card-title {
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+}
+
+.access-card-info {
+  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.access-card-info > div {
+  display: flex;
+  gap: 12px;
+  font-size: 0.85rem;
+}
+
+.access-card-info dt {
+  flex-shrink: 0;
+  width: 5.5em;
+  color: var(--color-text-soft);
+}
+
+.access-card-info dd {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.access-map {
+  position: relative;
+  width: 100%;
+  padding-top: 66%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--color-bg-alt);
+}
+
+.access-map iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+@media (min-width: 760px) {
+  .access-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* Page (別ページ用) 共通ヒーロー簡易版 */
 .page-hero {
   padding: calc(var(--header-height) + 64px) 0 64px;

@@ -433,8 +433,35 @@
   <div class="container">
     <span class="section-eyebrow">Access</span>
     <h2 class="section-title">アクセス</h2>
-    <div class="section-placeholder">
-      <strong>次回実装予定:</strong> 各店舗の住所・Googleマップ埋め込み。構造化データ(LocalBusiness)もここで実装。
+
+    <!-- TODO: 住所・電話番号・正式な営業時間を確認して以下のdd(確認中)を差し替える。
+         地図は店舗名検索による暫定embed(APIキー不要の簡易方式)。確定後は
+         Googleビジネスプロフィールの「地図を埋め込む」から正式なembedコードに
+         差し替えることを推奨。住所が確定次第、構造化データ(LocalBusiness/
+         ExerciseGym、head内にTODO記載済み)もここで実装する。 -->
+    <div class="access-grid">
+      <div class="access-card">
+        <h3 class="access-card-title">代官山</h3>
+        <dl class="access-card-info">
+          <div><dt>住所</dt><dd>確認中</dd></div>
+          <div><dt>営業時間</dt><dd>確認中</dd></div>
+          <div><dt>電話番号</dt><dd>確認中</dd></div>
+        </dl>
+        <div class="access-map">
+          <iframe src="https://maps.google.com/maps?q=Roots+Fitness+DAIKANYAMA&output=embed" loading="lazy" title="代官山店の地図"></iframe>
+        </div>
+      </div>
+      <div class="access-card">
+        <h3 class="access-card-title">軽井沢</h3>
+        <dl class="access-card-info">
+          <div><dt>住所</dt><dd>確認中</dd></div>
+          <div><dt>営業時間</dt><dd>確認中</dd></div>
+          <div><dt>電話番号</dt><dd>確認中</dd></div>
+        </dl>
+        <div class="access-map">
+          <iframe src="https://maps.google.com/maps?q=Roots+FITNESS+LOUNGE+KARUIZAWA&output=embed" loading="lazy" title="軽井沢店の地図"></iframe>
+        </div>
+      </div>
     </div>
   </div>
 </section>

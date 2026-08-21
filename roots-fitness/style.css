@@ -1295,10 +1295,16 @@ a.news-card:hover {
   overflow: hidden;
 }
 
+.location-card-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
 .location-card-photo {
   display: block;
   width: 100%;
-  height: 220px;
+  height: 180px;
   object-fit: cover;
 }
 

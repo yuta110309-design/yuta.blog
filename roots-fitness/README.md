@@ -52,7 +52,7 @@ CTAボタンには `data-store-cta="daikanyama"` のように店舗IDを指定�
 - 公式LINE URL(`data/stores.json` の `line.url`)
 - Instagram実アカウントURL(代官山・軽井沢)
 - 店舗住所・電話番号・営業時間(Accessセクション実装時に構造化データとあわせて追加)
-- Hero・その他セクションの実写真素材(Locationセクションの店内写真は反映済み。`images/daikanyama-interior.jpg`、`images/karuizawa-interior.jpg`、`images/karuizawa-exterior.jpg`(軽井沢外観、店内表示部分では未使用)。住所・営業時間は「記載してOK」と確認済みなので、情報が揃い次第Accessセクションに反映する)
+- Hero・その他セクションの実写真素材(Locationセクションは代官山・軽井沢ともに外観+店内の実写真を反映済み: `images/daikanyama-exterior.jpg`、`images/daikanyama-interior.jpg`、`images/karuizawa-exterior.jpg`、`images/karuizawa-interior.jpg`。Heroなど他セクションの実写真はまだ未反映。住所・営業時間は「記載してOK」と確認済みなので、情報が揃い次第Accessセクションに反映する)
 - セミパーソナルのペアレッスン料金
 - 体験予約フォームのGoogleフォーム本体の作成・`data/reservation-form.json` の設定・Apps Scriptの設置(`docs/reservation-form-setup.md` の手順を実施)
 

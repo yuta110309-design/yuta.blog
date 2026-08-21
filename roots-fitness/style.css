@@ -1005,6 +1005,86 @@ a.news-card:hover {
   gap: 20px;
 }
 
+/* 体験までの流れ(Trial flow) */
+.trial-flow {
+  margin-top: 64px;
+  padding-top: 56px;
+  border-top: 1px solid rgba(46, 61, 40, 0.12);
+}
+
+.trial-flow-title {
+  font-size: 1.3rem;
+  margin-bottom: 32px;
+}
+
+.trial-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.trial-step {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.trial-step-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 140px;
+  background: linear-gradient(160deg, #33422c 0%, #2e3d28 60%, #232f1e 100%);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius);
+  text-align: center;
+  padding: 12px;
+}
+
+.trial-step-label {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--color-terracotta);
+  margin-bottom: 8px;
+}
+
+.trial-step-title {
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.trial-step-text {
+  font-size: 0.86rem;
+  color: var(--color-text-soft);
+  line-height: 1.85;
+  margin: 0;
+}
+
+@media (min-width: 700px) {
+  .trial-step {
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .trial-step-photo {
+    flex: 0 0 240px;
+    height: 160px;
+  }
+
+  .trial-step-body {
+    flex: 1;
+  }
+}
+
 @media (min-width: 640px) {
   .plan-cards {
     grid-template-columns: repeat(2, 1fr);

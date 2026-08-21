@@ -605,7 +605,8 @@ a.news-card:hover {
    Concept
    ========================================================================== */
 .concept-headline {
-  font-size: clamp(1.9rem, 7vw, 3.2rem);
+  font-size: clamp(1.9rem, 9vw, 3.2rem);
+  white-space: nowrap;
   margin-bottom: 14px;
 }
 
@@ -637,9 +638,10 @@ a.news-card:hover {
 
 .concept-pillar-statement {
   font-family: var(--font-heading);
-  font-size: 1.2rem;
-  letter-spacing: 0.04em;
+  font-size: clamp(1rem, 5vw, 1.2rem);
+  letter-spacing: 0.02em;
   line-height: 1.6;
+  white-space: nowrap;
   color: var(--color-deep-green);
   margin: 0 0 10px;
 }

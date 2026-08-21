@@ -594,6 +594,90 @@ a.news-card:hover {
   }
 }
 
+/* ==========================================================================
+   Concept
+   ========================================================================== */
+.concept-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+.concept-quote {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  letter-spacing: 0.06em;
+  line-height: 1.7;
+  color: var(--color-deep-green);
+  margin-top: 8px;
+  padding-left: 20px;
+  border-left: 2px solid var(--color-terracotta);
+}
+
+.concept-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 0.92rem;
+  color: var(--color-text-soft);
+  max-width: 34em;
+}
+
+.concept-body p {
+  margin: 0;
+}
+
+@media (min-width: 860px) {
+  .concept-layout {
+    grid-template-columns: minmax(240px, 380px) 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+}
+
+/* ==========================================================================
+   Why Roots
+   ========================================================================== */
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.why-card {
+  background: var(--color-bg-alt);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+}
+
+.why-card-index {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  color: var(--color-terracotta);
+  margin-bottom: 14px;
+}
+
+.why-card-title {
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+.why-card-body {
+  font-size: 0.86rem;
+  color: var(--color-text-soft);
+  line-height: 1.85;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* Page (別ページ用) 共通ヒーロー簡易版 */
 .page-hero {
   padding: calc(var(--header-height) + 64px) 0 64px;

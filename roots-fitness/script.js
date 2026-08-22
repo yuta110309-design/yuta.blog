@@ -1,6 +1,10 @@
 (function () {
   "use strict";
 
+  /* 写真未確定のプレースホルダーで使う共通アイコン(index.html側の #photo-pending シンボルを参照)。 */
+  var PHOTO_PLACEHOLDER_ICON =
+    '<svg class="photo-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#photo-pending"></use></svg>';
+
   /* ------------------------------------------------------------------ */
   /* Hamburger nav toggle                                                */
   /* ------------------------------------------------------------------ */
@@ -377,7 +381,7 @@
           '<span class="section-eyebrow">Plan Detail</span>' +
           '<h2 id="plan-detail-modal-title" class="section-title">' + plan.name + "</h2>" +
           '<p class="plan-detail-price">' + priceLine + "</p>" +
-          '<div class="plan-detail-photo">' + (plan.photoNote || "セッション風景") + "</div>" +
+          '<div class="plan-detail-photo">' + PHOTO_PLACEHOLDER_ICON + (plan.photoNote || "セッション風景") + "</div>" +
           '<h3 class="plan-detail-subhead">こんな方におすすめ</h3>' +
           '<p class="plan-detail-recommend">' + (plan.recommendedFor || "準備中です。") + "</p>";
 
@@ -424,7 +428,7 @@
       trainerById[trainer.id] = trainer;
       return (
         '<button type="button" class="trainer-card" data-trainer-detail="' + trainer.id + '">' +
-          '<span class="trainer-card-photo">' + (trainer.photoNote || "トレーナー写真") + "</span>" +
+          '<span class="trainer-card-photo">' + PHOTO_PLACEHOLDER_ICON + (trainer.photoNote || "トレーナー写真") + "</span>" +
           '<span class="trainer-card-body">' +
             '<span class="trainer-card-name">' + trainer.name + "</span>" +
             '<span class="trainer-card-role">' + trainer.role + "</span>" +
@@ -458,7 +462,7 @@
           '<span class="section-eyebrow">Trainer</span>' +
           '<h2 id="trainer-detail-modal-title" class="section-title">' + trainer.name + "</h2>" +
           '<p class="trainer-detail-role">' + trainer.role + "</p>" +
-          '<div class="plan-detail-photo">' + (trainer.photoNote || "トレーナー写真") + "</div>" +
+          '<div class="plan-detail-photo">' + PHOTO_PLACEHOLDER_ICON + (trainer.photoNote || "トレーナー写真") + "</div>" +
           '<h3 class="plan-detail-subhead">経歴・実績</h3>' +
           '<p class="plan-detail-recommend">' + trainer.career + "</p>" +
           '<h3 class="plan-detail-subhead" style="margin-top: 20px;">トレーナーとしての想い</h3>' +

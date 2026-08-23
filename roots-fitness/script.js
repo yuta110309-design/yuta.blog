@@ -132,6 +132,16 @@
     return dateStr.replace(/-/g, ".");
   }
 
+  /* 予約投稿(小出し配信)用: 閲覧者の端末のローカル日付を YYYY-MM-DD で返す。
+     data/news.json に未来の日付でitemを仕込んでおくと、その日を迎えるまで
+     非表示になる(コード修正・再デプロイ不要)。 */
+  function todayIsoDate() {
+    var d = new Date();
+    var mm = String(d.getMonth() + 1).padStart(2, "0");
+    var dd = String(d.getDate()).padStart(2, "0");
+    return d.getFullYear() + "-" + mm + "-" + dd;
+  }
+
   function buildNewsCardHtml(item) {
     var titleHtml =
       '<p class="news-card-title">' + item.title + "</p>" +
@@ -173,9 +183,15 @@
         return res.ok ? res.json() : { items: [] };
       })
       .then(function (data) {
-        var items = (data.items || []).slice().sort(function (a, b) {
-          return a.date < b.date ? 1 : -1;
-        });
+        var today = todayIsoDate();
+        var items = (data.items || [])
+          .filter(function (item) {
+            return item.date <= today;
+          })
+          .slice()
+          .sort(function (a, b) {
+            return a.date < b.date ? 1 : -1;
+          });
         if (limit) {
           items = items.slice(0, limit);
         }

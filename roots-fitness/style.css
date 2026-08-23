@@ -2090,12 +2090,12 @@ a.news-card:hover {
 
 .cta-strip-text {
   font-family: var(--font-heading);
-  font-size: clamp(0.62rem, 3.2vw, 1.02rem);
+  font-size: clamp(0.88rem, 4.5vw, 1rem);
   letter-spacing: 0.04em;
-  line-height: 1.7;
+  line-height: 1.6;
   max-width: 26em;
   margin: 0;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 @media (min-width: 640px) {
@@ -2107,7 +2107,6 @@ a.news-card:hover {
 
   .cta-strip-text {
     font-size: 1.1rem;
-    white-space: normal;
   }
 }
 

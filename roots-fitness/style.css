@@ -2444,6 +2444,7 @@ a.news-card:hover {
   color: var(--color-text-soft);
   line-height: 1.85;
   margin: 0 0 12px;
+  white-space: pre-line;
 }
 
 .review-card-photo {

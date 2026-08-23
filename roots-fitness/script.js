@@ -365,6 +365,27 @@
       return !plan.stores || plan.stores.indexOf(storeId) !== -1;
     }
 
+    function buildScheduleRowHtml(label, times) {
+      return (
+        '<div class="plan-schedule-row">' +
+          '<span class="plan-schedule-label">' + label + "</span>" +
+          '<span class="plan-schedule-times">' + times.join(" / ") + "</span>" +
+        "</div>"
+      );
+    }
+
+    function buildScheduleHtml(schedule) {
+      if (!schedule) return "";
+      return (
+        '<div class="plan-schedule">' +
+          '<h4 class="plan-schedule-title">時間割</h4>' +
+          Object.keys(schedule).map(function (label) {
+            return buildScheduleRowHtml(label, schedule[label]);
+          }).join("") +
+        "</div>"
+      );
+    }
+
     function buildPanelHtml(categories, storeId) {
       var html = "";
       categories.forEach(function (category) {
@@ -375,6 +396,7 @@
         html +=
           '<div class="plan-category">' +
             '<h3 class="plan-category-title">' + category.name + "</h3>" +
+            buildScheduleHtml(category.schedule) +
             '<div class="plan-cards">' + plans.map(buildPlanCardHtml).join("") + "</div>" +
           "</div>";
       });

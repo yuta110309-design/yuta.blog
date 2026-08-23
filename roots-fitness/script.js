@@ -74,6 +74,8 @@
   /* data-instagram-cta="<storeId>" を持つ要素には店舗別Instagram URLを、    */
   /* data-line-cta を持つ要素には公式LINEのURLを自動設定する。               */
   /* ------------------------------------------------------------------ */
+  var storeMapCache = {};
+
   function applyStoreLinks(config) {
     if (!config || !config.stores) return;
 
@@ -81,6 +83,7 @@
     config.stores.forEach(function (store) {
       storeMap[store.id] = store;
     });
+    storeMapCache = storeMap;
 
     document.querySelectorAll("[data-store-cta]").forEach(function (el) {
       var storeId = el.getAttribute("data-store-cta");
@@ -419,11 +422,17 @@
     var planDetailBody = document.getElementById("plan-detail-modal-body");
 
     if (planDetailModal && planDetailBody) {
-      function openPlanDetailModal(plan, triggerEl) {
+      function openPlanDetailModal(plan, triggerEl, storeId) {
         var priceLine =
           plan.price === null || plan.price === undefined
             ? plan.note || "料金未定"
             : formatYen(plan.price) + " / " + plan.priceUnit + (plan.unitPrice ? "(単価 " + formatYen(plan.unitPrice) + ")" : "");
+
+        var store = storeMapCache[storeId];
+        var fitkarteLinkHtml =
+          store && store.fitkarteUrl
+            ? '<a href="' + store.fitkarteUrl + '" class="btn btn-line btn-small plan-detail-fitkarte-link" target="_blank" rel="noopener noreferrer">フィットカルテで予約する</a>'
+            : "";
 
         planDetailBody.innerHTML =
           '<span class="section-eyebrow">Plan Detail</span>' +
@@ -431,7 +440,8 @@
           '<p class="plan-detail-price">' + priceLine + "</p>" +
           '<div class="plan-detail-photo">' + PHOTO_PLACEHOLDER_ICON + (plan.photoNote || "セッション風景") + "</div>" +
           '<h3 class="plan-detail-subhead">こんな方におすすめ</h3>' +
-          '<p class="plan-detail-recommend">' + (plan.recommendedFor || "準備中です。") + "</p>";
+          '<p class="plan-detail-recommend">' + (plan.recommendedFor || "準備中です。") + "</p>" +
+          fitkarteLinkHtml;
 
         openModal(planDetailModal, triggerEl);
       }
@@ -444,7 +454,9 @@
         var btn = e.target.closest("[data-plan-detail]");
         if (!btn) return;
         var plan = planById[btn.getAttribute("data-plan-detail")];
-        if (plan) openPlanDetailModal(plan, btn);
+        var panel = btn.closest("[data-plan-panel]");
+        var storeId = panel ? panel.getAttribute("data-plan-panel") : null;
+        if (plan) openPlanDetailModal(plan, btn, storeId);
       });
 
       planDetailModal.querySelectorAll("[data-close-plan-detail]").forEach(function (el) {

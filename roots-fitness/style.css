@@ -1003,6 +1003,54 @@ a.news-card:hover {
   margin-bottom: 40px;
 }
 
+.service-facilities {
+  margin-bottom: 40px;
+}
+
+.service-facilities-title {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: var(--color-deep-green);
+  margin-bottom: 16px;
+}
+
+.service-facilities-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.service-facility {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: calc(33.333% - 11px);
+  text-align: center;
+}
+
+.service-facility-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--color-white);
+  color: var(--color-terracotta);
+}
+
+.service-facility-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.service-facility-label {
+  font-size: 0.74rem;
+  color: var(--color-text-soft);
+  line-height: 1.5;
+}
+
 /* Service セクションは section-alt(背景bg-alt)のため、
    .why-card をそのまま使うと背景と同化してしまう。カードだけ白に上書きする。 */
 .service-perks .why-card {

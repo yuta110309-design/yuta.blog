@@ -541,31 +541,40 @@
   }
 
   /* ------------------------------------------------------------------ */
-  /* FAQ(アコーディオン)                                                  */
-  /* [data-faq-source] に data/faq.json を読み込み、ネイティブの                */
-  /* <details>/<summary> でアコーディオン表示する。                          */
-  /* 質問の追加・編集は data/faq.json を編集するだけでよい。                   */
+  /* FAQ(カテゴリ見出し + アコーディオン)                                   */
+  /* [data-faq-source] に data/faq.json を読み込み、カテゴリ(categories)     */
+  /* ごとに見出しを出したうえで、ネイティブの<details>/<summary>で             */
+  /* アコーディオン表示する。質問の追加・編集はdata/faq.jsonを編集するだけでよい。*/
   /* ------------------------------------------------------------------ */
   var faqList = document.querySelector("[data-faq-source]");
+
+  function buildFaqItemHtml(item) {
+    return (
+      '<details class="faq-item">' +
+        "<summary>" + item.q + "</summary>" +
+        '<div class="faq-answer">' + item.a + "</div>" +
+      "</details>"
+    );
+  }
+
+  function buildFaqCategoryHtml(category) {
+    return (
+      '<div class="faq-category">' +
+        '<h3 class="faq-category-title">' + category.name + "</h3>" +
+        (category.items || []).map(buildFaqItemHtml).join("") +
+      "</div>"
+    );
+  }
 
   if (faqList) {
     fetch(faqList.getAttribute("data-faq-source"))
       .then(function (res) {
-        return res.ok ? res.json() : { items: [] };
+        return res.ok ? res.json() : { categories: [] };
       })
       .then(function (data) {
-        var items = data.items || [];
-        faqList.innerHTML = items.length
-          ? items
-              .map(function (item) {
-                return (
-                  '<details class="faq-item">' +
-                    "<summary>" + item.q + "</summary>" +
-                    '<div class="faq-answer">' + item.a + "</div>" +
-                  "</details>"
-                );
-              })
-              .join("")
+        var categories = data.categories || [];
+        faqList.innerHTML = categories.length
+          ? categories.map(buildFaqCategoryHtml).join("")
           : '<p class="plan-loading">現在準備中です。</p>';
       })
       .catch(function () {

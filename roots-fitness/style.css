@@ -1456,6 +1456,23 @@ a.news-card:hover {
   margin-bottom: 40px;
 }
 
+.faq-category {
+  margin-bottom: 32px;
+}
+
+.faq-category:last-child {
+  margin-bottom: 0;
+}
+
+.faq-category-title {
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: var(--color-deep-green);
+  margin-bottom: 4px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(46, 61, 40, 0.12);
+}
+
 .faq-item {
   border-bottom: 1px solid rgba(46, 61, 40, 0.15);
 }

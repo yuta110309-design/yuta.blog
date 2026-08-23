@@ -67,37 +67,15 @@
           "photoNote": "セミパーソナル通い放題のセッション風景"
         },
         {
-          "id": "semi-ticket4",
-          "name": "チケット4回",
-          "frequency": "4回(2ヶ月有効)",
-          "price": 28000,
-          "priceUnit": "回券",
-          "unitPrice": 7000,
-          "note": "",
-          "recommendedFor": "まずは少ない回数から試してみたい方に。",
-          "photoNote": "セミパーソナルのセッション風景"
-        },
-        {
-          "id": "semi-ticket16",
-          "name": "チケット16回",
-          "frequency": "16回(4ヶ月有効)",
-          "price": 80000,
-          "priceUnit": "回券",
-          "unitPrice": 5000,
-          "note": "",
-          "recommendedFor": "数ヶ月かけて、習慣として定着させていきたい方に。",
-          "photoNote": "セミパーソナルのセッション風景"
-        },
-        {
-          "id": "semi-ticket24",
-          "name": "チケット24回",
-          "frequency": "24回(6ヶ月有効)",
-          "price": 96000,
-          "priceUnit": "回券",
-          "unitPrice": 4000,
-          "note": "",
-          "recommendedFor": "半年単位で、じっくり腰を据えて取り組みたい方に。",
-          "photoNote": "セミパーソナルのセッション風景"
+          "id": "semi-single",
+          "name": "単発(都度)",
+          "frequency": "1回",
+          "price": null,
+          "priceUnit": "回",
+          "unitPrice": null,
+          "note": "料金未定。チケット制終了(2026年8月)に伴い新設。確定後に差し替え",
+          "recommendedFor": "まずは1回試してみたい方、出張や旅行のタイミングで単発利用したい方に。",
+          "photoNote": "単発利用時のセッション風景"
         },
         {
           "id": "semi-pair",

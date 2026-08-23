@@ -491,17 +491,33 @@ body.reservation-open {
    News
    ========================================================================== */
 .news-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 8px;
+  scrollbar-width: none;
 }
 
+.news-grid::-webkit-scrollbar {
+  display: none;
+}
+
+/* お知らせ一覧ページ(news.html)では横スライドではなく、通常のグリッド一覧に戻す */
 .news-grid-full {
+  display: grid;
+  grid-template-columns: 1fr;
+  overflow-x: visible;
+  scroll-snap-type: none;
+  padding-bottom: 0;
   gap: 16px;
 }
 
 .news-card {
   display: block;
+  flex: 0 0 min(78vw, 320px);
+  scroll-snap-align: start;
   background: var(--color-white);
   border: 1px solid rgba(46, 61, 40, 0.1);
   border-radius: var(--radius);
@@ -586,10 +602,6 @@ a.news-card:hover {
 }
 
 @media (min-width: 640px) {
-  .news-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
   .news-grid-full {
     grid-template-columns: repeat(2, 1fr);
   }

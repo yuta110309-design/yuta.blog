@@ -785,6 +785,22 @@ a.news-card:hover {
   padding: 28px 24px;
 }
 
+.why-card-with-photo {
+  padding: 0;
+  overflow: hidden;
+}
+
+.why-card-photo {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.why-card-with-photo .why-card-content {
+  padding: 28px 24px;
+}
+
 .why-card-index {
   display: block;
   font-family: var(--font-heading);

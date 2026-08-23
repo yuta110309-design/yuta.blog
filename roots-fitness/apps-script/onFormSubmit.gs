@@ -22,8 +22,7 @@ var STORE_REPLY_TEMPLATES = {
   },
   "軽井沢": {
     subject: "【Roots Fitness 軽井沢店】体験予約のご案内",
-    // TODO: 軽井沢店のFitKarte予約URLが確定次第、下記を差し替える
-    fitkarteUrl: "https://roots-fitness.fit-karte.com/mypage?s=REPLACE_ME_KARUIZAWA&openExternalBrowser=1",
+    fitkarteUrl: "https://roots-fitness.fit-karte.com/mypage?s=roots-fitness-karuizawa&openExternalBrowser=1",
     bodyIntro: "軽井沢店へのお問い合わせ、ありがとうございます。"
   }
 };

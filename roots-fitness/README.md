@@ -32,9 +32,10 @@
 
 店舗ごとのInstagram URL(`instagramUrl`)は `data-instagram-cta="<storeId>"` を持つ要素に自動反映されます(全ページのフッター「代官山店」「軽井沢店」リンクで使用中)。代官山・軽井沢とも実アカウントURLを反映済みです。
 
-店舗ごとのFitKarte予約URL(`fitkarteUrl`)は、現状は体験予約モーダル経由(Apps Scriptの自動返信メール内)でのみ使用しています。トップの主CTA「体験予約はこちら」は現在すべてモーダルを開く仕様(`data-open-reservation`)に統一されているため、`data-store-cta="daikanyama"` のような店舗別直リンク用の属性(`script.js`に実装済み)は現時点でどのページにも設置していません。将来、店舗ページ等で直接FitKarteへ飛ばすボタンが必要になった場合は、その要素に `data-store-cta="<storeId>"` を付けるだけで動作します。店舗を増やす場合は `data/stores.json` の `stores` 配列にオブジェクトを追加するだけで、HTML/CSS/JSの修正は不要です。
+店舗ごとのFitKarte予約URL(`fitkarteUrl`)は、体験予約モーダル経由(Apps Scriptの自動返信メール内)に加えて、料金プランの「プラン詳細」モーダルの「フィットカルテで予約する」リンク(選択中の店舗タブに連動)でも使用しています。トップの主CTA「体験予約はこちら」は現在すべてモーダルを開く仕様(`data-open-reservation`)に統一されているため、`data-store-cta="daikanyama"` のような店舗別直リンク用の属性(`script.js`に実装済み)は現時点でどのページの静的HTMLにも設置していません。将来、店舗ページ等で直接FitKarteへ飛ばすボタンが必要になった場合は、その要素に `data-store-cta="<storeId>"` を付けるだけで動作します。店舗を増やす場合は `data/stores.json` の `stores` 配列にオブジェクトを追加するだけで、HTML/CSS/JSの修正は不要です。
 
-軽井沢店・オンラインの `fitkarteUrl` は現時点でプレースホルダー(`REPLACE_ME_...`)です。URLが確定次第、`data/stores.json` の該当箇所を差し替えてください。
+- **代官山・軽井沢の `fitkarteUrl` は実URLを反映済み**(軽井沢は `roots-fitness-karuizawa`)。`apps-script/onFormSubmit.gs` の `STORE_REPLY_TEMPLATES["軽井沢"].fitkarteUrl` も同時に差し替え済み
+- **オンラインの `fitkarteUrl` はまだプレースホルダー**(`REPLACE_ME_ONLINE`)です。URLが確定次第、`data/stores.json` の該当箇所を差し替えてください
 
 ## News(お知らせ)の運用方法(提案)
 

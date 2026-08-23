@@ -7,6 +7,7 @@
       "shortName": "代官山",
       "area": "東京",
       "fitkarteUrl": "https://roots-fitness.fit-karte.com/mypage?s=roots-fitness-daikanyama&openExternalBrowser=1",
+      "instagramUrl": "https://www.instagram.com/roots_fitness_daikanyama",
       "status": "active"
     },
     {
@@ -15,6 +16,7 @@
       "shortName": "軽井沢",
       "area": "長野",
       "fitkarteUrl": "https://roots-fitness.fit-karte.com/mypage?s=REPLACE_ME_KARUIZAWA&openExternalBrowser=1",
+      "instagramUrl": "https://www.instagram.com/roots__fitness",
       "status": "placeholder",
       "_note": "軽井沢店のFitKarte URLは未確定。開業/契約確定後に fitkarteUrl を差し替える。"
     },

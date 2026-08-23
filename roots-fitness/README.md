@@ -30,6 +30,8 @@
 
 `data/stores.json` の `line.url`(公式LINE)は `data-line-cta` を持つ全ボタンに自動反映されます(現在サイト全体のLINE関連ボタンで使用中)。
 
+店舗ごとのInstagram URL(`instagramUrl`)は `data-instagram-cta="<storeId>"` を持つ要素に自動反映されます(全ページのフッター「代官山店」「軽井沢店」リンクで使用中)。代官山・軽井沢とも実アカウントURLを反映済みです。
+
 店舗ごとのFitKarte予約URL(`fitkarteUrl`)は、現状は体験予約モーダル経由(Apps Scriptの自動返信メール内)でのみ使用しています。トップの主CTA「体験予約はこちら」は現在すべてモーダルを開く仕様(`data-open-reservation`)に統一されているため、`data-store-cta="daikanyama"` のような店舗別直リンク用の属性(`script.js`に実装済み)は現時点でどのページにも設置していません。将来、店舗ページ等で直接FitKarteへ飛ばすボタンが必要になった場合は、その要素に `data-store-cta="<storeId>"` を付けるだけで動作します。店舗を増やす場合は `data/stores.json` の `stores` 配列にオブジェクトを追加するだけで、HTML/CSS/JSの修正は不要です。
 
 軽井沢店・オンラインの `fitkarteUrl` は現時点でプレースホルダー(`REPLACE_ME_...`)です。URLが確定次第、`data/stores.json` の該当箇所を差し替えてください。
@@ -51,7 +53,6 @@
 ## 未確定・要確認事項(プレースホルダーのまま)
 
 - 軽井沢店・オンラインの FitKarte予約URL(`data/stores.json`、`apps-script/onFormSubmit.gs`)
-- Instagram実アカウントURL(代官山・軽井沢)
 - **Googleマップ**: APIキー不要のiframe埋め込み(`output=embed`)は実機検証したところ表示されなかったため撤回し、「Googleマップで見る」という新規タブで開くリンク形式に変更した(確実に動作する)。インライン地図表示にしたい場合は、Google Cloud で Maps Embed API キーを発行してもらう必要がある(`docs/`に手順を追記可能)
 - **電話番号が代官山・軽井沢で同一**(090-8443-5501)になっている点は、意図した共通の代表電話か確認したい(店舗ごとに直通番号を分ける予定がないか)
 - **軽井沢店の紹介文**: Googleビジネスプロフィールに「トレーニング・コワーキング・エステ完備の複合型フィットネス施設」という記載があった。単なるジムではなく複合施設という要素をLocationやServiceのコピーに反映すべきか確認したい

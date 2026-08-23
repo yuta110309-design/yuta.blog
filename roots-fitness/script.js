@@ -45,9 +45,10 @@
   }
 
   /* ------------------------------------------------------------------ */
-  /* 店舗設定(FitKarte予約URL / LINE URL)の読み込み                       */
+  /* 店舗設定(FitKarte予約URL / Instagram URL / LINE URL)の読み込み          */
   /* data/stores.json を編集するだけで店舗の追加・URL差し替えが可能。        */
   /* data-store-cta="<storeId>" を持つ要素の href を自動設定する。          */
+  /* data-instagram-cta="<storeId>" を持つ要素には店舗別Instagram URLを、    */
   /* data-line-cta を持つ要素には公式LINEのURLを自動設定する。               */
   /* ------------------------------------------------------------------ */
   function applyStoreLinks(config) {
@@ -63,6 +64,16 @@
       var store = storeMap[storeId];
       if (store && store.fitkarteUrl) {
         el.setAttribute("href", store.fitkarteUrl);
+        el.setAttribute("target", "_blank");
+        el.setAttribute("rel", "noopener noreferrer");
+      }
+    });
+
+    document.querySelectorAll("[data-instagram-cta]").forEach(function (el) {
+      var storeId = el.getAttribute("data-instagram-cta");
+      var store = storeMap[storeId];
+      if (store && store.instagramUrl) {
+        el.setAttribute("href", store.instagramUrl);
         el.setAttribute("target", "_blank");
         el.setAttribute("rel", "noopener noreferrer");
       }

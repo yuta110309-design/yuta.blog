@@ -1232,20 +1232,13 @@ a.news-card:hover {
 }
 
 .roots-mark-ring-1 {
-  stroke-width: 1.4;
-  opacity: 0.28;
-  stroke-dasharray: 1 4;
+  stroke-width: 1.5;
+  opacity: 0.4;
 }
 
 .roots-mark-ring-2 {
-  stroke-width: 1.6;
-  opacity: 0.48;
-  stroke-dasharray: 4 2.5;
-}
-
-.roots-mark-ring-3 {
-  stroke-width: 2.2;
-  opacity: 0.8;
+  stroke-width: 2.4;
+  opacity: 0.85;
 }
 
 .roots-mark-roots path {

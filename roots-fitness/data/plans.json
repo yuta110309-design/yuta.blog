@@ -109,17 +109,45 @@
           "note": "",
           "recommendedFor": "まずは1回試してみたい方、出張や旅行のタイミングで単発利用したい方に。",
           "photoNote": "単発利用時のセッション風景"
+        }
+      ]
+    },
+    {
+      "id": "pair",
+      "name": "ペアレッスン",
+      "plans": [
+        {
+          "id": "pair-ticket8",
+          "name": "チケット8回",
+          "frequency": "8回(有効期限2ヶ月)",
+          "price": 64000,
+          "priceUnit": "回券",
+          "unitPrice": 8000,
+          "note": "入会金11,000円が別途かかります。",
+          "recommendedFor": "ご家族やご友人と、まずは短期間から一緒に体を動かしてみたい方に。",
+          "photoNote": "ペアレッスンのセッション風景"
         },
         {
-          "id": "semi-pair",
-          "name": "ペアレッスン",
-          "frequency": "1回・2名",
-          "price": 14000,
-          "priceUnit": "回",
-          "unitPrice": 7000,
-          "note": "お一人様7,000円(2名でのご利用時の合計額)",
-          "recommendedFor": "ご家族やご友人と、一緒に体を動かしたい方に。",
-          "photoNote": "ペアレッスンのセッション風景(詳細確定後に追加)"
+          "id": "pair-ticket32",
+          "name": "チケット32回",
+          "frequency": "32回(有効期限3ヶ月)",
+          "price": 192000,
+          "priceUnit": "回券",
+          "unitPrice": 6000,
+          "note": "入会金11,000円が別途かかります。",
+          "recommendedFor": "お二人のペースで、数ヶ月かけてじっくり取り組みたい方に。",
+          "photoNote": "ペアレッスンのセッション風景"
+        },
+        {
+          "id": "pair-ticket48",
+          "name": "チケット48回",
+          "frequency": "48回(有効期限5ヶ月)",
+          "price": 240000,
+          "priceUnit": "回券",
+          "unitPrice": 5000,
+          "note": "入会金11,000円が別途かかります。",
+          "recommendedFor": "長期的に、お二人で習慣として続けていきたい方に。",
+          "photoNote": "ペアレッスンのセッション風景"
         }
       ]
     }

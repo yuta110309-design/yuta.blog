@@ -2281,3 +2281,198 @@ a.news-card:hover {
     padding: 48px 40px 40px;
   }
 }
+
+/* ==========================================================================
+   Voice(Googleマップの口コミ)
+   ========================================================================== */
+.review-group {
+  margin-bottom: 48px;
+}
+
+.review-group:last-child {
+  margin-bottom: 0;
+}
+
+.review-summary {
+  margin-bottom: 20px;
+}
+
+.review-summary-store {
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  color: var(--color-deep-green);
+  margin-bottom: 10px;
+}
+
+.review-summary-stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.review-star {
+  color: rgba(46, 61, 40, 0.2);
+  font-size: 1rem;
+}
+
+.review-star.is-filled {
+  color: var(--color-terracotta);
+}
+
+.review-summary-score {
+  margin-left: 8px;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.review-summary-count {
+  margin-left: 4px;
+  font-size: 0.82rem;
+  color: var(--color-text-soft);
+}
+
+.review-group-note {
+  font-size: 0.85rem;
+  color: var(--color-text-soft);
+  margin: 0 0 16px;
+}
+
+.review-slider {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.review-cards {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.review-cards::-webkit-scrollbar {
+  display: none;
+}
+
+.review-card {
+  flex: 0 0 min(88vw, 380px);
+  scroll-snap-align: start;
+  background: var(--color-white);
+  border: 1px solid rgba(46, 61, 40, 0.1);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.review-card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.review-card-avatar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-bg-alt);
+  color: var(--color-deep-green);
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+}
+
+.review-card-head-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-card-author {
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.review-card-date {
+  font-size: 0.74rem;
+  color: var(--color-text-soft);
+}
+
+.review-card-stars {
+  margin-bottom: 12px;
+}
+
+.review-card-text {
+  font-size: 0.85rem;
+  color: var(--color-text-soft);
+  line-height: 1.85;
+  margin: 0 0 12px;
+}
+
+.review-card-source {
+  font-size: 0.72rem;
+  color: var(--color-text-soft);
+  opacity: 0.75;
+}
+
+.review-slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(46, 61, 40, 0.15);
+  background: var(--color-white);
+  color: var(--color-deep-green);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.review-slider-arrow-prev {
+  left: -8px;
+}
+
+.review-slider-arrow-next {
+  right: -8px;
+}
+
+.review-slider-dots {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.review-slider-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(46, 61, 40, 0.2);
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease), width 0.25s var(--ease);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.review-slider-dot.is-active {
+  width: 20px;
+  border-radius: 4px;
+  background: var(--color-terracotta);
+}
+
+.review-summary-link {
+  display: inline-block;
+}

@@ -1,0 +1,21 @@
+{
+  "_comment": "Googleマップの口コミデータ。stores配列の各要素が1店舗に対応する。rating/reviewCountは店舗ページに掲載しているGoogle口コミの集計値(代官山41件・軽井沢45件、いずれも★5.0、確認済み)。reviews配列には実際の口コミ本文を入れる想定だが、現時点では未収集のため空にしてある。空の場合はUI側で「Googleで見る」リンクのみ表示し、カードスライダーは表示しない。実際の口コミを反映する際は、Googleマップの当該口コミをそのまま(改変せず)コピーし、以下の形式で追加する: { \"author\": \"投稿者名\", \"rating\": 5, \"date\": \"YYYY年M月D日\", \"text\": \"本文\" }。投稿者の許諾が取れているか等、掲載可否は運営側で判断すること。",
+  "stores": [
+    {
+      "id": "daikanyama",
+      "storeName": "代官山",
+      "rating": 5.0,
+      "reviewCount": 41,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Roots+Fitness+DAIKANYAMA",
+      "reviews": []
+    },
+    {
+      "id": "karuizawa",
+      "storeName": "軽井沢",
+      "rating": 5.0,
+      "reviewCount": 45,
+      "mapsUrl": "https://maps.app.goo.gl/e9aqUPDxMSjd637TA",
+      "reviews": []
+    }
+  ]
+}

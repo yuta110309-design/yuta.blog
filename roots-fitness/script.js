@@ -69,60 +69,14 @@
 
   /* ------------------------------------------------------------------ */
   /* Why Roots スライダー(横スライド + 矢印 + ドットページネーション)          */
+  /* 共通のスライダー処理(setupCardSlider)を使う。定義は下の方にあるが、       */
+  /* 関数宣言は巻き上げられるため、ここで呼び出しても問題ない。                 */
   /* ------------------------------------------------------------------ */
   var whyCards = document.getElementById("why-cards");
   var whyDots = document.getElementById("why-slider-dots");
 
   if (whyCards && whyDots) {
-    var whyPrevBtn = document.querySelector("[data-why-prev]");
-    var whyNextBtn = document.querySelector("[data-why-next]");
-    var whyDotEls = Array.prototype.slice.call(whyDots.querySelectorAll("[data-why-dot]"));
-    var whyCardEls = Array.prototype.slice.call(whyCards.children);
-
-    function whyCardStep() {
-      return whyCardEls[0] ? whyCardEls[0].getBoundingClientRect().width + 14 : whyCards.clientWidth;
-    }
-
-    function whyScrollToIndex(index) {
-      var clamped = Math.max(0, Math.min(index, whyCardEls.length - 1));
-      whyCards.scrollTo({ left: clamped * whyCardStep(), behavior: "smooth" });
-    }
-
-    function whyCurrentIndex() {
-      return Math.round(whyCards.scrollLeft / whyCardStep());
-    }
-
-    function whySetActiveDot(index) {
-      whyDotEls.forEach(function (dot, i) {
-        dot.classList.toggle("is-active", i === index);
-      });
-    }
-
-    if (whyPrevBtn) {
-      whyPrevBtn.addEventListener("click", function () {
-        whyScrollToIndex(whyCurrentIndex() - 1);
-      });
-    }
-
-    if (whyNextBtn) {
-      whyNextBtn.addEventListener("click", function () {
-        whyScrollToIndex(whyCurrentIndex() + 1);
-      });
-    }
-
-    whyDotEls.forEach(function (dot, index) {
-      dot.addEventListener("click", function () {
-        whyScrollToIndex(index);
-      });
-    });
-
-    var whyScrollTimer = null;
-    whyCards.addEventListener("scroll", function () {
-      clearTimeout(whyScrollTimer);
-      whyScrollTimer = setTimeout(function () {
-        whySetActiveDot(whyCurrentIndex());
-      }, 100);
-    });
+    setupCardSlider(whyCards, document.querySelector("[data-why-prev]"), document.querySelector("[data-why-next]"), whyDots);
   }
 
   /* ------------------------------------------------------------------ */
@@ -688,6 +642,163 @@
         }
       });
     }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 汎用の横スライダー(矢印+ドット)セットアップ。                          */
+  /* Why Roots・口コミなど、同じ操作性のスライダーを複数箇所で使うための共通処理。*/
+  /* ------------------------------------------------------------------ */
+  function setupCardSlider(cardsEl, prevBtn, nextBtn, dotsEl) {
+    var cardEls = Array.prototype.slice.call(cardsEl.children);
+    var dotEls = dotsEl ? Array.prototype.slice.call(dotsEl.querySelectorAll("[data-slider-dot]")) : [];
+
+    function step() {
+      return cardEls[0] ? cardEls[0].getBoundingClientRect().width + 14 : cardsEl.clientWidth;
+    }
+
+    function currentIndex() {
+      return Math.round(cardsEl.scrollLeft / step());
+    }
+
+    function scrollToIndex(index) {
+      var clamped = Math.max(0, Math.min(index, cardEls.length - 1));
+      cardsEl.scrollTo({ left: clamped * step(), behavior: "smooth" });
+    }
+
+    function setActiveDot(index) {
+      dotEls.forEach(function (dot, i) {
+        dot.classList.toggle("is-active", i === index);
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener("click", function () {
+        scrollToIndex(currentIndex() - 1);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", function () {
+        scrollToIndex(currentIndex() + 1);
+      });
+    }
+
+    dotEls.forEach(function (dot, index) {
+      dot.addEventListener("click", function () {
+        scrollToIndex(index);
+      });
+    });
+
+    var scrollTimer = null;
+    cardsEl.addEventListener("scroll", function () {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function () {
+        setActiveDot(currentIndex());
+      }, 100);
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Googleマップの口コミ(店舗ごとに星平均+件数を表示し、実際の口コミ本文が    */
+  /* あれば横スライドのカードで、なければ「Googleで見る」リンクのみ表示する)。 */
+  /* [data-reviews-source] に data/reviews.json を読み込んで描画する。        */
+  /* ------------------------------------------------------------------ */
+  var reviewGroups = document.querySelector("[data-reviews-source]");
+
+  if (reviewGroups) {
+    function buildStarsHtml(rating) {
+      var filled = Math.round(rating || 0);
+      var html = "";
+      for (var i = 0; i < 5; i++) {
+        html += '<span class="review-star' + (i < filled ? " is-filled" : "") + '">★</span>';
+      }
+      return html;
+    }
+
+    function buildReviewCardHtml(review) {
+      return (
+        '<div class="review-card">' +
+          '<div class="review-card-head">' +
+            '<span class="review-card-avatar">' + (review.author ? review.author.charAt(0) : "") + "</span>" +
+            '<span class="review-card-head-body">' +
+              '<span class="review-card-author">' + review.author + "</span>" +
+              '<span class="review-card-date">' + review.date + "</span>" +
+            "</span>" +
+          "</div>" +
+          '<div class="review-card-stars">' + buildStarsHtml(review.rating) + "</div>" +
+          '<p class="review-card-text">' + review.text + "</p>" +
+          '<span class="review-card-source">(Googleのクチコミから引用)</span>' +
+        "</div>"
+      );
+    }
+
+    function buildReviewGroupHtml(store, groupIndex) {
+      var reviews = store.reviews || [];
+      var sliderId = "review-cards-" + store.id;
+
+      var bodyHtml;
+      if (reviews.length) {
+        bodyHtml =
+          '<div class="review-slider">' +
+            '<button type="button" class="review-slider-arrow review-slider-arrow-prev" data-review-prev="' + groupIndex + '" aria-label="前の口コミへ">‹</button>' +
+            '<div class="review-cards" id="' + sliderId + '">' +
+              reviews.map(buildReviewCardHtml).join("") +
+            "</div>" +
+            '<button type="button" class="review-slider-arrow review-slider-arrow-next" data-review-next="' + groupIndex + '" aria-label="次の口コミへ">›</button>' +
+          "</div>" +
+          '<div class="review-slider-dots" data-review-dots="' + groupIndex + '">' +
+            reviews.map(function (r, i) {
+              return '<button type="button" class="review-slider-dot' + (i === 0 ? " is-active" : "") + '" data-slider-dot data-review-dot="' + i + '" aria-label="' + (i + 1) + '件目"></button>';
+            }).join("") +
+          "</div>";
+      } else {
+        bodyHtml = '<p class="review-group-note">個別の口コミは準備中です。</p>';
+      }
+
+      return (
+        '<div class="review-group">' +
+          '<div class="review-summary">' +
+            '<h3 class="review-summary-store">' + store.storeName + "</h3>" +
+            '<div class="review-summary-stars">' +
+              buildStarsHtml(store.rating) +
+              '<span class="review-summary-score">' + store.rating.toFixed(1) + "</span>" +
+              '<span class="review-summary-count">(' + store.reviewCount + "件)</span>" +
+            "</div>" +
+          "</div>" +
+          bodyHtml +
+          (store.mapsUrl
+            ? '<a class="link-line review-summary-link" href="' + store.mapsUrl + '" target="_blank" rel="noopener noreferrer">Googleで口コミをすべて見る ↗</a>'
+            : "") +
+        "</div>"
+      );
+    }
+
+    fetch(reviewGroups.getAttribute("data-reviews-source"))
+      .then(function (res) {
+        return res.ok ? res.json() : { stores: [] };
+      })
+      .then(function (data) {
+        var stores = data.stores || [];
+
+        if (!stores.length) {
+          reviewGroups.innerHTML = '<p class="plan-loading">現在準備中です。</p>';
+          return;
+        }
+
+        reviewGroups.innerHTML = stores.map(buildReviewGroupHtml).join("");
+
+        stores.forEach(function (store, groupIndex) {
+          if (!(store.reviews || []).length) return;
+          var cardsEl = document.getElementById("review-cards-" + store.id);
+          var prevBtn = document.querySelector('[data-review-prev="' + groupIndex + '"]');
+          var nextBtn = document.querySelector('[data-review-next="' + groupIndex + '"]');
+          var dotsEl = document.querySelector('[data-review-dots="' + groupIndex + '"]');
+          if (cardsEl) setupCardSlider(cardsEl, prevBtn, nextBtn, dotsEl);
+        });
+      })
+      .catch(function () {
+        reviewGroups.innerHTML = '<p class="plan-loading">口コミの読み込みに失敗しました。</p>';
+      });
   }
 
   /* ------------------------------------------------------------------ */

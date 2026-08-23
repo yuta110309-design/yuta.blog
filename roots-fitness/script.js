@@ -553,12 +553,14 @@
   }
 
   /* ------------------------------------------------------------------ */
-  /* FAQ(カテゴリ見出し + アコーディオン)                                   */
+  /* FAQ(カテゴリタグ + アコーディオン)                                    */
   /* [data-faq-source] に data/faq.json を読み込み、カテゴリ(categories)     */
-  /* ごとに見出しを出したうえで、ネイティブの<details>/<summary>で             */
-  /* アコーディオン表示する。質問の追加・編集はdata/faq.jsonを編集するだけでよい。*/
+  /* ごとにタグボタンを生成する。タグをタップすると、そのカテゴリの質問だけを     */
+  /* ネイティブの<details>/<summary>アコーディオンで表示する。                */
+  /* 質問の追加・編集はdata/faq.jsonを編集するだけでよい。                    */
   /* ------------------------------------------------------------------ */
   var faqList = document.querySelector("[data-faq-source]");
+  var faqTabs = document.getElementById("faq-tabs");
 
   function buildFaqItemHtml(item) {
     return (
@@ -569,27 +571,53 @@
     );
   }
 
-  function buildFaqCategoryHtml(category) {
+  function buildFaqTabHtml(category, index) {
     return (
-      '<div class="faq-category">' +
-        '<h3 class="faq-category-title">' + category.name + "</h3>" +
-        (category.items || []).map(buildFaqItemHtml).join("") +
-      "</div>"
+      '<button type="button" class="faq-tab' + (index === 0 ? " is-active" : "") + '" role="tab" ' +
+        'aria-selected="' + (index === 0 ? "true" : "false") + '" data-faq-tab="' + index + '">' +
+        category.name +
+      "</button>"
     );
   }
 
-  if (faqList) {
+  function renderFaqCategory(category) {
+    faqList.innerHTML = category && (category.items || []).length
+      ? category.items.map(buildFaqItemHtml).join("")
+      : '<p class="plan-loading">現在準備中です。</p>';
+  }
+
+  if (faqList && faqTabs) {
     fetch(faqList.getAttribute("data-faq-source"))
       .then(function (res) {
         return res.ok ? res.json() : { categories: [] };
       })
       .then(function (data) {
         var categories = data.categories || [];
-        faqList.innerHTML = categories.length
-          ? categories.map(buildFaqCategoryHtml).join("")
-          : '<p class="plan-loading">現在準備中です。</p>';
+
+        if (!categories.length) {
+          faqTabs.innerHTML = "";
+          faqList.innerHTML = '<p class="plan-loading">現在準備中です。</p>';
+          return;
+        }
+
+        faqTabs.innerHTML = categories.map(buildFaqTabHtml).join("");
+        renderFaqCategory(categories[0]);
+
+        faqTabs.addEventListener("click", function (e) {
+          var tab = e.target.closest("[data-faq-tab]");
+          if (!tab) return;
+
+          faqTabs.querySelectorAll("[data-faq-tab]").forEach(function (t) {
+            var isActive = t === tab;
+            t.classList.toggle("is-active", isActive);
+            t.setAttribute("aria-selected", isActive ? "true" : "false");
+          });
+
+          renderFaqCategory(categories[Number(tab.getAttribute("data-faq-tab"))]);
+        });
       })
       .catch(function () {
+        faqTabs.innerHTML = "";
         faqList.innerHTML = '<p class="plan-loading">FAQの読み込みに失敗しました。</p>';
       });
   }

@@ -1484,27 +1484,36 @@ a.news-card:hover {
 /* ==========================================================================
    FAQ(アコーディオン)
    ========================================================================== */
+.faq-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.faq-tab {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(46, 61, 40, 0.2);
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  color: var(--color-text-soft);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.faq-tab.is-active {
+  background: var(--color-deep-green);
+  border-color: var(--color-deep-green);
+  color: var(--color-white);
+}
+
 .faq-list {
   display: flex;
   flex-direction: column;
   margin-bottom: 40px;
-}
-
-.faq-category {
-  margin-bottom: 32px;
-}
-
-.faq-category:last-child {
-  margin-bottom: 0;
-}
-
-.faq-category-title {
-  font-size: 1rem;
-  letter-spacing: 0.08em;
-  color: var(--color-deep-green);
-  margin-bottom: 4px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(46, 61, 40, 0.12);
 }
 
 .faq-item {

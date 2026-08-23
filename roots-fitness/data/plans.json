@@ -70,21 +70,21 @@
           "id": "semi-single",
           "name": "単発(都度)",
           "frequency": "1回",
-          "price": null,
+          "price": 12000,
           "priceUnit": "回",
           "unitPrice": null,
-          "note": "料金未定。チケット制終了(2026年8月)に伴い新設。確定後に差し替え",
+          "note": "",
           "recommendedFor": "まずは1回試してみたい方、出張や旅行のタイミングで単発利用したい方に。",
           "photoNote": "単発利用時のセッション風景"
         },
         {
           "id": "semi-pair",
           "name": "ペアレッスン",
-          "frequency": "",
-          "price": null,
-          "priceUnit": "",
-          "unitPrice": null,
-          "note": "料金未定。確定後に差し替え",
+          "frequency": "1回・2名",
+          "price": 14000,
+          "priceUnit": "回",
+          "unitPrice": 7000,
+          "note": "お一人様7,000円(2名でのご利用時の合計額)",
           "recommendedFor": "ご家族やご友人と、一緒に体を動かしたい方に。",
           "photoNote": "ペアレッスンのセッション風景(詳細確定後に追加)"
         }

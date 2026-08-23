@@ -2106,6 +2106,18 @@ a.news-card:hover {
   margin-top: 12px;
 }
 
+.footer-sns-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-sns-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
 .footer-nav-col-title {
   font-size: 0.75rem;
   letter-spacing: 0.2em;

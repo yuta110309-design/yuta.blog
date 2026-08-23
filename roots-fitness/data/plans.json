@@ -103,7 +103,7 @@
           "id": "semi-single",
           "name": "単発(都度)",
           "frequency": "1回",
-          "price": 12000,
+          "price": 5000,
           "priceUnit": "回",
           "unitPrice": null,
           "note": "",

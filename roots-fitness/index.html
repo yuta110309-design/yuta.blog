@@ -390,48 +390,59 @@
     <div class="trial-flow">
       <span class="section-eyebrow">Trial</span>
       <h3 class="trial-flow-title">体験までの流れ</h3>
-      <ol class="trial-steps">
-        <li class="trial-step">
-          <img class="trial-step-photo-real" src="images/trial-step1-booking.jpg" alt="スマートフォンで体験予約フォームを入力する様子" loading="lazy" width="1600" height="900">
-          <div class="trial-step-body">
-            <span class="trial-step-label">Step 1</span>
-            <h4 class="trial-step-title">フォームから体験を予約</h4>
-            <p class="trial-step-text">ご希望の店舗・日時をお選びのうえ、体験予約フォームからお申し込みください。</p>
-          </div>
-        </li>
-        <li class="trial-step">
-          <div class="trial-step-photo"><svg class="photo-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#photo-pending"></use></svg>来店時の様子</div>
-          <div class="trial-step-body">
-            <span class="trial-step-label">Step 2</span>
-            <h4 class="trial-step-title">来店・準備</h4>
-            <p class="trial-step-text">ご予約のお時間に店舗へお越しください(オンラインの場合はご自宅などから接続)。更衣室もご用意しています。</p>
-          </div>
-        </li>
-        <li class="trial-step">
-          <div class="trial-step-photo"><svg class="photo-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#photo-pending"></use></svg>カウンセリングの様子</div>
-          <div class="trial-step-body">
-            <span class="trial-step-label">Step 3</span>
-            <h4 class="trial-step-title">カウンセリング</h4>
-            <p class="trial-step-text">今の体の状態や生活習慣について、丁寧にお伺いします。</p>
-          </div>
-        </li>
-        <li class="trial-step">
-          <div class="trial-step-photo"><svg class="photo-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#photo-pending"></use></svg>体験トレーニングの様子</div>
-          <div class="trial-step-body">
-            <span class="trial-step-label">Step 4</span>
-            <h4 class="trial-step-title">体験トレーニングスタート</h4>
-            <p class="trial-step-text">ヒアリングをもとに、その日の体調に合わせたメニューで体を動かします。</p>
-          </div>
-        </li>
-        <li class="trial-step">
-          <div class="trial-step-photo"><svg class="photo-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#photo-pending"></use></svg>フィードバックの様子</div>
-          <div class="trial-step-body">
-            <span class="trial-step-label">Step 5</span>
-            <h4 class="trial-step-title">フィードバック・ご案内</h4>
-            <p class="trial-step-text">体験して感じたことをすり合わせ、今後に合ったプランをご案内します。</p>
-          </div>
-        </li>
-      </ol>
+      <div class="trial-slider">
+        <button type="button" class="trial-slider-arrow trial-slider-arrow-prev" data-trial-prev aria-label="前のステップへ">‹</button>
+        <ol class="trial-steps" id="trial-steps">
+          <li class="trial-step">
+            <img class="trial-step-photo-real" src="images/trial-step1-booking.jpg" alt="スマートフォンで体験予約フォームを入力する様子" loading="lazy" width="1600" height="900">
+            <div class="trial-step-body">
+              <span class="trial-step-label">Step 1</span>
+              <h4 class="trial-step-title">フォームから体験を予約</h4>
+              <p class="trial-step-text">ご希望の店舗・日時をお選びのうえ、体験予約フォームからお申し込みください。</p>
+            </div>
+          </li>
+          <li class="trial-step">
+            <div class="trial-step-photo"><svg class="photo-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#photo-pending"></use></svg>来店時の様子</div>
+            <div class="trial-step-body">
+              <span class="trial-step-label">Step 2</span>
+              <h4 class="trial-step-title">来店・準備</h4>
+              <p class="trial-step-text">ご予約のお時間に店舗へお越しください(オンラインの場合はご自宅などから接続)。更衣室もご用意しています。</p>
+            </div>
+          </li>
+          <li class="trial-step">
+            <div class="trial-step-photo"><svg class="photo-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#photo-pending"></use></svg>カウンセリングの様子</div>
+            <div class="trial-step-body">
+              <span class="trial-step-label">Step 3</span>
+              <h4 class="trial-step-title">カウンセリング</h4>
+              <p class="trial-step-text">今の体の状態や生活習慣について、丁寧にお伺いします。</p>
+            </div>
+          </li>
+          <li class="trial-step">
+            <div class="trial-step-photo"><svg class="photo-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#photo-pending"></use></svg>体験トレーニングの様子</div>
+            <div class="trial-step-body">
+              <span class="trial-step-label">Step 4</span>
+              <h4 class="trial-step-title">体験トレーニングスタート</h4>
+              <p class="trial-step-text">ヒアリングをもとに、その日の体調に合わせたメニューで体を動かします。</p>
+            </div>
+          </li>
+          <li class="trial-step">
+            <div class="trial-step-photo"><svg class="photo-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#photo-pending"></use></svg>フィードバックの様子</div>
+            <div class="trial-step-body">
+              <span class="trial-step-label">Step 5</span>
+              <h4 class="trial-step-title">フィードバック・ご案内</h4>
+              <p class="trial-step-text">体験して感じたことをすり合わせ、今後に合ったプランをご案内します。</p>
+            </div>
+          </li>
+        </ol>
+        <button type="button" class="trial-slider-arrow trial-slider-arrow-next" data-trial-next aria-label="次のステップへ">›</button>
+      </div>
+      <div class="trial-slider-dots" id="trial-slider-dots" role="tablist" aria-label="表示中のステップ">
+        <button type="button" class="trial-slider-dot is-active" data-slider-dot aria-label="Step 1"></button>
+        <button type="button" class="trial-slider-dot" data-slider-dot aria-label="Step 2"></button>
+        <button type="button" class="trial-slider-dot" data-slider-dot aria-label="Step 3"></button>
+        <button type="button" class="trial-slider-dot" data-slider-dot aria-label="Step 4"></button>
+        <button type="button" class="trial-slider-dot" data-slider-dot aria-label="Step 5"></button>
+      </div>
     </div>
 
     <div class="plan-actions">

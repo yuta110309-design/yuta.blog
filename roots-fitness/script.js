@@ -80,6 +80,16 @@
   }
 
   /* ------------------------------------------------------------------ */
+  /* 体験までの流れ スライダー(横スライド + 矢印 + ドットページネーション)       */
+  /* ------------------------------------------------------------------ */
+  var trialSteps = document.getElementById("trial-steps");
+  var trialDots = document.getElementById("trial-slider-dots");
+
+  if (trialSteps && trialDots) {
+    setupCardSlider(trialSteps, document.querySelector("[data-trial-prev]"), document.querySelector("[data-trial-next]"), trialDots);
+  }
+
+  /* ------------------------------------------------------------------ */
   /* 店舗設定(FitKarte予約URL / Instagram URL / LINE URL)の読み込み          */
   /* data/stores.json を編集するだけで店舗の追加・URL差し替えが可能。        */
   /* data-store-cta="<storeId>" を持つ要素の href を自動設定する。          */

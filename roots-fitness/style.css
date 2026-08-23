@@ -1338,16 +1338,29 @@ a.news-card:hover {
   margin-bottom: 32px;
 }
 
+.trial-slider {
+  position: relative;
+}
+
 .trial-steps {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 0 8px;
   display: flex;
-  flex-direction: column;
-  gap: 28px;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.trial-steps::-webkit-scrollbar {
+  display: none;
 }
 
 .trial-step {
+  flex: 0 0 min(88vw, 420px);
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1359,7 +1372,7 @@ a.news-card:hover {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  height: 140px;
+  height: 180px;
   background: linear-gradient(160deg, #33422c 0%, #2e3d28 60%, #232f1e 100%);
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.78rem;
@@ -1372,7 +1385,7 @@ a.news-card:hover {
 .trial-step-photo-real {
   display: block;
   width: 100%;
-  height: 140px;
+  height: 180px;
   object-fit: cover;
   border-radius: var(--radius);
 }
@@ -1399,26 +1412,59 @@ a.news-card:hover {
   margin: 0;
 }
 
-@media (min-width: 700px) {
-  .trial-step {
-    flex-direction: row;
-    align-items: center;
-    gap: 32px;
-  }
+.trial-slider-arrow {
+  position: absolute;
+  top: 90px;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-deep-green);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
 
-  .trial-step-photo {
-    flex: 0 0 240px;
-    height: 160px;
-  }
+.trial-slider-arrow-prev {
+  left: 12px;
+}
 
-  .trial-step-photo-real {
-    flex: 0 0 240px;
-    height: 160px;
-  }
+.trial-slider-arrow-next {
+  right: 12px;
+}
 
-  .trial-step-body {
-    flex: 1;
-  }
+.trial-slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.trial-slider-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(46, 61, 40, 0.2);
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease), width 0.25s var(--ease);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.trial-slider-dot.is-active {
+  width: 20px;
+  border-radius: 4px;
+  background: var(--color-terracotta);
 }
 
 

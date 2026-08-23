@@ -445,24 +445,19 @@
     <span class="section-eyebrow">Results</span>
     <h2 class="section-title">実績</h2>
 
-    <!-- 共有のバッジ用SVGシンボル定義(1回だけ定義し、下の3つのバッジで使い回す) -->
+    <!-- 共有のバッジ用SVGシンボル定義(1回だけ定義し、下の3つのバッジで使い回す)。
+         年輪(積み重ねてきた実績)+根が広がるモチーフで、Rootsらしさを表現。 -->
     <svg width="0" height="0" style="position: absolute;" aria-hidden="true">
       <defs>
-        <symbol id="wreath" viewBox="0 0 120 110">
-          <ellipse cx="24" cy="90" rx="6" ry="2.5" transform="rotate(-60 24 90)" />
-          <ellipse cx="19" cy="78" rx="6" ry="2.5" transform="rotate(-40 19 78)" />
-          <ellipse cx="17" cy="64" rx="6" ry="2.5" transform="rotate(-15 17 64)" />
-          <ellipse cx="18" cy="50" rx="6" ry="2.5" transform="rotate(15 18 50)" />
-          <ellipse cx="23" cy="37" rx="6" ry="2.5" transform="rotate(40 23 37)" />
-          <ellipse cx="31" cy="27" rx="6" ry="2.5" transform="rotate(65 31 27)" />
-          <ellipse cx="41" cy="20" rx="6" ry="2.5" transform="rotate(85 41 20)" />
-          <ellipse cx="96" cy="90" rx="6" ry="2.5" transform="rotate(60 96 90)" />
-          <ellipse cx="101" cy="78" rx="6" ry="2.5" transform="rotate(40 101 78)" />
-          <ellipse cx="103" cy="64" rx="6" ry="2.5" transform="rotate(15 103 64)" />
-          <ellipse cx="102" cy="50" rx="6" ry="2.5" transform="rotate(-15 102 50)" />
-          <ellipse cx="97" cy="37" rx="6" ry="2.5" transform="rotate(-40 97 37)" />
-          <ellipse cx="89" cy="27" rx="6" ry="2.5" transform="rotate(-65 89 27)" />
-          <ellipse cx="79" cy="20" rx="6" ry="2.5" transform="rotate(-85 79 20)" />
+        <symbol id="roots-mark" viewBox="0 0 120 128">
+          <circle class="roots-mark-ring roots-mark-ring-1" cx="60" cy="50" r="44" />
+          <circle class="roots-mark-ring roots-mark-ring-2" cx="60" cy="50" r="33" />
+          <circle class="roots-mark-ring roots-mark-ring-3" cx="60" cy="50" r="22" />
+          <g class="roots-mark-roots">
+            <path d="M47 92 C 44 101 39 108 30 114" />
+            <path d="M60 94 C 60 103 59 110 56 118" />
+            <path d="M73 92 C 76 101 81 108 90 114" />
+          </g>
         </symbol>
       </defs>
     </svg>
@@ -472,17 +467,17 @@
          集計時点(例: 2026年◯月現在)の注記も確認して追加する。 -->
     <div class="results-badges">
       <div class="results-badge">
-        <svg class="results-badge-wreath" viewBox="0 0 120 110" aria-hidden="true"><use href="#wreath"></use></svg>
+        <svg class="results-badge-mark" viewBox="0 0 120 128" aria-hidden="true"><use href="#roots-mark"></use></svg>
         <span class="results-badge-value">---</span>
         <span class="results-badge-label">累計セッション実績</span>
       </div>
       <div class="results-badge">
-        <svg class="results-badge-wreath" viewBox="0 0 120 110" aria-hidden="true"><use href="#wreath"></use></svg>
+        <svg class="results-badge-mark" viewBox="0 0 120 128" aria-hidden="true"><use href="#roots-mark"></use></svg>
         <span class="results-badge-value">86件</span>
         <span class="results-badge-label">Google口コミ累計</span>
       </div>
       <div class="results-badge">
-        <svg class="results-badge-wreath" viewBox="0 0 120 110" aria-hidden="true"><use href="#wreath"></use></svg>
+        <svg class="results-badge-mark" viewBox="0 0 120 128" aria-hidden="true"><use href="#roots-mark"></use></svg>
         <span class="results-badge-value">★5.0</span>
         <span class="results-badge-label">Google口コミ評価</span>
       </div>

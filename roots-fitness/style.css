@@ -180,11 +180,11 @@ button {
   width: 100%;
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 6px;
 }
 
 .logo {
@@ -192,14 +192,14 @@ button {
   align-items: center;
   gap: 8px;
   font-family: var(--font-heading);
-  font-size: 1.05rem;
-  letter-spacing: 0.14em;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
   color: var(--color-deep-green);
 }
 
 .logo-mark {
-  width: 30px;
-  height: 30px;
+  width: 22px;
+  height: 22px;
   flex-shrink: 0;
   border-radius: 50%;
 }
@@ -211,12 +211,42 @@ button {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 5px;
 }
 
 .header-cta {
-  padding: 11px 22px;
-  font-size: 0.85rem;
+  padding: 8px 9px;
+  font-size: 0.66rem;
+}
+
+/* 460px未満(iPhone標準サイズ帯を含む)では、ロゴ+CTA+ハンバーガーが
+   横並びで収まりきらずヘッダーの右端が画面外にはみ出す(position:fixedのため
+   スクロールでは気づきにくい)。実機検証(Playwright)で確認したうえで、
+   460px以上でのみ通常サイズに戻す。 */
+@media (min-width: 460px) {
+  .header-inner {
+    padding: 0 20px;
+    gap: 16px;
+  }
+
+  .logo {
+    font-size: 1.05rem;
+    letter-spacing: 0.14em;
+  }
+
+  .logo-mark {
+    width: 30px;
+    height: 30px;
+  }
+
+  .header-actions {
+    gap: 12px;
+  }
+
+  .header-cta {
+    padding: 11px 22px;
+    font-size: 0.85rem;
+  }
 }
 
 .nav-toggle {
@@ -1175,13 +1205,42 @@ a.news-card:hover {
   justify-content: center;
 }
 
-.results-badge-wreath {
+.results-badge-mark {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  fill: var(--color-moss);
-  opacity: 0.55;
+  fill: none;
+}
+
+.roots-mark-ring {
+  fill: none;
+  stroke: var(--color-moss);
+}
+
+.roots-mark-ring-1 {
+  stroke-width: 1.4;
+  opacity: 0.28;
+  stroke-dasharray: 1 4;
+}
+
+.roots-mark-ring-2 {
+  stroke-width: 1.6;
+  opacity: 0.48;
+  stroke-dasharray: 4 2.5;
+}
+
+.roots-mark-ring-3 {
+  stroke-width: 2.2;
+  opacity: 0.8;
+}
+
+.roots-mark-roots path {
+  fill: none;
+  stroke: var(--color-terracotta);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  opacity: 0.85;
 }
 
 .results-badge-value {
@@ -1603,11 +1662,12 @@ a.news-card:hover {
 
 .cta-strip-text {
   font-family: var(--font-heading);
-  font-size: 1.02rem;
+  font-size: clamp(0.62rem, 3.2vw, 1.02rem);
   letter-spacing: 0.04em;
   line-height: 1.7;
   max-width: 26em;
   margin: 0;
+  white-space: nowrap;
 }
 
 @media (min-width: 640px) {
@@ -1619,6 +1679,7 @@ a.news-card:hover {
 
   .cta-strip-text {
     font-size: 1.1rem;
+    white-space: normal;
   }
 }
 

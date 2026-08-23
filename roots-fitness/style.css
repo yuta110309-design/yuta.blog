@@ -762,30 +762,51 @@ a.news-card:hover {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
 
 .founder-message-list li {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(46, 61, 40, 0.1);
+}
+
+.founder-message-list li:first-child {
+  padding-top: 0;
+}
+
+.founder-message-list li:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.founder-message-list-index {
+  flex-shrink: 0;
+  width: 1.8em;
+  font-family: var(--font-heading);
   font-size: 0.85rem;
-  color: var(--color-text-soft);
-  line-height: 1.8;
+  letter-spacing: 0.04em;
+  color: var(--color-terracotta);
+}
+
+.founder-message-list-body {
+  min-width: 0;
 }
 
 .founder-message-term {
   display: block;
   font-family: var(--font-heading);
+  font-size: 0.92rem;
   letter-spacing: 0.04em;
   color: var(--color-deep-green);
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 
-@media (min-width: 640px) {
-  .founder-message-term {
-    display: inline-block;
-    min-width: 7.5em;
-    margin-bottom: 0;
-    margin-right: 4px;
-  }
+.founder-message-list-text {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-text-soft);
+  line-height: 1.8;
 }
 
 .founder-message-name {

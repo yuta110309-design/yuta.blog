@@ -1437,10 +1437,6 @@ a.news-card:hover {
   position: relative;
   width: 160px;
   height: 148px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 .results-badge-mark {
@@ -1449,6 +1445,27 @@ a.news-card:hover {
   width: 100%;
   height: 100%;
   fill: none;
+}
+
+/* roots-mark(#roots-mark)のリング部分は viewBox(0 0 122 128)の中で
+   上寄り(y:15〜91、中心y≈53)に描かれ、下側は根っこの装飾用の余白になっている。
+   数字(value)はリングの視覚的な中心(53/128 ≈ 41.4%)に、ラベル(label)は
+   リングの下(根っこの装飾エリア)に別々に配置する。 */
+.results-badge-value {
+  position: absolute;
+  left: 50%;
+  top: 41.4%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+}
+
+.results-badge-label {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  transform: translateX(-50%);
+  width: 100%;
 }
 
 .roots-mark-ring {
@@ -1475,7 +1492,6 @@ a.news-card:hover {
 }
 
 .results-badge-value {
-  position: relative;
   z-index: 1;
   font-family: var(--font-heading);
   font-size: 1.7rem;
@@ -1484,14 +1500,11 @@ a.news-card:hover {
 }
 
 .results-badge-label {
-  position: relative;
   z-index: 1;
   font-size: 0.76rem;
   color: var(--color-text-soft);
   letter-spacing: 0.04em;
   text-align: center;
-  max-width: 110px;
-  margin-top: 6px;
 }
 
 .results-note {

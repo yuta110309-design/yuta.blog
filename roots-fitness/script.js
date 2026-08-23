@@ -5,6 +5,29 @@
   var PHOTO_PLACEHOLDER_ICON =
     '<svg class="photo-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#photo-pending"></use></svg>';
 
+  /* モーダル共通のフォーカス制御(予約・プラン詳細・トレーナー詳細で共用)。      */
+  /* 開いたときはモーダル内の閉じるボタンへ、閉じたときは開くきっかけになった      */
+  /* 要素へフォーカスを戻す(キーボード操作時にフォーカスが迷子にならないように)。 */
+  var modalLastFocused = new Map();
+
+  function openModal(modal, triggerEl) {
+    modalLastFocused.set(modal, triggerEl || document.activeElement);
+    modal.classList.add("is-open");
+    document.body.classList.add("reservation-open");
+    var closeBtn = modal.querySelector(".reservation-modal-close");
+    if (closeBtn) closeBtn.focus();
+  }
+
+  function closeModal(modal) {
+    modal.classList.remove("is-open");
+    document.body.classList.remove("reservation-open");
+    var toFocus = modalLastFocused.get(modal);
+    modalLastFocused.delete(modal);
+    if (toFocus && typeof toFocus.focus === "function") {
+      toFocus.focus();
+    }
+  }
+
   /* ------------------------------------------------------------------ */
   /* Hamburger nav toggle                                                */
   /* ------------------------------------------------------------------ */
@@ -191,22 +214,20 @@
         /* 設定が読み込めない場合はプレースホルダーのまま(送信時に警告) */
       });
 
-    function openReservationModal() {
-      reservationModal.classList.add("is-open");
-      document.body.classList.add("reservation-open");
+    function openReservationModal(triggerEl) {
       if (reservationFormStep) reservationFormStep.hidden = false;
       if (reservationSuccessStep) reservationSuccessStep.hidden = true;
+      openModal(reservationModal, triggerEl);
     }
 
     function closeReservationModal() {
-      reservationModal.classList.remove("is-open");
-      document.body.classList.remove("reservation-open");
+      closeModal(reservationModal);
     }
 
     document.querySelectorAll("[data-open-reservation]").forEach(function (el) {
       el.addEventListener("click", function (e) {
         e.preventDefault();
-        openReservationModal();
+        openReservationModal(el);
       });
     });
 
@@ -382,7 +403,7 @@
     var planDetailBody = document.getElementById("plan-detail-modal-body");
 
     if (planDetailModal && planDetailBody) {
-      function openPlanDetailModal(plan) {
+      function openPlanDetailModal(plan, triggerEl) {
         var priceLine =
           plan.price === null || plan.price === undefined
             ? plan.note || "料金未定"
@@ -396,20 +417,18 @@
           '<h3 class="plan-detail-subhead">こんな方におすすめ</h3>' +
           '<p class="plan-detail-recommend">' + (plan.recommendedFor || "準備中です。") + "</p>";
 
-        planDetailModal.classList.add("is-open");
-        document.body.classList.add("reservation-open");
+        openModal(planDetailModal, triggerEl);
       }
 
       function closePlanDetailModal() {
-        planDetailModal.classList.remove("is-open");
-        document.body.classList.remove("reservation-open");
+        closeModal(planDetailModal);
       }
 
       planPanelsRoot.addEventListener("click", function (e) {
         var btn = e.target.closest("[data-plan-detail]");
         if (!btn) return;
         var plan = planById[btn.getAttribute("data-plan-detail")];
-        if (plan) openPlanDetailModal(plan);
+        if (plan) openPlanDetailModal(plan, btn);
       });
 
       planDetailModal.querySelectorAll("[data-close-plan-detail]").forEach(function (el) {
@@ -468,7 +487,7 @@
     var trainerDetailBody = document.getElementById("trainer-detail-modal-body");
 
     if (trainerDetailModal && trainerDetailBody) {
-      function openTrainerDetailModal(trainer) {
+      function openTrainerDetailModal(trainer, triggerEl) {
         trainerDetailBody.innerHTML =
           '<span class="section-eyebrow">Trainer</span>' +
           '<h2 id="trainer-detail-modal-title" class="section-title">' + trainer.name + "</h2>" +
@@ -479,20 +498,18 @@
           '<h3 class="plan-detail-subhead" style="margin-top: 20px;">トレーナーとしての想い</h3>' +
           '<p class="plan-detail-recommend">' + trainer.message + "</p>";
 
-        trainerDetailModal.classList.add("is-open");
-        document.body.classList.add("reservation-open");
+        openModal(trainerDetailModal, triggerEl);
       }
 
       function closeTrainerDetailModal() {
-        trainerDetailModal.classList.remove("is-open");
-        document.body.classList.remove("reservation-open");
+        closeModal(trainerDetailModal);
       }
 
       trainerGrid.addEventListener("click", function (e) {
         var btn = e.target.closest("[data-trainer-detail]");
         if (!btn) return;
         var trainer = trainerById[btn.getAttribute("data-trainer-detail")];
-        if (trainer) openTrainerDetailModal(trainer);
+        if (trainer) openTrainerDetailModal(trainer, btn);
       });
 
       trainerDetailModal.querySelectorAll("[data-close-trainer-detail]").forEach(function (el) {

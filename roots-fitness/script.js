@@ -727,6 +727,9 @@
           "</div>" +
           '<div class="review-card-stars">' + buildStarsHtml(review.rating) + "</div>" +
           '<p class="review-card-text">' + review.text + "</p>" +
+          (review.photo
+            ? '<img class="review-card-photo" src="' + review.photo + '" alt="' + (review.photoAlt || "口コミに添付された写真") + '" loading="lazy">'
+            : "") +
           '<span class="review-card-source">(Googleのクチコミから引用)</span>' +
         "</div>"
       );

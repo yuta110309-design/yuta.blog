@@ -1366,15 +1366,79 @@ a.news-card:hover {
 /* ==========================================================================
    Trainer
    ========================================================================== */
-.trainer-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
+.trainer-banner {
+  position: relative;
+  height: 200px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.trainer-banner-photo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(160deg, #33422c 0%, #2e3d28 60%, #232f1e 100%);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+  padding: 12px;
+}
+
+.trainer-banner-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(2.4rem, 12vw, 4.2rem);
+  letter-spacing: 0.02em;
+  color: var(--color-white);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+}
+
+.trainer-group {
+  margin-bottom: 36px;
+}
+
+.trainer-group:last-child {
+  margin-bottom: 0;
+}
+
+.trainer-group-title {
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: var(--color-deep-green);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(46, 61, 40, 0.12);
+}
+
+.trainer-cards {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.trainer-cards::-webkit-scrollbar {
+  display: none;
 }
 
 .trainer-card {
+  flex: 0 0 min(80vw, 260px);
+  scroll-snap-align: start;
   display: block;
-  width: 100%;
   background: var(--color-white);
   border: 1px solid rgba(46, 61, 40, 0.1);
   border-radius: var(--radius);
@@ -1414,6 +1478,7 @@ a.news-card:hover {
 }
 
 .trainer-card-name {
+  display: block;
   font-family: var(--font-heading);
   font-size: 1.05rem;
   letter-spacing: 0.04em;
@@ -1422,12 +1487,14 @@ a.news-card:hover {
 }
 
 .trainer-card-role {
+  display: block;
   font-size: 0.76rem;
   color: var(--color-text-soft);
   margin-bottom: 12px;
 }
 
 .trainer-card-summary {
+  display: block;
   font-size: 0.85rem;
   color: var(--color-text-soft);
   line-height: 1.8;
@@ -1435,6 +1502,7 @@ a.news-card:hover {
 }
 
 .trainer-card-link {
+  display: block;
   font-size: 0.76rem;
   color: var(--color-terracotta);
   letter-spacing: 0.02em;
@@ -1444,18 +1512,6 @@ a.news-card:hover {
   font-size: 0.85rem;
   color: var(--color-text-soft);
   margin: 4px 0 20px;
-}
-
-@media (min-width: 640px) {
-  .trainer-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 960px) {
-  .trainer-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 /* ==========================================================================

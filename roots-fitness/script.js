@@ -495,13 +495,19 @@
 
   /* ------------------------------------------------------------------ */
   /* Trainer                                                               */
-  /* [data-trainers-source] に data/trainers.json を読み込みカード表示。      */
+  /* [data-trainers-source] に data/trainers.json を読み込み、店舗(store)     */
+  /* ごとにグルーピングして横スライドのカードで表示する。                       */
   /* カードをタップすると経歴・実績・想いをモーダル展開する。                    */
   /* トレーナーの追加・編集は data/trainers.json を編集するだけでよい。        */
   /* ------------------------------------------------------------------ */
-  var trainerGrid = document.querySelector("[data-trainers-source]");
+  var trainerGroups = document.querySelector("[data-trainers-source]");
 
-  if (trainerGrid) {
+  function trainerRoleLine(trainer) {
+    var storeLabel = trainer.store === "online" ? trainer.storeName : trainer.storeName + "店";
+    return storeLabel + " / " + trainer.role;
+  }
+
+  if (trainerGroups) {
     var trainerById = {};
 
     function buildTrainerCardHtml(trainer) {
@@ -519,18 +525,44 @@
       );
     }
 
-    fetch(trainerGrid.getAttribute("data-trainers-source"))
+    function buildTrainerGroupHtml(group) {
+      return (
+        '<div class="trainer-group">' +
+          '<h3 class="trainer-group-title">' + group.storeName + "</h3>" +
+          '<div class="trainer-cards">' + group.trainers.map(buildTrainerCardHtml).join("") + "</div>" +
+        "</div>"
+      );
+    }
+
+    fetch(trainerGroups.getAttribute("data-trainers-source"))
       .then(function (res) {
         return res.ok ? res.json() : { trainers: [] };
       })
       .then(function (data) {
         var trainers = data.trainers || [];
-        trainerGrid.innerHTML = trainers.length
-          ? trainers.map(buildTrainerCardHtml).join("")
-          : '<p class="plan-loading">現在準備中です。</p>';
+
+        if (!trainers.length) {
+          trainerGroups.innerHTML = '<p class="plan-loading">現在準備中です。</p>';
+          return;
+        }
+
+        var groupOrder = [];
+        var groupsByStore = {};
+        trainers.forEach(function (trainer) {
+          var key = trainer.store || trainer.storeName || "";
+          if (!groupsByStore[key]) {
+            groupsByStore[key] = { storeName: trainer.storeName, trainers: [] };
+            groupOrder.push(key);
+          }
+          groupsByStore[key].trainers.push(trainer);
+        });
+
+        trainerGroups.innerHTML = groupOrder.map(function (key) {
+          return buildTrainerGroupHtml(groupsByStore[key]);
+        }).join("");
       })
       .catch(function () {
-        trainerGrid.innerHTML = '<p class="plan-loading">トレーナー情報の読み込みに失敗しました。</p>';
+        trainerGroups.innerHTML = '<p class="plan-loading">トレーナー情報の読み込みに失敗しました。</p>';
       });
 
     var trainerDetailModal = document.getElementById("trainer-detail-modal");
@@ -541,7 +573,7 @@
         trainerDetailBody.innerHTML =
           '<span class="section-eyebrow">Trainer</span>' +
           '<h2 id="trainer-detail-modal-title" class="section-title">' + trainer.name + "</h2>" +
-          '<p class="trainer-detail-role">' + trainer.role + "</p>" +
+          '<p class="trainer-detail-role">' + trainerRoleLine(trainer) + "</p>" +
           '<div class="plan-detail-photo">' + PHOTO_PLACEHOLDER_ICON + (trainer.photoNote || "トレーナー写真") + "</div>" +
           '<h3 class="plan-detail-subhead">経歴・実績</h3>' +
           '<p class="plan-detail-recommend">' + trainer.career + "</p>" +
@@ -555,7 +587,7 @@
         closeModal(trainerDetailModal);
       }
 
-      trainerGrid.addEventListener("click", function (e) {
+      trainerGroups.addEventListener("click", function (e) {
         var btn = e.target.closest("[data-trainer-detail]");
         if (!btn) return;
         var trainer = trainerById[btn.getAttribute("data-trainer-detail")];

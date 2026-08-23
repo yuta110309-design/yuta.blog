@@ -469,9 +469,18 @@
     <h2 class="section-title">トレーナー</h2>
     <p class="service-lead">タップすると、経歴や実績、トレーナーとしての想いをご覧いただけます。</p>
 
+    <!-- TODO: トレーナー集合写真が確定したら、下のプレースホルダーを実写真に差し替える -->
+    <div class="trainer-banner">
+      <span class="trainer-banner-photo">
+        <svg class="photo-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#photo-pending"></use></svg>
+        トレーナー集合写真(準備中)
+      </span>
+      <span class="trainer-banner-label">TRAINER</span>
+    </div>
+
     <!-- TODO: 実際のトレーナー氏名・写真・経歴・実績・想いを data/trainers.json に反映する。
          現在はサンプル(仮)データ。 -->
-    <div class="trainer-grid" data-trainers-source="data/trainers.json">
+    <div class="trainer-groups" data-trainers-source="data/trainers.json">
       <p class="plan-loading">読み込み中…</p>
     </div>
   </div>

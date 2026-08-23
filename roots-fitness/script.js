@@ -569,11 +569,37 @@
     var trainerDetailBody = document.getElementById("trainer-detail-modal-body");
 
     if (trainerDetailModal && trainerDetailBody) {
+      var ALL_WEEKDAYS = ["月", "火", "水", "木", "金", "土", "日"];
+
+      function buildTrainerDaysHtml(trainer) {
+        var activeDays = trainer.days || [];
+        if (!activeDays.length) {
+          return (
+            '<div class="trainer-detail-days">' +
+              '<span class="trainer-detail-days-label">担当曜日</span>' +
+              '<p class="trainer-detail-days-note">曜日は確定次第掲載します。</p>' +
+            "</div>"
+          );
+        }
+        return (
+          '<div class="trainer-detail-days">' +
+            '<span class="trainer-detail-days-label">担当曜日</span>' +
+            '<div class="trainer-detail-days-list">' +
+              ALL_WEEKDAYS.map(function (day) {
+                var isActive = activeDays.indexOf(day) !== -1;
+                return '<span class="trainer-day' + (isActive ? " is-active" : "") + '">' + day + "</span>";
+              }).join("") +
+            "</div>" +
+          "</div>"
+        );
+      }
+
       function openTrainerDetailModal(trainer, triggerEl) {
         trainerDetailBody.innerHTML =
           '<span class="section-eyebrow">Trainer</span>' +
           '<h2 id="trainer-detail-modal-title" class="section-title">' + trainer.name + "</h2>" +
           '<p class="trainer-detail-role">' + trainerRoleLine(trainer) + "</p>" +
+          buildTrainerDaysHtml(trainer) +
           '<div class="plan-detail-photo">' + PHOTO_PLACEHOLDER_ICON + (trainer.photoNote || "トレーナー写真") + "</div>" +
           '<h3 class="plan-detail-subhead">経歴・実績</h3>' +
           '<p class="plan-detail-recommend">' + trainer.career + "</p>" +

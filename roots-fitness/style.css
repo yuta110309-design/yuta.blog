@@ -1514,6 +1514,46 @@ a.news-card:hover {
   margin: 4px 0 20px;
 }
 
+.trainer-detail-days {
+  margin-bottom: 20px;
+}
+
+.trainer-detail-days-label {
+  display: block;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--color-text-soft);
+  margin-bottom: 10px;
+}
+
+.trainer-detail-days-note {
+  font-size: 0.85rem;
+  color: var(--color-text-soft);
+  margin: 0;
+}
+
+.trainer-detail-days-list {
+  display: flex;
+  gap: 8px;
+}
+
+.trainer-day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-bg-alt);
+  color: var(--color-text-soft);
+  font-size: 0.82rem;
+}
+
+.trainer-day.is-active {
+  background: var(--color-terracotta);
+  color: var(--color-white);
+}
+
 /* ==========================================================================
    Location
    ========================================================================== */

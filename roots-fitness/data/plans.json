@@ -56,6 +56,39 @@
       "name": "セミパーソナル",
       "plans": [
         {
+          "id": "semi-weekly1",
+          "name": "週1回コース",
+          "frequency": "月4回",
+          "price": 24000,
+          "priceUnit": "月",
+          "unitPrice": 6000,
+          "note": "",
+          "recommendedFor": "セミパーソナルを、まずは無理なく週1回のペースで試してみたい方に。",
+          "photoNote": "週1回コース(セミパーソナル)のセッション風景"
+        },
+        {
+          "id": "semi-weekly2",
+          "name": "週2回コース",
+          "frequency": "月8回",
+          "price": 40000,
+          "priceUnit": "月",
+          "unitPrice": 5000,
+          "note": "",
+          "recommendedFor": "同じ空間に通う仲間とのペースを大切にしながら、着実に続けていきたい方に。",
+          "photoNote": "週2回コース(セミパーソナル)のセッション風景"
+        },
+        {
+          "id": "semi-weekly3",
+          "name": "週3回コース",
+          "frequency": "月12回",
+          "price": 48000,
+          "priceUnit": "月",
+          "unitPrice": 4000,
+          "note": "",
+          "recommendedFor": "習慣として、より高い頻度で通っていきたい方に。",
+          "photoNote": "週3回コース(セミパーソナル)のセッション風景"
+        },
+        {
           "id": "semi-unlimited",
           "name": "通い放題",
           "frequency": "無制限",

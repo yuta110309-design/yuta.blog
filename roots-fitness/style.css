@@ -1133,6 +1133,14 @@ a.news-card:hover {
   padding: 12px;
 }
 
+.trial-step-photo-real {
+  display: block;
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
 .trial-step-label {
   display: block;
   font-family: var(--font-heading);
@@ -1163,6 +1171,11 @@ a.news-card:hover {
   }
 
   .trial-step-photo {
+    flex: 0 0 240px;
+    height: 160px;
+  }
+
+  .trial-step-photo-real {
     flex: 0 0 240px;
     height: 160px;
   }

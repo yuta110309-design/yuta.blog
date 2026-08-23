@@ -7,7 +7,14 @@
       "rating": 5.0,
       "reviewCount": 41,
       "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Roots+Fitness+DAIKANYAMA",
-      "reviews": []
+      "reviews": [
+        {
+          "author": "心斎橋長堀フェムテック鍼灸整骨院",
+          "rating": 5,
+          "date": "2か月前",
+          "text": "お邪魔させて頂きました。まず空間づくりのレベルの高さに驚きました。清潔感があり、細部までこだわりを感じる素敵なジムです。また、トレーナーさんのトレーニングや身体づくりに対する考え方も非常に勉強になりました。「ここなら安心して通いたい」と思える環境が整っていると感じます。代官山でジムを探されている方におすすめしたい場所です。"
+        }
+      ]
     },
     {
       "id": "karuizawa",

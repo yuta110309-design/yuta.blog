@@ -52,7 +52,7 @@
 1. フォームの「回答」タブ → 緑のスプレッドシートアイコンから、回答を記録するGoogleスプレッドシートを作成(まだ無ければ)
 2. そのスプレッドシートを開き、「拡張機能」→「Apps Script」を開く
 3. `apps-script/onFormSubmit.gs` の内容をすべて貼り付けて保存
-4. `ADMIN_NOTIFY_EMAIL` を運営が確認できるメールアドレスに変更
+4. `ADMIN_NOTIFY_EMAILS` は運営向けの新規予約通知先として `yuta110309@gmail.com,kawashima@proudc-inc.com` を設定済み(カンマ区切りで複数宛先。宛先を変更・追加する場合はここを編集する)
 5. 軽井沢店のFitKarte予約URLが確定したら `STORE_REPLY_TEMPLATES["軽井沢"].fitkarteUrl` を差し替える
 6. 左メニューの「トリガー」(時計アイコン)→「トリガーを追加」
    - 実行する関数: `onFormSubmit`

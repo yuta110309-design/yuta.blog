@@ -68,6 +68,64 @@
   }
 
   /* ------------------------------------------------------------------ */
+  /* Why Roots スライダー(横スライド + 矢印 + ドットページネーション)          */
+  /* ------------------------------------------------------------------ */
+  var whyCards = document.getElementById("why-cards");
+  var whyDots = document.getElementById("why-slider-dots");
+
+  if (whyCards && whyDots) {
+    var whyPrevBtn = document.querySelector("[data-why-prev]");
+    var whyNextBtn = document.querySelector("[data-why-next]");
+    var whyDotEls = Array.prototype.slice.call(whyDots.querySelectorAll("[data-why-dot]"));
+    var whyCardEls = Array.prototype.slice.call(whyCards.children);
+
+    function whyCardStep() {
+      return whyCardEls[0] ? whyCardEls[0].getBoundingClientRect().width + 14 : whyCards.clientWidth;
+    }
+
+    function whyScrollToIndex(index) {
+      var clamped = Math.max(0, Math.min(index, whyCardEls.length - 1));
+      whyCards.scrollTo({ left: clamped * whyCardStep(), behavior: "smooth" });
+    }
+
+    function whyCurrentIndex() {
+      return Math.round(whyCards.scrollLeft / whyCardStep());
+    }
+
+    function whySetActiveDot(index) {
+      whyDotEls.forEach(function (dot, i) {
+        dot.classList.toggle("is-active", i === index);
+      });
+    }
+
+    if (whyPrevBtn) {
+      whyPrevBtn.addEventListener("click", function () {
+        whyScrollToIndex(whyCurrentIndex() - 1);
+      });
+    }
+
+    if (whyNextBtn) {
+      whyNextBtn.addEventListener("click", function () {
+        whyScrollToIndex(whyCurrentIndex() + 1);
+      });
+    }
+
+    whyDotEls.forEach(function (dot, index) {
+      dot.addEventListener("click", function () {
+        whyScrollToIndex(index);
+      });
+    });
+
+    var whyScrollTimer = null;
+    whyCards.addEventListener("scroll", function () {
+      clearTimeout(whyScrollTimer);
+      whyScrollTimer = setTimeout(function () {
+        whySetActiveDot(whyCurrentIndex());
+      }, 100);
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
   /* 店舗設定(FitKarte予約URL / Instagram URL / LINE URL)の読み込み          */
   /* data/stores.json を編集するだけで店舗の追加・URL差し替えが可能。        */
   /* data-store-cta="<storeId>" を持つ要素の href を自動設定する。          */

@@ -852,6 +852,7 @@ a.news-card:hover {
 }
 
 .why-card-with-photo {
+  position: relative;
   padding: 0;
   overflow: hidden;
 }
@@ -893,6 +894,103 @@ a.news-card:hover {
   .why-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* Why Roots スライダー(強みを横スライド形式で表示) */
+.why-slider {
+  position: relative;
+}
+
+.why-cards {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.why-cards::-webkit-scrollbar {
+  display: none;
+}
+
+.why-cards .why-card {
+  flex: 0 0 min(88vw, 420px);
+  scroll-snap-align: start;
+}
+
+.why-card-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+.why-slider-arrow {
+  position: absolute;
+  top: 90px;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-deep-green);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.why-slider-arrow-prev {
+  left: 12px;
+}
+
+.why-slider-arrow-next {
+  right: 12px;
+}
+
+.why-slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.why-slider-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(46, 61, 40, 0.2);
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease), width 0.25s var(--ease);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.why-slider-dot.is-active {
+  width: 20px;
+  border-radius: 4px;
+  background: var(--color-terracotta);
 }
 
 /* ==========================================================================

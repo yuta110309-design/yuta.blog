@@ -271,39 +271,51 @@
   <div class="container">
     <span class="section-eyebrow">Why Roots</span>
     <h2 class="section-title">選ばれる、4つの理由</h2>
-    <div class="why-grid">
-      <div class="why-card why-card-with-photo">
-        <img class="why-card-photo" src="images/why-dialogue.jpg" alt="トレーナーとお客様のカウンセリングの様子" loading="lazy" width="1536" height="1024">
-        <div class="why-card-content">
-          <span class="why-card-index">01</span>
-          <h3 class="why-card-title">対話からはじまる設計</h3>
-          <p class="why-card-body">見た目の数字ではなく、体の状態や生活習慣を丁寧にヒアリングしたうえで、一人ひとりに合わせたメニューを組み立てます。</p>
+
+    <div class="why-slider">
+      <button type="button" class="why-slider-arrow why-slider-arrow-prev" data-why-prev aria-label="前の理由へ">‹</button>
+      <div class="why-cards" id="why-cards">
+        <div class="why-card why-card-with-photo">
+          <span class="why-card-badge">01</span>
+          <img class="why-card-photo" src="images/why-dialogue.jpg" alt="トレーナーとお客様のカウンセリングの様子" loading="lazy" width="1536" height="1024">
+          <div class="why-card-content">
+            <h3 class="why-card-title">対話からはじまる設計</h3>
+            <p class="why-card-body">見た目の数字ではなく、体の状態や生活習慣を丁寧にヒアリングしたうえで、一人ひとりに合わせたメニューを組み立てます。</p>
+          </div>
+        </div>
+        <div class="why-card why-card-with-photo">
+          <span class="why-card-badge">02</span>
+          <img class="why-card-photo" src="images/why-habit.jpg" alt="通いなれた様子でスタジオに立ち寄るお客様" loading="lazy" width="1448" height="1086">
+          <div class="why-card-content">
+            <h3 class="why-card-title">整えることを、続けられる形に</h3>
+            <p class="why-card-body">週1回から通い放題まで、無理なく習慣にできるプランをご用意。トレーニングを日常の一部として定着させることを大切にしています。</p>
+          </div>
+        </div>
+        <div class="why-card why-card-with-photo">
+          <span class="why-card-badge">03</span>
+          <img class="why-card-photo" src="images/why-two-locations.jpg" alt="窓の外の緑を眺める様子" loading="lazy" width="1448" height="1086">
+          <div class="why-card-content">
+            <h3 class="why-card-title">都会と自然、2つの拠点</h3>
+            <p class="why-card-body">代官山の落ち着いた空間と、軽井沢の自然に囲まれた環境。気分やライフスタイルに合わせて、通う場所を選べます。</p>
+          </div>
+        </div>
+        <div class="why-card why-card-with-photo">
+          <span class="why-card-badge">04</span>
+          <img class="why-card-photo" src="images/why-online.jpg" alt="自宅でオンライントレーニングを受ける様子" loading="lazy" width="1448" height="1086">
+          <div class="why-card-content">
+            <h3 class="why-card-title">オンラインでも、本質は変わらない</h3>
+            <p class="why-card-body">通える距離でなくても、同じ考え方でのトレーニングをオンラインで。全国どこからでも、自然体を目指せます。</p>
+          </div>
         </div>
       </div>
-      <div class="why-card why-card-with-photo">
-        <img class="why-card-photo" src="images/why-habit.jpg" alt="通いなれた様子でスタジオに立ち寄るお客様" loading="lazy" width="1448" height="1086">
-        <div class="why-card-content">
-          <span class="why-card-index">02</span>
-          <h3 class="why-card-title">整えることを、続けられる形に</h3>
-          <p class="why-card-body">週1回から通い放題まで、無理なく習慣にできるプランをご用意。トレーニングを日常の一部として定着させることを大切にしています。</p>
-        </div>
-      </div>
-      <div class="why-card why-card-with-photo">
-        <img class="why-card-photo" src="images/why-two-locations.jpg" alt="窓の外の緑を眺める様子" loading="lazy" width="1448" height="1086">
-        <div class="why-card-content">
-          <span class="why-card-index">03</span>
-          <h3 class="why-card-title">都会と自然、2つの拠点</h3>
-          <p class="why-card-body">代官山の落ち着いた空間と、軽井沢の自然に囲まれた環境。気分やライフスタイルに合わせて、通う場所を選べます。</p>
-        </div>
-      </div>
-      <div class="why-card why-card-with-photo">
-        <img class="why-card-photo" src="images/why-online.jpg" alt="自宅でオンライントレーニングを受ける様子" loading="lazy" width="1448" height="1086">
-        <div class="why-card-content">
-          <span class="why-card-index">04</span>
-          <h3 class="why-card-title">オンラインでも、本質は変わらない</h3>
-          <p class="why-card-body">通える距離でなくても、同じ考え方でのトレーニングをオンラインで。全国どこからでも、自然体を目指せます。</p>
-        </div>
-      </div>
+      <button type="button" class="why-slider-arrow why-slider-arrow-next" data-why-next aria-label="次の理由へ">›</button>
+    </div>
+
+    <div class="why-slider-dots" id="why-slider-dots" role="tablist" aria-label="表示中の理由">
+      <button type="button" class="why-slider-dot is-active" data-why-dot="0" aria-label="1件目"></button>
+      <button type="button" class="why-slider-dot" data-why-dot="1" aria-label="2件目"></button>
+      <button type="button" class="why-slider-dot" data-why-dot="2" aria-label="3件目"></button>
+      <button type="button" class="why-slider-dot" data-why-dot="3" aria-label="4件目"></button>
     </div>
   </div>
 </section>

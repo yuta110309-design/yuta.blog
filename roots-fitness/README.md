@@ -51,7 +51,6 @@
 ## 未確定・要確認事項(プレースホルダーのまま)
 
 - 軽井沢店・オンラインの FitKarte予約URL(`data/stores.json`、`apps-script/onFormSubmit.gs`)
-- 公式LINE URL(`data/stores.json` の `line.url`)
 - Instagram実アカウントURL(代官山・軽井沢)
 - **Googleマップ**: APIキー不要のiframe埋め込み(`output=embed`)は実機検証したところ表示されなかったため撤回し、「Googleマップで見る」という新規タブで開くリンク形式に変更した(確実に動作する)。インライン地図表示にしたい場合は、Google Cloud で Maps Embed API キーを発行してもらう必要がある(`docs/`に手順を追記可能)
 - **電話番号が代官山・軽井沢で同一**(090-8443-5501)になっている点は、意図した共通の代表電話か確認したい(店舗ごとに直通番号を分ける予定がないか)

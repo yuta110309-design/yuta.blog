@@ -941,12 +941,22 @@ a.news-card:hover {
 }
 
 .plan-cards {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
   gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.plan-cards::-webkit-scrollbar {
+  display: none;
 }
 
 .plan-card {
+  flex: 0 0 min(80vw, 280px);
+  scroll-snap-align: start;
   background: var(--color-white);
   border: 1px solid rgba(46, 61, 40, 0.1);
   border-radius: var(--radius);
@@ -1185,17 +1195,6 @@ a.news-card:hover {
   }
 }
 
-@media (min-width: 640px) {
-  .plan-cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 960px) {
-  .plan-cards {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
 
 /* ==========================================================================
    Results(実績バッジ)

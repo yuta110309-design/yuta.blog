@@ -722,15 +722,16 @@ a.news-card:hover {
   margin-bottom: 32px;
   border-radius: var(--radius);
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
   background: linear-gradient(160deg, #33422c 0%, #2e3d28 60%, #232f1e 100%);
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.8rem;
-  letter-spacing: 0.04em;
+}
+
+.founder-message-photo-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
 }
 
 .founder-message-photo-tag {
@@ -787,6 +788,10 @@ a.news-card:hover {
   .founder-message-lead {
     font-size: 1.15rem;
     line-height: 2.1;
+  }
+
+  .founder-message-photo-img {
+    object-position: center 22%;
   }
 }
 

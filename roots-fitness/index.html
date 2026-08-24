@@ -519,7 +519,13 @@
 
     <div class="results-voice-teaser">
       <p class="results-voice-text">お客様お一人おひとりの変化については、お客様の声でご紹介しています。</p>
-      <a href="voice.html" class="btn btn-line btn-small" target="_blank" rel="noopener">お客様の声を見る</a>
+      <div class="results-voice-cards" data-voice-teaser-source="data/reviews.json" data-voice-teaser-initial="3">
+        <p class="plan-loading">読み込み中…</p>
+      </div>
+      <div class="results-voice-actions">
+        <button type="button" class="btn btn-line btn-small" data-voice-teaser-toggle hidden>もっと見る</button>
+        <a href="voice.html" class="link-line" target="_blank" rel="noopener">すべての口コミを見る ↗</a>
+      </div>
     </div>
   </div>
 </section>

@@ -815,6 +815,83 @@
   }
 
   /* ------------------------------------------------------------------ */
+  /* トップページの「お客様の声」ティザー(店舗をまたいで数件だけ表示し、        */
+  /* 「もっと見る」タップで残りを表示する)。                                  */
+  /* [data-voice-teaser-source] に data/reviews.json を読み込んで描画する。   */
+  /* ------------------------------------------------------------------ */
+  var voiceTeaser = document.querySelector("[data-voice-teaser-source]");
+
+  if (voiceTeaser) {
+    var voiceTeaserInitial = parseInt(voiceTeaser.getAttribute("data-voice-teaser-initial"), 10) || 3;
+    var voiceTeaserToggle = document.querySelector("[data-voice-teaser-toggle]");
+
+    function buildVoiceStarsHtml(rating) {
+      var filled = Math.round(rating || 0);
+      var html = "";
+      for (var i = 0; i < 5; i++) {
+        html += '<span class="review-star' + (i < filled ? " is-filled" : "") + '">★</span>';
+      }
+      return html;
+    }
+
+    function buildVoiceTeaserCardHtml(review, storeName, isExtra) {
+      return (
+        '<div class="review-card' + (isExtra ? " is-voice-extra" : "") + '">' +
+          '<div class="review-card-head">' +
+            '<span class="review-card-avatar">' + (review.author ? review.author.charAt(0) : "") + "</span>" +
+            '<span class="review-card-head-body">' +
+              '<span class="review-card-author">' + review.author + "</span>" +
+              '<span class="review-card-date">' + storeName + " ・ " + review.date + "</span>" +
+            "</span>" +
+          "</div>" +
+          '<div class="review-card-stars">' + buildVoiceStarsHtml(review.rating) + "</div>" +
+          '<p class="review-card-text">' + review.text + "</p>" +
+          (review.photo
+            ? '<img class="review-card-photo" src="' + review.photo + '" alt="' + (review.photoAlt || "口コミに添付された写真") + '" loading="lazy">'
+            : "") +
+          '<span class="review-card-source">(Googleのクチコミから引用)</span>' +
+        "</div>"
+      );
+    }
+
+    fetch(voiceTeaser.getAttribute("data-voice-teaser-source"))
+      .then(function (res) {
+        return res.ok ? res.json() : { stores: [] };
+      })
+      .then(function (data) {
+        var stores = data.stores || [];
+        var allReviews = [];
+        stores.forEach(function (store) {
+          (store.reviews || []).forEach(function (review) {
+            allReviews.push({ review: review, storeName: store.storeName });
+          });
+        });
+
+        if (!allReviews.length) {
+          voiceTeaser.innerHTML = '<p class="plan-loading">現在準備中です。</p>';
+          return;
+        }
+
+        voiceTeaser.innerHTML = allReviews
+          .map(function (item, i) {
+            return buildVoiceTeaserCardHtml(item.review, item.storeName, i >= voiceTeaserInitial);
+          })
+          .join("");
+
+        if (voiceTeaserToggle && allReviews.length > voiceTeaserInitial) {
+          voiceTeaserToggle.hidden = false;
+          voiceTeaserToggle.addEventListener("click", function () {
+            var expanded = voiceTeaser.classList.toggle("is-expanded");
+            voiceTeaserToggle.textContent = expanded ? "閉じる" : "もっと見る";
+          });
+        }
+      })
+      .catch(function () {
+        voiceTeaser.innerHTML = '<p class="plan-loading">口コミの読み込みに失敗しました。</p>';
+      });
+  }
+
+  /* ------------------------------------------------------------------ */
   /* FAQ(カテゴリタグ + アコーディオン)                                    */
   /* [data-faq-source] に data/faq.json を読み込み、カテゴリ(categories)     */
   /* ごとにタグボタンを生成する。タグをタップすると、そのカテゴリの質問だけを     */

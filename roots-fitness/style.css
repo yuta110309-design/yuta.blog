@@ -1543,11 +1543,6 @@ a.news-card:hover {
 }
 
 .results-voice-teaser {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
   padding-top: 32px;
   border-top: 1px solid rgba(46, 61, 40, 0.12);
 }
@@ -1555,7 +1550,35 @@ a.news-card:hover {
 .results-voice-text {
   font-size: 0.88rem;
   color: var(--color-text-soft);
-  margin: 0;
+  margin: 0 0 20px;
+}
+
+.results-voice-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 700px) {
+  .results-voice-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.results-voice-cards .review-card.is-voice-extra {
+  display: none;
+}
+
+.results-voice-cards.is-expanded .review-card.is-voice-extra {
+  display: block;
+}
+
+.results-voice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
 }
 
 /* ==========================================================================

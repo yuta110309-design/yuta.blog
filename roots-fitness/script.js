@@ -391,7 +391,11 @@
       return (
         '<div class="plan-schedule-row">' +
           '<span class="plan-schedule-label">' + label + "</span>" +
-          '<span class="plan-schedule-times">' + times.join(" / ") + "</span>" +
+          '<div class="plan-schedule-times">' +
+            times.map(function (t) {
+              return '<span class="plan-schedule-chip">' + t + "</span>";
+            }).join("") +
+          "</div>" +
         "</div>"
       );
     }

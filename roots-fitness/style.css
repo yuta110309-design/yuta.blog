@@ -1145,10 +1145,9 @@ a.news-card:hover {
 
 .plan-schedule-row {
   display: flex;
-  gap: 12px;
-  padding: 6px 0;
-  font-size: 0.82rem;
-  line-height: 1.6;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 0;
 }
 
 .plan-schedule-row:not(:last-child) {
@@ -1157,13 +1156,35 @@ a.news-card:hover {
 
 .plan-schedule-label {
   flex-shrink: 0;
-  width: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-bg-alt);
   color: var(--color-deep-green);
   font-family: var(--font-heading);
+  font-size: 0.82rem;
 }
 
 .plan-schedule-times {
-  color: var(--color-text-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.plan-schedule-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--color-bg-alt);
+  border: 1px solid rgba(46, 61, 40, 0.12);
+  font-size: 0.8rem;
+  color: var(--color-text);
+  white-space: nowrap;
 }
 
 .plan-cards {

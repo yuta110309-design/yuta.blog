@@ -736,27 +736,26 @@ a.news-card:hover {
 
 .founder-message-photo-tag {
   position: absolute;
-  right: 16px;
-  bottom: 16px;
+  right: 20px;
+  bottom: 18px;
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: 12px 16px;
-  background: var(--color-white);
-  border-radius: var(--radius);
-  text-align: left;
+  text-align: right;
 }
 
 .founder-message-photo-tag-role {
-  font-size: 0.68rem;
-  letter-spacing: 0.04em;
-  color: var(--color-text-soft);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55), 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 .founder-message-photo-tag-name {
   font-family: var(--font-signature);
-  font-size: 1.3rem;
-  color: var(--color-deep-green);
+  font-size: 1.6rem;
+  color: var(--color-white);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .founder-message {

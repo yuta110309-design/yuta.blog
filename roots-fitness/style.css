@@ -408,7 +408,6 @@ body.reservation-open {
   font-family: var(--font-body);
   font-size: 0.75rem;
   letter-spacing: 0.35em;
-  text-transform: uppercase;
   opacity: 0.85;
   margin-bottom: 20px;
 }

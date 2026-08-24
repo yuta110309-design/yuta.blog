@@ -1128,10 +1128,6 @@ a.news-card:hover {
 }
 
 .plan-schedule {
-  background: var(--color-white);
-  border: 1px solid rgba(46, 61, 40, 0.12);
-  border-radius: var(--radius);
-  padding: 16px 20px;
   margin-bottom: 20px;
 }
 
@@ -1139,18 +1135,20 @@ a.news-card:hover {
   font-size: 0.78rem;
   letter-spacing: 0.08em;
   color: var(--color-terracotta);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .plan-schedule-row {
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  padding: 12px 0;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  margin-bottom: 10px;
 }
 
-.plan-schedule-row:not(:last-child) {
-  border-bottom: 1px solid rgba(46, 61, 40, 0.08);
+.plan-schedule-row:last-child {
+  margin-bottom: 0;
 }
 
 .plan-schedule-label {
@@ -1161,8 +1159,7 @@ a.news-card:hover {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--color-bg-alt);
-  color: var(--color-deep-green);
+  background: var(--color-white);
   font-family: var(--font-heading);
   font-size: 0.82rem;
 }
@@ -1179,11 +1176,47 @@ a.news-card:hover {
   align-items: center;
   padding: 6px 14px;
   border-radius: 999px;
-  background: var(--color-bg-alt);
-  border: 1px solid rgba(46, 61, 40, 0.12);
+  background: var(--color-white);
   font-size: 0.8rem;
-  color: var(--color-text);
   white-space: nowrap;
+}
+
+.plan-schedule-row.is-morning {
+  background: rgba(169, 103, 61, 0.1);
+}
+
+.plan-schedule-row.is-morning .plan-schedule-label {
+  color: var(--color-terracotta);
+}
+
+.plan-schedule-row.is-morning .plan-schedule-chip {
+  color: var(--color-terracotta-dark);
+}
+
+.plan-schedule-row.is-noon {
+  background: rgba(78, 97, 68, 0.1);
+}
+
+.plan-schedule-row.is-noon .plan-schedule-label {
+  color: var(--color-moss);
+}
+
+.plan-schedule-row.is-noon .plan-schedule-chip {
+  color: var(--color-deep-green);
+}
+
+.plan-schedule-row.is-night {
+  background: var(--color-deep-green);
+}
+
+.plan-schedule-row.is-night .plan-schedule-label {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--color-white);
+}
+
+.plan-schedule-row.is-night .plan-schedule-chip {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--color-white);
 }
 
 .plan-cards {

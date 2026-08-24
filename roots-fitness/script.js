@@ -387,9 +387,12 @@
       return !plan.stores || plan.stores.indexOf(storeId) !== -1;
     }
 
+    var SCHEDULE_TIME_CLASS = { "朝": "is-morning", "昼": "is-noon", "夜": "is-night" };
+
     function buildScheduleRowHtml(label, times) {
+      var timeClass = SCHEDULE_TIME_CLASS[label] || "";
       return (
-        '<div class="plan-schedule-row">' +
+        '<div class="plan-schedule-row ' + timeClass + '">' +
           '<span class="plan-schedule-label">' + label + "</span>" +
           '<div class="plan-schedule-times">' +
             times.map(function (t) {

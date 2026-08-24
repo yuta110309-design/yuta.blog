@@ -488,38 +488,22 @@
     <span class="section-eyebrow">Results</span>
     <h2 class="section-title">実績</h2>
 
-    <!-- 共有のバッジ用SVGシンボル定義(1回だけ定義し、下の3つのバッジで使い回す)。
-         年輪(積み重ねてきた実績)+根が広がるモチーフで、Rootsらしさを表現。 -->
-    <svg width="0" height="0" style="position: absolute;" aria-hidden="true">
-      <defs>
-        <symbol id="roots-mark" viewBox="0 0 122 128">
-          <path class="roots-mark-ring roots-mark-ring-1" d="M102,54 C102,77.2 80.4,91 60,91 C39.6,91 20,76.1 20,54 C20,31.9 38.5,15 60,15 C81.5,15 102,30.8 102,54 Z" />
-          <path class="roots-mark-ring roots-mark-ring-2" d="M87,54 C87,68.9 73.3,78 60,78 C46.7,78 34,68.4 34,54 C34,39.6 46.2,29 60,29 C73.8,29 87,39.1 87,54 Z" />
-          <g class="roots-mark-roots">
-            <path d="M47 91 C 44 100 39 107 30 113" />
-            <path d="M60 93 C 60 102 59 109 56 117" />
-            <path d="M73 91 C 76 100 81 107 90 113" />
-          </g>
-        </symbol>
-      </defs>
-    </svg>
-
     <!-- TODO: 累計セッション実績は未確認。Google口コミの2件は代官山店(41件・★5.0)+軽井沢店
          (45件・★5.0)の実数を合算(件数は合計、評価は両店舗とも★5.0のためそのまま)。
          集計時点(例: 2026年◯月現在)の注記も確認して追加する。 -->
     <div class="results-badges">
       <div class="results-badge">
-        <svg class="results-badge-mark" viewBox="0 0 122 128" aria-hidden="true"><use href="#roots-mark"></use></svg>
+        <img class="results-badge-mark" src="images/results-badge-frame.png" alt="" aria-hidden="true" loading="lazy" width="480" height="480">
         <span class="results-badge-value">---</span>
         <span class="results-badge-label">累計セッション実績</span>
       </div>
       <div class="results-badge">
-        <svg class="results-badge-mark" viewBox="0 0 122 128" aria-hidden="true"><use href="#roots-mark"></use></svg>
+        <img class="results-badge-mark" src="images/results-badge-frame.png" alt="" aria-hidden="true" loading="lazy" width="480" height="480">
         <span class="results-badge-value">86件</span>
         <span class="results-badge-label">Google口コミ累計</span>
       </div>
       <div class="results-badge">
-        <svg class="results-badge-mark" viewBox="0 0 122 128" aria-hidden="true"><use href="#roots-mark"></use></svg>
+        <img class="results-badge-mark" src="images/results-badge-frame.png" alt="" aria-hidden="true" loading="lazy" width="480" height="480">
         <span class="results-badge-value">★5.0</span>
         <span class="results-badge-label">Google口コミ評価</span>
       </div>

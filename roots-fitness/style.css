@@ -1574,36 +1574,8 @@ a.news-card:hover {
   margin: 0 0 20px;
 }
 
-.results-voice-group {
-  margin-bottom: 32px;
-}
-
-.results-voice-group-title {
-  font-size: 0.95rem;
-  letter-spacing: 0.04em;
-  color: var(--color-deep-green);
-  margin: 0 0 14px;
-}
-
-.results-voice-cards {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-@media (min-width: 700px) {
-  .results-voice-cards {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.results-voice-cards .review-card.is-voice-extra {
-  display: none;
-}
-
-.results-voice-cards.is-expanded .review-card.is-voice-extra {
-  display: block;
+.results-voice-groups .review-group:last-child {
+  margin-bottom: 20px;
 }
 
 .results-voice-actions {

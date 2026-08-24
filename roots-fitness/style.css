@@ -1479,9 +1479,20 @@ a.news-card:hover {
 }
 
 .results-badge {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 160px;
-  height: 148px;
+}
+
+/* バッジ画像(images/results-badge-frame.png)のリング部分は、画像の高さに対して
+   上寄り(中心 y ≈ 42.3%)に描かれ、下側は根っこの装飾になっている。数字(value)は
+   リングの視覚的な中心に重ねて配置し、ラベル(label)は根っこと被らないよう
+   画像の外(下)に独立した要素として配置する。 */
+.results-badge-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
 }
 
 .results-badge-mark {
@@ -1492,10 +1503,6 @@ a.news-card:hover {
   object-fit: contain;
 }
 
-/* バッジ画像(images/results-badge-frame.png)のリング部分は、画像の高さに対して
-   上寄り(中心 y ≈ 42.3%)に描かれ、下側は根っこの装飾用の余白になっている。
-   数字(value)はリングの視覚的な中心に、ラベル(label)はリングの下
-   (根っこの装飾エリア)に別々に配置する。 */
 .results-badge-value {
   position: absolute;
   left: 50%;
@@ -1506,27 +1513,21 @@ a.news-card:hover {
 }
 
 .results-badge-label {
-  position: absolute;
-  left: 50%;
-  bottom: 6px;
-  transform: translateX(-50%);
-  width: 100%;
+  margin-top: 14px;
+  text-align: center;
 }
 
 .results-badge-value {
-  z-index: 1;
   font-family: var(--font-heading);
-  font-size: 1.7rem;
+  font-size: 2.15rem;
   letter-spacing: 0.02em;
   color: var(--color-deep-green);
 }
 
 .results-badge-label {
-  z-index: 1;
   font-size: 0.76rem;
   color: var(--color-text-soft);
   letter-spacing: 0.04em;
-  text-align: center;
 }
 
 .results-note {

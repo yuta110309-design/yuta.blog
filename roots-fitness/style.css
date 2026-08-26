@@ -2217,15 +2217,15 @@ a.news-card:hover {
   background-image: url("images/why-two-locations.jpg");
   background-size: cover;
   background-position: center;
-  opacity: 0.16;
-  filter: saturate(0.7);
+  opacity: 0.42;
+  filter: saturate(0.75);
 }
 
 .cta-strip::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, rgba(51, 66, 44, 0.92) 0%, rgba(46, 61, 40, 0.94) 45%, rgba(35, 47, 30, 0.95) 100%);
+  background: linear-gradient(160deg, rgba(51, 66, 44, 0.72) 0%, rgba(46, 61, 40, 0.76) 45%, rgba(35, 47, 30, 0.8) 100%);
 }
 
 .cta-strip-inner {

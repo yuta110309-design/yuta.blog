@@ -957,6 +957,7 @@ a.news-card:hover {
 /* Why Roots スライダー(強みを横スライド形式で表示) */
 .why-slider {
   position: relative;
+  overflow: hidden;
 }
 
 .why-cards {
@@ -1487,6 +1488,7 @@ a.news-card:hover {
 
 .trial-slider {
   position: relative;
+  overflow: hidden;
 }
 
 .trial-steps {
@@ -2586,6 +2588,7 @@ a.news-card:hover {
 
 .review-slider {
   position: relative;
+  overflow: hidden;
   margin-bottom: 16px;
 }
 

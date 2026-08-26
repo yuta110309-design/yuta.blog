@@ -697,12 +697,17 @@
 
     /* flexコンテナは横に並ぶ全カードのうち最も背の高いものに合わせて高さが
        決まるため、そのままだと写真付きなど背の高いカードがスライダー内に
-       あると、それより低いカードの下に空白ができてしまう。表示中のカードの
-       実際の高さに合わせてコンテナの高さを都度上書きすることで防ぐ。 */
+       あると、それより低いカードの下に空白ができてしまう。
+       高さを上書きする対象は、スクロールされる本体(cardsEl)ではなく、
+       ひとつ外側のラッパー(position:relative + overflow:hiddenの
+       .why-slider / .trial-slider / .review-slider)にする。cardsEl自体の
+       高さをタッチスクロール中に書き換えると、iOSでスワイプの慣性が
+       途切れて操作しづらくなるため。 */
     function syncHeight(index) {
       var active = cardEls[index];
-      if (active) {
-        cardsEl.style.height = active.offsetHeight + "px";
+      var wrap = cardsEl.parentElement;
+      if (active && wrap) {
+        wrap.style.height = active.offsetHeight + "px";
       }
     }
 

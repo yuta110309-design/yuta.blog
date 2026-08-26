@@ -572,7 +572,8 @@ body.reservation-open {
   display: flex;
   gap: 16px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 8px;
   scrollbar-width: none;
@@ -962,7 +963,8 @@ a.news-card:hover {
   display: flex;
   gap: 14px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 8px;
   scrollbar-width: none;
@@ -1309,7 +1311,8 @@ a.news-card:hover {
   display: flex;
   gap: 14px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 8px;
   scrollbar-width: none;
@@ -1493,7 +1496,8 @@ a.news-card:hover {
   display: flex;
   gap: 14px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
@@ -1766,7 +1770,8 @@ a.news-card:hover {
   display: flex;
   gap: 14px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 8px;
   scrollbar-width: none;
@@ -2589,7 +2594,8 @@ a.news-card:hover {
   align-items: flex-start;
   gap: 14px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 8px;
   scrollbar-width: none;

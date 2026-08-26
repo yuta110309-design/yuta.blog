@@ -1151,16 +1151,26 @@ a.news-card:hover {
 }
 
 .plan-schedule-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 14px 16px;
+  padding: 10px 16px;
   border-radius: var(--radius);
   margin-bottom: 10px;
 }
 
 .plan-schedule-row:last-child {
   margin-bottom: 0;
+}
+
+.plan-schedule-summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 4px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.plan-schedule-summary::-webkit-details-marker {
+  display: none;
 }
 
 .plan-schedule-label {
@@ -1176,11 +1186,26 @@ a.news-card:hover {
   font-size: 0.82rem;
 }
 
+.plan-schedule-range {
+  flex: 1;
+  font-size: 0.85rem;
+}
+
+.plan-schedule-chevron {
+  flex-shrink: 0;
+  font-size: 1rem;
+  transition: transform 0.25s var(--ease);
+}
+
+.plan-schedule-row[open] .plan-schedule-chevron {
+  transform: rotate(90deg);
+}
+
 .plan-schedule-times {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  padding-top: 8px;
+  padding: 10px 0 6px 54px;
 }
 
 .plan-schedule-chip {
@@ -1201,6 +1226,11 @@ a.news-card:hover {
   color: var(--color-terracotta);
 }
 
+.plan-schedule-row.is-morning .plan-schedule-range,
+.plan-schedule-row.is-morning .plan-schedule-chevron {
+  color: var(--color-terracotta-dark);
+}
+
 .plan-schedule-row.is-morning .plan-schedule-chip {
   color: var(--color-terracotta-dark);
 }
@@ -1213,6 +1243,11 @@ a.news-card:hover {
   color: var(--color-moss);
 }
 
+.plan-schedule-row.is-noon .plan-schedule-range,
+.plan-schedule-row.is-noon .plan-schedule-chevron {
+  color: var(--color-deep-green);
+}
+
 .plan-schedule-row.is-noon .plan-schedule-chip {
   color: var(--color-deep-green);
 }
@@ -1223,6 +1258,11 @@ a.news-card:hover {
 
 .plan-schedule-row.is-night .plan-schedule-label {
   background: rgba(255, 255, 255, 0.14);
+  color: var(--color-white);
+}
+
+.plan-schedule-row.is-night .plan-schedule-range,
+.plan-schedule-row.is-night .plan-schedule-chevron {
   color: var(--color-white);
 }
 

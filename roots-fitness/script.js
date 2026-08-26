@@ -391,15 +391,22 @@
 
     function buildScheduleRowHtml(label, times) {
       var timeClass = SCHEDULE_TIME_CLASS[label] || "";
+      var rangeHint = times.length
+        ? times[0].split("-")[0] + "〜" + times[times.length - 1].split("-")[1]
+        : "";
       return (
-        '<div class="plan-schedule-row ' + timeClass + '">' +
-          '<span class="plan-schedule-label">' + label + "</span>" +
+        '<details class="plan-schedule-row ' + timeClass + '">' +
+          '<summary class="plan-schedule-summary">' +
+            '<span class="plan-schedule-label">' + label + "</span>" +
+            '<span class="plan-schedule-range">' + rangeHint + "</span>" +
+            '<span class="plan-schedule-chevron" aria-hidden="true">›</span>' +
+          "</summary>" +
           '<div class="plan-schedule-times">' +
             times.map(function (t) {
               return '<span class="plan-schedule-chip">' + t + "</span>";
             }).join("") +
           "</div>" +
-        "</div>"
+        "</details>"
       );
     }
 

@@ -390,58 +390,48 @@ body.reservation-open {
   isolation: isolate;
 }
 
-/* 代官山・軽井沢の実写真が、列ごとに上下逆方向へゆっくり流れ続ける背景。
-   各列は同じ2枚の写真を2セット並べ、trackをちょうど半分の高さぶん
-   translateYすることで、途切れなくループしているように見せている。 */
-.hero-photowall {
+/* 代官山・軽井沢の実写真が交互に、ゆっくりズームインしながら
+   クロスフェードで切り替わる背景(いわゆるケンバーンズ効果)。
+   4枚を24秒周期で6秒ずつ、delayをずらして表示することで
+   1枚ずつ順番に浮かび上がっては消えていくように見せている。 */
+.hero-kenburns {
   position: absolute;
   inset: 0;
   z-index: -2;
-  display: flex;
-  gap: 4px;
-}
-
-.hero-photowall-col {
-  flex: 1;
   overflow: hidden;
 }
 
-.hero-photowall-track {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.hero-photowall-track img {
-  display: block;
+.hero-kenburns img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
-  aspect-ratio: 3 / 4;
+  height: 100%;
   object-fit: cover;
+  opacity: 0;
   filter: brightness(0.6) saturate(0.9);
+  animation: hero-kenburns-cycle 24s ease-in-out infinite;
 }
 
-.hero-photowall-col-up .hero-photowall-track {
-  animation: hero-photowall-up 48s linear infinite;
-}
+.hero-kenburns img:nth-child(1) { animation-delay: 0s; }
+.hero-kenburns img:nth-child(2) { animation-delay: 6s; }
+.hero-kenburns img:nth-child(3) { animation-delay: 12s; }
+.hero-kenburns img:nth-child(4) { animation-delay: 18s; }
 
-.hero-photowall-col-down .hero-photowall-track {
-  animation: hero-photowall-down 48s linear infinite;
-}
-
-@keyframes hero-photowall-up {
-  from { transform: translateY(0); }
-  to { transform: translateY(-50%); }
-}
-
-@keyframes hero-photowall-down {
-  from { transform: translateY(-50%); }
-  to { transform: translateY(0); }
+@keyframes hero-kenburns-cycle {
+  0% { opacity: 0; transform: scale(1); }
+  4% { opacity: 1; }
+  21% { opacity: 1; transform: scale(1.12); }
+  25% { opacity: 0; transform: scale(1.12); }
+  100% { opacity: 0; transform: scale(1.12); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-photowall-track {
+  .hero-kenburns img {
     animation: none;
+  }
+
+  .hero-kenburns img:first-child {
+    opacity: 1;
   }
 }
 

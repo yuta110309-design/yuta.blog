@@ -1332,10 +1332,11 @@ a.news-card:hover {
 .plan-card {
   flex: 0 0 min(80vw, 280px);
   scroll-snap-align: start;
-  background: var(--color-white);
-  border: 1px solid rgba(46, 61, 40, 0.1);
-  border-radius: var(--radius);
+  background: linear-gradient(160deg, #ffffff 0%, #f7f2e6 55%, #efe6d3 100%);
+  border: 1px solid rgba(46, 61, 40, 0.08);
+  border-radius: 20px;
   padding: 20px;
+  box-shadow: 0 2px 14px rgba(46, 61, 40, 0.07);
 }
 
 .plan-card-head {

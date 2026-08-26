@@ -216,22 +216,61 @@
   </div>
 </section>
 
-<!-- ==================== 3. NEWS ==================== -->
-<section class="section" id="news">
+<!-- ==================== 5. RESULTS ==================== -->
+<section class="section section-alt" id="results">
   <div class="container">
-    <span class="section-eyebrow">News</span>
-    <h2 class="section-title">お知らせ</h2>
-    <div class="news-grid" id="news-list-top" data-news-source="data/news.json" data-news-limit="3">
-      <noscript><p>最新のお知らせは <a href="news.html">お知らせ一覧</a> をご覧ください。</p></noscript>
+    <span class="section-eyebrow">Results</span>
+    <h2 class="section-title">実績</h2>
+
+    <!-- TODO: 累計セッション実績は未確認。Google口コミの2件は代官山店(41件・★5.0)+軽井沢店
+         (45件・★5.0)の実数を合算(件数は合計、評価は両店舗とも★5.0のためそのまま)。
+         集計時点(例: 2026年◯月現在)の注記も確認して追加する。 -->
+    <div class="results-badges">
+      <div class="results-badge">
+        <div class="results-badge-visual">
+          <img class="results-badge-mark" src="images/results-badge-frame.png" alt="" aria-hidden="true" loading="lazy" width="480" height="480">
+          <span class="results-badge-value">---</span>
+        </div>
+        <span class="results-badge-label">累計セッション実績</span>
+      </div>
+      <div class="results-badge">
+        <div class="results-badge-visual">
+          <img class="results-badge-mark" src="images/results-badge-frame.png" alt="" aria-hidden="true" loading="lazy" width="480" height="480">
+          <span class="results-badge-value">86件</span>
+        </div>
+        <span class="results-badge-label">Google口コミ累計</span>
+      </div>
+      <div class="results-badge">
+        <div class="results-badge-visual">
+          <img class="results-badge-mark" src="images/results-badge-frame.png" alt="" aria-hidden="true" loading="lazy" width="480" height="480">
+          <span class="results-badge-value">★5.0</span>
+        </div>
+        <span class="results-badge-label">Google口コミ評価</span>
+      </div>
     </div>
-    <div class="news-actions">
-      <a href="news.html" class="btn btn-line btn-small">すべて見る</a>
-      <a href="#" class="link-line" data-line-cta target="_blank" rel="noopener noreferrer">まずは情報だけ知りたい方はLINEで</a>
+    <!-- TODO: 集計時点(例: 2026年◯月現在)を確認して以下に追記する -->
+    <p class="results-note">※Google口コミは代官山店・軽井沢店の合算(累計セッション実績は確定次第公開します)</p>
+
+    <div class="results-voice-teaser">
+      <p class="results-voice-text">お客様お一人おひとりの変化については、お客様の声でご紹介しています。</p>
+      <div class="results-voice-groups" data-reviews-source="data/reviews.json">
+        <p class="plan-loading">読み込み中…</p>
+      </div>
+      <div class="results-voice-actions">
+        <a href="voice.html" class="link-line" target="_blank" rel="noopener">すべての口コミを見る ↗</a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ==================== 4. WHY ROOTS ==================== -->
+<section class="cta-strip">
+  <div class="container cta-strip-inner">
+    <p class="cta-strip-text">実際の声を確かめたら、次はあなたの番です。</p>
+    <button type="button" class="btn btn-primary" data-open-reservation>体験予約はこちら</button>
+  </div>
+</section>
+
+<!-- ==================== 6. WHY ROOTS ==================== -->
 <section class="section" id="why">
   <div class="container">
     <span class="section-eyebrow">Why Roots</span>
@@ -285,141 +324,9 @@
   </div>
 </section>
 
-<!-- ==================== 5. SERVICE ==================== -->
-<section class="section section-alt" id="service">
+<!-- ==================== 8. TRIAL ==================== -->
+<section class="section" id="trial">
   <div class="container">
-    <span class="section-eyebrow">Service</span>
-    <h2 class="section-title">サービス</h2>
-    <p class="service-lead">パーソナル・セミパーソナル・オンライン。トレーニングの先にも、続けたくなる時間があります。</p>
-
-    <!-- TODO: 機材へのこだわり(電気を使わない配慮など)は川島さん確認後に追記。
-         個人/お子様連れ/友人グループでの利用可否も確認事項。
-         レンタルウェア・レンタルシューズ・完全個室の有無は川島さん確認待ちのため、
-         確認が取れ次第 .service-facilities-grid に項目を追加する。
-         プロテイン提供はなしと確認済みのため、あえて掲載していない。 -->
-    <div class="service-facilities">
-      <h3 class="service-facilities-title">設備</h3>
-      <div class="service-facilities-grid">
-        <div class="service-facility">
-          <span class="service-facility-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3c-3 4-6 8-6 11a6 6 0 0 0 12 0c0-3-3-7-6-11z"/></svg>
-          </span>
-          <span class="service-facility-label">ウォーターサーバー<br>(無料)</span>
-        </div>
-        <div class="service-facility">
-          <span class="service-facility-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h10M7 14h6"/></svg>
-          </span>
-          <span class="service-facility-label">冷暖房完備</span>
-        </div>
-        <div class="service-facility">
-          <span class="service-facility-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1"/><circle cx="15" cy="12" r="1" fill="currentColor" stroke="none"/></svg>
-          </span>
-          <span class="service-facility-label">更衣室完備</span>
-        </div>
-        <div class="service-facility">
-          <span class="service-facility-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V13M9 19V9M14 19V15M19 19V6"/></svg>
-          </span>
-          <span class="service-facility-label">InBody完備</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="why-grid service-perks">
-      <div class="why-card why-card-with-photo">
-        <img class="why-card-photo" src="images/service-meetup.jpg" alt="会員限定オフ会で談笑する様子" loading="lazy" width="1448" height="1086">
-        <div class="why-card-content">
-          <span class="why-card-index">Meetup</span>
-          <h3 class="why-card-title">会員限定オフ会</h3>
-          <p class="why-card-body">2〜3ヶ月に1回、会員同士が気軽に顔を合わせられる場を設けています。トレーニング以外の時間でも、自然体でいられる関係を。</p>
-        </div>
-      </div>
-      <div class="why-card why-card-with-photo">
-        <img class="why-card-photo" src="images/service-seasonal.jpg" alt="季節の日本文化体験(茶道)の様子" loading="lazy" width="1448" height="1086">
-        <div class="why-card-content">
-          <span class="why-card-index">Seasonal</span>
-          <h3 class="why-card-title">季節のイベント・コンテンツ</h3>
-          <p class="why-card-body">季節ごとに、食事の会やイベント、コンテンツを企画・実施。トレーニングだけでは終わらない、Rootsならではの時間をつくっています。</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== 6. LOCATION ==================== -->
-<section class="section" id="location">
-  <div class="container">
-    <span class="section-eyebrow">Location</span>
-    <h2 class="section-title">代官山 / 軽井沢</h2>
-    <p class="service-lead">同じ本質を、それぞれの場所で。都会と自然、2つの拠点をご用意しています。</p>
-
-    <!-- TODO: 各店舗の住所・営業時間・Googleマップ埋め込みはAccessセクションで実装(要確認) -->
-    <div class="location-grid">
-      <div class="location-card">
-        <div class="location-card-photos">
-          <img class="location-card-photo" src="images/daikanyama-exterior.jpg" alt="代官山店の外観" loading="lazy" width="1206" height="1419">
-          <img class="location-card-photo" src="images/daikanyama-interior.jpg" alt="代官山店の店内" loading="lazy" width="1600" height="1066">
-        </div>
-        <div class="location-card-body">
-          <span class="location-card-eyebrow">代官山</span>
-          <h3 class="location-card-title">日常の延長で、通いやすく。</h3>
-          <p class="location-card-text">落ち着いた住宅街の一角、洗練された空間で。仕事や暮らしの合間に、無理なく立ち寄れる場所です。</p>
-        </div>
-      </div>
-      <div class="location-card">
-        <div class="location-card-photos">
-          <img class="location-card-photo" src="images/karuizawa-exterior.jpg" alt="軽井沢店の外観" loading="lazy" width="1206" height="1378">
-          <img class="location-card-photo" src="images/karuizawa-interior.jpg" alt="軽井沢店の店内" loading="lazy" width="1206" height="1377">
-        </div>
-        <div class="location-card-body">
-          <span class="location-card-eyebrow">軽井沢</span>
-          <h3 class="location-card-title">自然に囲まれた、ラウンジのような時間。</h3>
-          <p class="location-card-text">「Roots FITNESS LOUNGE」の名の通り、寛ぎの中でトレーニングを。都会とは違うペースで、自分と向き合う時間を過ごせます。</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="cta-strip">
-  <div class="container cta-strip-inner">
-    <p class="cta-strip-text">行きたい場所へ、まずは体験を。</p>
-    <button type="button" class="btn btn-primary" data-open-reservation>体験予約はこちら</button>
-  </div>
-</section>
-
-<!-- ==================== 7. PLAN ==================== -->
-<section class="section section-alt" id="plan">
-  <div class="container">
-    <span class="section-eyebrow">Plan</span>
-    <h2 class="section-title">料金プラン</h2>
-    <p class="plan-fee-note">パーソナル・セミパーソナル・ペアレッスンは、入会金11,000円が別途かかります(オンラインを除く)。</p>
-
-    <!-- TODO: パーソナル/セミパーソナルの適用店舗は要確認。確認が取れるまでは
-         全タブ(代官山/軽井沢/オンライン)に同じ内容を表示している。
-         店舗ごとに提供プランが異なることが分かった場合は data/plans.json の
-         各プランに "stores": ["daikanyama","karuizawa"] のように対象店舗を
-         追加すれば、コード修正なしで出し分けできる。 -->
-    <div class="plan-tabs" role="tablist" aria-label="店舗を選択">
-      <button type="button" class="plan-tab is-active" role="tab" aria-selected="true" data-plan-tab="daikanyama">代官山</button>
-      <button type="button" class="plan-tab" role="tab" aria-selected="false" data-plan-tab="karuizawa">軽井沢</button>
-      <button type="button" class="plan-tab" role="tab" aria-selected="false" data-plan-tab="online">オンライン</button>
-    </div>
-
-    <div class="plan-panels" data-plans-source="data/plans.json">
-      <div class="plan-panel is-active" data-plan-panel="daikanyama">
-        <p class="plan-loading">読み込み中…</p>
-      </div>
-      <div class="plan-panel" data-plan-panel="karuizawa" hidden>
-        <p class="plan-loading">読み込み中…</p>
-      </div>
-      <div class="plan-panel" data-plan-panel="online" hidden>
-        <p class="plan-loading">読み込み中…</p>
-      </div>
-    </div>
-
     <div class="trial-flow">
       <span class="section-eyebrow">Trial</span>
       <h3 class="trial-flow-title">体験までの流れ</h3>
@@ -485,7 +392,208 @@
   </div>
 </section>
 
-<!-- ==================== 9. TRAINER ==================== -->
+<!-- ==================== 9. PLAN ==================== -->
+<section class="section section-alt" id="plan">
+  <div class="container">
+    <span class="section-eyebrow">Plan</span>
+    <h2 class="section-title">料金プラン</h2>
+    <p class="plan-fee-note">パーソナル・セミパーソナル・ペアレッスンは、入会金11,000円が別途かかります(オンラインを除く)。</p>
+
+    <!-- TODO: パーソナル/セミパーソナルの適用店舗は要確認。確認が取れるまでは
+         全タブ(代官山/軽井沢/オンライン)に同じ内容を表示している。
+         店舗ごとに提供プランが異なることが分かった場合は data/plans.json の
+         各プランに "stores": ["daikanyama","karuizawa"] のように対象店舗を
+         追加すれば、コード修正なしで出し分けできる。 -->
+    <div class="plan-tabs" role="tablist" aria-label="店舗を選択">
+      <button type="button" class="plan-tab is-active" role="tab" aria-selected="true" data-plan-tab="daikanyama">代官山</button>
+      <button type="button" class="plan-tab" role="tab" aria-selected="false" data-plan-tab="karuizawa">軽井沢</button>
+      <button type="button" class="plan-tab" role="tab" aria-selected="false" data-plan-tab="online">オンライン</button>
+    </div>
+
+    <div class="plan-panels" data-plans-source="data/plans.json">
+      <div class="plan-panel is-active" data-plan-panel="daikanyama">
+        <p class="plan-loading">読み込み中…</p>
+      </div>
+      <div class="plan-panel" data-plan-panel="karuizawa" hidden>
+        <p class="plan-loading">読み込み中…</p>
+      </div>
+      <div class="plan-panel" data-plan-panel="online" hidden>
+        <p class="plan-loading">読み込み中…</p>
+      </div>
+    </div>
+
+    <div class="plan-actions">
+      <button type="button" class="btn btn-primary" data-open-reservation>体験予約はこちら</button>
+      <a href="#" class="link-line" data-line-cta target="_blank" rel="noopener noreferrer">まずは情報だけ知りたい方はLINEで</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 10. LOCATION ==================== -->
+<section class="section" id="location">
+  <div class="container">
+    <span class="section-eyebrow">Location</span>
+    <h2 class="section-title">代官山 / 軽井沢</h2>
+    <p class="service-lead">同じ本質を、それぞれの場所で。都会と自然、2つの拠点をご用意しています。</p>
+
+    <!-- TODO: 各店舗の住所・営業時間・Googleマップ埋め込みはAccessセクションで実装(要確認) -->
+    <div class="location-grid">
+      <div class="location-card">
+        <div class="location-card-photos">
+          <img class="location-card-photo" src="images/daikanyama-exterior.jpg" alt="代官山店の外観" loading="lazy" width="1206" height="1419">
+          <img class="location-card-photo" src="images/daikanyama-interior.jpg" alt="代官山店の店内" loading="lazy" width="1600" height="1066">
+        </div>
+        <div class="location-card-body">
+          <span class="location-card-eyebrow">代官山</span>
+          <h3 class="location-card-title">日常の延長で、通いやすく。</h3>
+          <p class="location-card-text">落ち着いた住宅街の一角、洗練された空間で。仕事や暮らしの合間に、無理なく立ち寄れる場所です。</p>
+        </div>
+      </div>
+      <div class="location-card">
+        <div class="location-card-photos">
+          <img class="location-card-photo" src="images/karuizawa-exterior.jpg" alt="軽井沢店の外観" loading="lazy" width="1206" height="1378">
+          <img class="location-card-photo" src="images/karuizawa-interior.jpg" alt="軽井沢店の店内" loading="lazy" width="1206" height="1377">
+        </div>
+        <div class="location-card-body">
+          <span class="location-card-eyebrow">軽井沢</span>
+          <h3 class="location-card-title">自然に囲まれた、ラウンジのような時間。</h3>
+          <p class="location-card-text">「Roots FITNESS LOUNGE」の名の通り、寛ぎの中でトレーニングを。都会とは違うペースで、自分と向き合う時間を過ごせます。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div class="container cta-strip-inner">
+    <p class="cta-strip-text">行きたい場所へ、まずは体験を。</p>
+    <button type="button" class="btn btn-primary" data-open-reservation>体験予約はこちら</button>
+  </div>
+</section>
+
+<!-- ==================== 11. ACCESS ==================== -->
+<section class="section" id="access">
+  <div class="container">
+    <span class="section-eyebrow">Access</span>
+    <h2 class="section-title">アクセス</h2>
+
+    <!-- TODO: 地図の埋め込み(iframe)はGoogle側の仕様変更でAPIキーなしでは表示できないことを確認した。
+         現在は確実に機能するリンク形式(新しいタブでGoogleマップを開く)にしている。
+         インライン埋め込みにしたい場合は、Google Cloud で Maps Embed API キーを発行し、
+         https://www.google.com/maps/embed/v1/place?key=APIキー&q=店舗名 の形式に差し替える。 -->
+    <div class="access-grid">
+      <div class="access-card access-card-with-photo">
+        <img class="access-card-photo" src="images/daikanyama-exterior.jpg" alt="代官山店の外観" loading="lazy" width="1206" height="1419">
+        <div class="access-card-content">
+          <h3 class="access-card-title">代官山</h3>
+          <dl class="access-card-info">
+            <div><dt>住所</dt><dd>〒150-0034<br>東京都渋谷区代官山町20-23<br>フォレストゲート代官山 2階</dd></div>
+            <div><dt>営業時間</dt><dd>9:00〜20:00(年中無休)</dd></div>
+            <div><dt>電話番号</dt><dd><a href="tel:090-8443-5501">090-8443-5501</a></dd></div>
+            <div><dt>アクセス</dt><dd>東急東横線 代官山駅から徒歩1分</dd></div>
+          </dl>
+          <a class="access-map-link" href="https://www.google.com/maps/search/?api=1&query=Roots+Fitness+DAIKANYAMA" target="_blank" rel="noopener noreferrer">Googleマップで見る ↗</a>
+        </div>
+      </div>
+      <div class="access-card access-card-with-photo">
+        <img class="access-card-photo" src="images/karuizawa-exterior.jpg" alt="軽井沢店の外観" loading="lazy" width="1206" height="1378">
+        <div class="access-card-content">
+          <h3 class="access-card-title">軽井沢</h3>
+          <dl class="access-card-info">
+            <div><dt>住所</dt><dd>〒389-0111<br>長野県北佐久郡軽井沢町長倉<br>字大道南2477-1 202 BEWELL</dd></div>
+            <div><dt>営業時間</dt><dd>9:00〜21:00(水曜定休)</dd></div>
+            <div><dt>電話番号</dt><dd><a href="tel:090-8443-5501">090-8443-5501</a></dd></div>
+            <div><dt>アクセス</dt><dd>しなの鉄道線 中軽井沢駅から徒歩19分</dd></div>
+          </dl>
+          <a class="access-map-link" href="https://maps.app.goo.gl/e9aqUPDxMSjd637TA" target="_blank" rel="noopener noreferrer">Googleマップで見る ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 12. FAQ ==================== -->
+<section class="section section-alt" id="faq">
+  <div class="container">
+    <span class="section-eyebrow">FAQ</span>
+    <h2 class="section-title">よくある質問</h2>
+
+    <div class="faq-tabs" id="faq-tabs" role="tablist" aria-label="質問カテゴリを選択"></div>
+
+    <div class="faq-list" data-faq-source="data/faq.json">
+      <p class="plan-loading">読み込み中…</p>
+    </div>
+
+    <div class="plan-actions">
+      <a href="#" class="link-line" data-line-cta target="_blank" rel="noopener noreferrer">まずは情報だけ知りたい方はLINEで</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 13. SERVICE (secondary) ==================== -->
+<section class="section section-alt" id="service">
+  <div class="container">
+    <span class="section-eyebrow">Service</span>
+    <h2 class="section-title">サービス</h2>
+    <p class="service-lead">パーソナル・セミパーソナル・オンライン。トレーニングの先にも、続けたくなる時間があります。</p>
+
+    <!-- TODO: 機材へのこだわり(電気を使わない配慮など)は川島さん確認後に追記。
+         個人/お子様連れ/友人グループでの利用可否も確認事項。
+         レンタルウェア・レンタルシューズ・完全個室の有無は川島さん確認待ちのため、
+         確認が取れ次第 .service-facilities-grid に項目を追加する。
+         プロテイン提供はなしと確認済みのため、あえて掲載していない。 -->
+    <div class="service-facilities">
+      <h3 class="service-facilities-title">設備</h3>
+      <div class="service-facilities-grid">
+        <div class="service-facility">
+          <span class="service-facility-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3c-3 4-6 8-6 11a6 6 0 0 0 12 0c0-3-3-7-6-11z"/></svg>
+          </span>
+          <span class="service-facility-label">ウォーターサーバー<br>(無料)</span>
+        </div>
+        <div class="service-facility">
+          <span class="service-facility-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h10M7 14h6"/></svg>
+          </span>
+          <span class="service-facility-label">冷暖房完備</span>
+        </div>
+        <div class="service-facility">
+          <span class="service-facility-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1"/><circle cx="15" cy="12" r="1" fill="currentColor" stroke="none"/></svg>
+          </span>
+          <span class="service-facility-label">更衣室完備</span>
+        </div>
+        <div class="service-facility">
+          <span class="service-facility-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V13M9 19V9M14 19V15M19 19V6"/></svg>
+          </span>
+          <span class="service-facility-label">InBody完備</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="why-grid service-perks">
+      <div class="why-card why-card-with-photo">
+        <img class="why-card-photo" src="images/service-meetup.jpg" alt="会員限定オフ会で談笑する様子" loading="lazy" width="1448" height="1086">
+        <div class="why-card-content">
+          <span class="why-card-index">Meetup</span>
+          <h3 class="why-card-title">会員限定オフ会</h3>
+          <p class="why-card-body">2〜3ヶ月に1回、会員同士が気軽に顔を合わせられる場を設けています。トレーニング以外の時間でも、自然体でいられる関係を。</p>
+        </div>
+      </div>
+      <div class="why-card why-card-with-photo">
+        <img class="why-card-photo" src="images/service-seasonal.jpg" alt="季節の日本文化体験(茶道)の様子" loading="lazy" width="1448" height="1086">
+        <div class="why-card-content">
+          <span class="why-card-index">Seasonal</span>
+          <h3 class="why-card-title">季節のイベント・コンテンツ</h3>
+          <p class="why-card-body">季節ごとに、食事の会やイベント、コンテンツを企画・実施。トレーニングだけでは終わらない、Rootsならではの時間をつくっています。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 14. TRAINER (secondary) ==================== -->
 <section class="section" id="trainer">
   <div class="container">
     <span class="section-eyebrow">Trainer</span>
@@ -512,60 +620,6 @@
 <section class="cta-strip">
   <div class="container cta-strip-inner">
     <p class="cta-strip-text">一緒に整えるトレーナーと、まずは体験でお会いしませんか。</p>
-    <button type="button" class="btn btn-primary" data-open-reservation>体験予約はこちら</button>
-  </div>
-</section>
-
-<!-- ==================== 10. RESULTS (トップ内ダイジェスト) ==================== -->
-<section class="section section-alt" id="results">
-  <div class="container">
-    <span class="section-eyebrow">Results</span>
-    <h2 class="section-title">実績</h2>
-
-    <!-- TODO: 累計セッション実績は未確認。Google口コミの2件は代官山店(41件・★5.0)+軽井沢店
-         (45件・★5.0)の実数を合算(件数は合計、評価は両店舗とも★5.0のためそのまま)。
-         集計時点(例: 2026年◯月現在)の注記も確認して追加する。 -->
-    <div class="results-badges">
-      <div class="results-badge">
-        <div class="results-badge-visual">
-          <img class="results-badge-mark" src="images/results-badge-frame.png" alt="" aria-hidden="true" loading="lazy" width="480" height="480">
-          <span class="results-badge-value">---</span>
-        </div>
-        <span class="results-badge-label">累計セッション実績</span>
-      </div>
-      <div class="results-badge">
-        <div class="results-badge-visual">
-          <img class="results-badge-mark" src="images/results-badge-frame.png" alt="" aria-hidden="true" loading="lazy" width="480" height="480">
-          <span class="results-badge-value">86件</span>
-        </div>
-        <span class="results-badge-label">Google口コミ累計</span>
-      </div>
-      <div class="results-badge">
-        <div class="results-badge-visual">
-          <img class="results-badge-mark" src="images/results-badge-frame.png" alt="" aria-hidden="true" loading="lazy" width="480" height="480">
-          <span class="results-badge-value">★5.0</span>
-        </div>
-        <span class="results-badge-label">Google口コミ評価</span>
-      </div>
-    </div>
-    <!-- TODO: 集計時点(例: 2026年◯月現在)を確認して以下に追記する -->
-    <p class="results-note">※Google口コミは代官山店・軽井沢店の合算(累計セッション実績は確定次第公開します)</p>
-
-    <div class="results-voice-teaser">
-      <p class="results-voice-text">お客様お一人おひとりの変化については、お客様の声でご紹介しています。</p>
-      <div class="results-voice-groups" data-reviews-source="data/reviews.json">
-        <p class="plan-loading">読み込み中…</p>
-      </div>
-      <div class="results-voice-actions">
-        <a href="voice.html" class="link-line" target="_blank" rel="noopener">すべての口コミを見る ↗</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="cta-strip">
-  <div class="container cta-strip-inner">
-    <p class="cta-strip-text">実際の声を確かめたら、次はあなたの番です。</p>
     <button type="button" class="btn btn-primary" data-open-reservation>体験予約はこちら</button>
   </div>
 </section>
@@ -649,66 +703,22 @@
   </div>
 </section>
 
-<!-- ==================== 14. FAQ ==================== -->
-<section class="section section-alt" id="faq">
+<!-- ==================== 16. NEWS (secondary) ==================== -->
+<section class="section" id="news">
   <div class="container">
-    <span class="section-eyebrow">FAQ</span>
-    <h2 class="section-title">よくある質問</h2>
-
-    <div class="faq-tabs" id="faq-tabs" role="tablist" aria-label="質問カテゴリを選択"></div>
-
-    <div class="faq-list" data-faq-source="data/faq.json">
-      <p class="plan-loading">読み込み中…</p>
+    <span class="section-eyebrow">News</span>
+    <h2 class="section-title">お知らせ</h2>
+    <div class="news-grid" id="news-list-top" data-news-source="data/news.json" data-news-limit="3">
+      <noscript><p>最新のお知らせは <a href="news.html">お知らせ一覧</a> をご覧ください。</p></noscript>
     </div>
-
-    <div class="plan-actions">
+    <div class="news-actions">
+      <a href="news.html" class="btn btn-line btn-small">すべて見る</a>
       <a href="#" class="link-line" data-line-cta target="_blank" rel="noopener noreferrer">まずは情報だけ知りたい方はLINEで</a>
     </div>
   </div>
 </section>
 
-<!-- ==================== 15. ACCESS ==================== -->
-<section class="section" id="access">
-  <div class="container">
-    <span class="section-eyebrow">Access</span>
-    <h2 class="section-title">アクセス</h2>
-
-    <!-- TODO: 地図の埋め込み(iframe)はGoogle側の仕様変更でAPIキーなしでは表示できないことを確認した。
-         現在は確実に機能するリンク形式(新しいタブでGoogleマップを開く)にしている。
-         インライン埋め込みにしたい場合は、Google Cloud で Maps Embed API キーを発行し、
-         https://www.google.com/maps/embed/v1/place?key=APIキー&q=店舗名 の形式に差し替える。 -->
-    <div class="access-grid">
-      <div class="access-card access-card-with-photo">
-        <img class="access-card-photo" src="images/daikanyama-exterior.jpg" alt="代官山店の外観" loading="lazy" width="1206" height="1419">
-        <div class="access-card-content">
-          <h3 class="access-card-title">代官山</h3>
-          <dl class="access-card-info">
-            <div><dt>住所</dt><dd>〒150-0034<br>東京都渋谷区代官山町20-23<br>フォレストゲート代官山 2階</dd></div>
-            <div><dt>営業時間</dt><dd>9:00〜20:00(年中無休)</dd></div>
-            <div><dt>電話番号</dt><dd><a href="tel:090-8443-5501">090-8443-5501</a></dd></div>
-            <div><dt>アクセス</dt><dd>東急東横線 代官山駅から徒歩1分</dd></div>
-          </dl>
-          <a class="access-map-link" href="https://www.google.com/maps/search/?api=1&query=Roots+Fitness+DAIKANYAMA" target="_blank" rel="noopener noreferrer">Googleマップで見る ↗</a>
-        </div>
-      </div>
-      <div class="access-card access-card-with-photo">
-        <img class="access-card-photo" src="images/karuizawa-exterior.jpg" alt="軽井沢店の外観" loading="lazy" width="1206" height="1378">
-        <div class="access-card-content">
-          <h3 class="access-card-title">軽井沢</h3>
-          <dl class="access-card-info">
-            <div><dt>住所</dt><dd>〒389-0111<br>長野県北佐久郡軽井沢町長倉<br>字大道南2477-1 202 BEWELL</dd></div>
-            <div><dt>営業時間</dt><dd>9:00〜21:00(水曜定休)</dd></div>
-            <div><dt>電話番号</dt><dd><a href="tel:090-8443-5501">090-8443-5501</a></dd></div>
-            <div><dt>アクセス</dt><dd>しなの鉄道線 中軽井沢駅から徒歩19分</dd></div>
-          </dl>
-          <a class="access-map-link" href="https://maps.app.goo.gl/e9aqUPDxMSjd637TA" target="_blank" rel="noopener noreferrer">Googleマップで見る ↗</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== 16. FOOTER ==================== -->
+<!-- ==================== 17. FOOTER ==================== -->
 <footer class="site-footer" id="footer">
   <div class="container">
     <div class="footer-top">

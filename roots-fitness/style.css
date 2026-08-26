@@ -205,6 +205,18 @@ button {
   height: 22px;
   flex-shrink: 0;
   border-radius: 50%;
+  animation: logo-breathe 6s ease-in-out infinite;
+}
+
+@keyframes logo-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-mark {
+    animation: none;
+  }
 }
 
 .logo-word {
@@ -2610,4 +2622,29 @@ a.news-card:hover {
 
 .review-summary-link {
   display: inline-block;
+}
+
+/* ==========================================================================
+   Scroll reveal — 自然体を感じさせる、静かなフェード+わずかな浮き上がり。
+   JSがIntersectionObserverで各セクションのcontainerにrevealクラスを付与し、
+   画面に入ったタイミングでis-visibleを加える。JS無効時はクラスが付与され
+   ないため、最初から表示されたまま(プログレッシブエンハンスメント)。
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }

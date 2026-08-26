@@ -890,4 +890,32 @@
         faqList.innerHTML = '<p class="plan-loading">FAQの読み込みに失敗しました。</p>';
       });
   }
+
+  /* ------------------------------------------------------------------ */
+  /* スクロールリビール(自然体を感じさせる、静かなフェード+浮き上がり)。      */
+  /* 各セクションのcontainerが画面に入ったタイミングで、ふわっと現れる。      */
+  /* prefers-reduced-motionの場合は何もしない(最初から表示されたまま)。     */
+  /* ------------------------------------------------------------------ */
+  var prefersReducedMotion =
+    window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!prefersReducedMotion && "IntersectionObserver" in window) {
+    var revealTargets = document.querySelectorAll(".section > .container");
+    var revealObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    revealTargets.forEach(function (el) {
+      el.classList.add("reveal");
+      revealObserver.observe(el);
+    });
+  }
 })();

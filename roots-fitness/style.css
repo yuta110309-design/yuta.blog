@@ -2529,6 +2529,7 @@ a.news-card:hover {
 
 .review-cards {
   display: flex;
+  align-items: flex-start;
   gap: 14px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;

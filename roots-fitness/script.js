@@ -695,6 +695,17 @@
       });
     }
 
+    /* flexコンテナは横に並ぶ全カードのうち最も背の高いものに合わせて高さが
+       決まるため、そのままだと写真付きなど背の高いカードがスライダー内に
+       あると、それより低いカードの下に空白ができてしまう。表示中のカードの
+       実際の高さに合わせてコンテナの高さを都度上書きすることで防ぐ。 */
+    function syncHeight(index) {
+      var active = cardEls[index];
+      if (active) {
+        cardsEl.style.height = active.offsetHeight + "px";
+      }
+    }
+
     if (prevBtn) {
       prevBtn.addEventListener("click", function () {
         scrollToIndex(currentIndex() - 1);
@@ -717,9 +728,13 @@
     cardsEl.addEventListener("scroll", function () {
       clearTimeout(scrollTimer);
       scrollTimer = setTimeout(function () {
-        setActiveDot(currentIndex());
+        var index = currentIndex();
+        setActiveDot(index);
+        syncHeight(index);
       }, 100);
     });
+
+    syncHeight(0);
   }
 
   /* ------------------------------------------------------------------ */

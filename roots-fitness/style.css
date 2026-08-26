@@ -2516,6 +2516,12 @@ a.news-card:hover {
   margin: 0 0 16px;
 }
 
+.online-training-note {
+  font-size: 0.85rem;
+  color: var(--color-text-soft);
+  margin: 8px 0 0;
+}
+
 .review-slider {
   position: relative;
   margin-bottom: 16px;

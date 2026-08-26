@@ -491,7 +491,9 @@ if (eventRows.length && APP_API_BASE) {
     body.hidden = true;
     body.innerHTML = '<p class="rsvp-hint">読み込み中…</p>';
 
-    const link = row.querySelector('.event-link');
+    // 複数リンクがある場合（Instagram + 会場サイトなど）は .event-links でまとめて
+    // ラップされているため、その直後に挿入する（.event-link単体の直後だと2つのリンクの間に挟まってしまう）。
+    const link = row.querySelector('.event-links') || row.querySelector('.event-link');
     link.insertAdjacentElement('afterend', body);
     link.insertAdjacentElement('afterend', toggle);
 

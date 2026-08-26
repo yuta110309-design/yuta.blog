@@ -387,6 +387,7 @@ button.link-arrow { background: none; border: none; border-bottom: 1px solid var
   transition: background 0.2s, color 0.2s;
 }
 .event-link:hover { background: var(--sage); color: var(--paper); }
+.event-links { display: flex; flex-wrap: wrap; gap: 10px; }
 .scroll-row .event-row {
   width: 320px;
   border: 1px solid var(--line);

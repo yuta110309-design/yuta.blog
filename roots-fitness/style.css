@@ -948,6 +948,12 @@ a.news-card:hover {
   margin: 0;
 }
 
+.why-card-note {
+  font-size: 0.76rem;
+  color: var(--color-text-soft);
+  margin: 10px 0 0;
+}
+
 @media (min-width: 640px) {
   .why-grid {
     grid-template-columns: repeat(2, 1fr);

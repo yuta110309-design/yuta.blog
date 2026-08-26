@@ -12,9 +12,9 @@
   --color-text-soft: #5C5346;
   --color-white: #FFFFFF;
 
-  --font-heading: "Shippori Mincho", serif;
+  --font-heading: "Shippori Antique B1", "Shippori Mincho", serif;
   --font-body: "Zen Kaku Gothic New", sans-serif;
-  --font-signature: "Yuji Syuku", "Shippori Mincho", serif;
+  --font-signature: "Yuji Syuku", "Shippori Antique B1", serif;
 
   --header-height: 72px;
   --container-max: 1120px;

@@ -753,6 +753,20 @@
     });
 
     syncHeight(0);
+
+    /* Webフォントの読み込みが完了するタイミングによっては、フォールバック
+       フォントで測った高さのまま固定されてしまい、実際のフォントに切り替わって
+       テキストの折り返しが変わった際に高さがずれる(空白ができる)ことがある。
+       フォント読み込み完了後に、その時点で表示中のカードの高さで再計算する。 */
+    if (window.document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        syncHeight(currentIndex());
+      });
+    }
+
+    window.addEventListener("load", function () {
+      syncHeight(currentIndex());
+    });
   }
 
   /* ------------------------------------------------------------------ */

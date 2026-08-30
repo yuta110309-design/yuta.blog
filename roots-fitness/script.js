@@ -555,9 +555,12 @@
 
     function buildTrainerCardHtml(trainer) {
       trainerById[trainer.id] = trainer;
+      var photoHtml = trainer.photo
+        ? '<img class="trainer-card-photo-img" src="' + trainer.photo + '" alt="' + trainer.name + 'トレーナー" loading="lazy">'
+        : PHOTO_PLACEHOLDER_ICON + (trainer.photoNote || "トレーナー写真");
       return (
         '<button type="button" class="trainer-card" data-trainer-detail="' + trainer.id + '">' +
-          '<span class="trainer-card-photo">' + PHOTO_PLACEHOLDER_ICON + (trainer.photoNote || "トレーナー写真") + "</span>" +
+          '<span class="trainer-card-photo">' + photoHtml + "</span>" +
           '<span class="trainer-card-body">' +
             '<span class="trainer-card-name">' + trainer.name + "</span>" +
             '<span class="trainer-card-role">' + trainer.role + "</span>" +
@@ -638,12 +641,15 @@
       }
 
       function openTrainerDetailModal(trainer, triggerEl) {
+        var photoHtml = trainer.photo
+          ? '<img class="plan-detail-photo-img" src="' + trainer.photo + '" alt="' + trainer.name + 'トレーナー" loading="lazy">'
+          : '<div class="plan-detail-photo">' + PHOTO_PLACEHOLDER_ICON + (trainer.photoNote || "トレーナー写真") + "</div>";
         trainerDetailBody.innerHTML =
           '<span class="section-eyebrow">Trainer</span>' +
           '<h2 id="trainer-detail-modal-title" class="section-title">' + trainer.name + "</h2>" +
           '<p class="trainer-detail-role">' + trainerRoleLine(trainer) + "</p>" +
           buildTrainerDaysHtml(trainer) +
-          '<div class="plan-detail-photo">' + PHOTO_PLACEHOLDER_ICON + (trainer.photoNote || "トレーナー写真") + "</div>" +
+          photoHtml +
           '<h3 class="plan-detail-subhead">経歴・実績</h3>' +
           '<p class="plan-detail-recommend">' + trainer.career + "</p>" +
           '<h3 class="plan-detail-subhead" style="margin-top: 20px;">トレーナーとしての想い</h3>' +

@@ -1469,6 +1469,16 @@ a.news-card:hover {
   padding: 12px;
 }
 
+.plan-detail-photo-img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: top center;
+  margin-bottom: 24px;
+  border-radius: var(--radius);
+}
+
 /* 写真未確定の箇所で使う共通プレースホルダーアイコン(画像アイコン)。
    実写真が入り次第、このdivごと <img> に差し替える。 */
 .photo-placeholder-icon {
@@ -1490,6 +1500,7 @@ a.news-card:hover {
   color: var(--color-text-soft);
   line-height: 1.85;
   margin: 0;
+  white-space: pre-line;
 }
 
 .plan-detail-fitkarte-link {
@@ -1849,6 +1860,17 @@ a.news-card:hover {
   letter-spacing: 0.04em;
   text-align: center;
   padding: 12px;
+}
+
+.trainer-card-photo:has(.trainer-card-photo-img) {
+  padding: 0;
+}
+
+.trainer-card-photo-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .trainer-card-body {

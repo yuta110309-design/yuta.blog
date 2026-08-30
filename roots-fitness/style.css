@@ -2005,10 +2005,16 @@ a.news-card:hover {
 }
 
 .location-card-title {
-  font-size: 1.05rem;
+  font-size: clamp(0.65rem, calc(4.7vw - 4.6px), 1.05rem);
   letter-spacing: 0.03em;
   margin-bottom: 10px;
-  text-wrap: balance;
+  white-space: nowrap;
+}
+
+@media (min-width: 480px) {
+  .location-card-title {
+    font-size: 1.05rem;
+  }
 }
 
 .location-card-text {

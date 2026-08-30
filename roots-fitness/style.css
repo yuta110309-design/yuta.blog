@@ -1888,6 +1888,7 @@ a.news-card:hover {
 }
 
 .trainer-card-body {
+  display: block;
   padding: 20px;
 }
 
@@ -2007,6 +2008,7 @@ a.news-card:hover {
   font-size: 1.05rem;
   letter-spacing: 0.03em;
   margin-bottom: 10px;
+  text-wrap: balance;
 }
 
 .location-card-text {

@@ -1339,6 +1339,30 @@ a.news-card:hover {
   box-shadow: 0 2px 14px rgba(46, 61, 40, 0.07);
 }
 
+.plan-card-type-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+
+.plan-card-type-badge-monthly {
+  background: rgba(46, 61, 40, 0.1);
+  color: var(--color-deep-green);
+}
+
+.plan-card-type-badge-ticket {
+  background: rgba(169, 103, 61, 0.12);
+  color: var(--color-terracotta-dark);
+}
+
+.plan-card-type-badge-single {
+  background: rgba(46, 61, 40, 0.06);
+  color: var(--color-text-soft);
+}
+
 .plan-card-head {
   display: flex;
   align-items: baseline;

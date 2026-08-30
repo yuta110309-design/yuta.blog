@@ -353,8 +353,12 @@
       return "¥" + amount.toLocaleString("ja-JP");
     }
 
+    var PLAN_TYPE_LABEL = { "月": "月額制", "回券": "回数券", "回": "都度払い" };
+    var PLAN_TYPE_CLASS = { "月": "monthly", "回券": "ticket", "回": "single" };
+
     function buildPlanCardHtml(plan) {
       planById[plan.id] = plan;
+      var typeLabel = PLAN_TYPE_LABEL[plan.priceUnit];
 
       var priceHtml;
       if (plan.price === null || plan.price === undefined) {
@@ -370,6 +374,9 @@
 
       return (
         '<div class="plan-card">' +
+          (typeLabel
+            ? '<span class="plan-card-type-badge plan-card-type-badge-' + PLAN_TYPE_CLASS[plan.priceUnit] + '">' + typeLabel + "</span>"
+            : "") +
           '<div class="plan-card-head">' +
             '<span class="plan-card-name">' + plan.name + "</span>" +
             (plan.frequency ? '<span class="plan-card-freq">' + plan.frequency + "</span>" : "") +

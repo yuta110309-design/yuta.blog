@@ -133,6 +133,25 @@ button {
   background: var(--color-terracotta-dark);
 }
 
+.btn-pending {
+  background: var(--color-bg-alt);
+  color: var(--color-text-soft);
+  border-color: rgba(46, 61, 40, 0.15);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-pending-note {
+  margin: 10px 0 0;
+  font-size: 0.82rem;
+  color: var(--color-text-soft);
+}
+
+.btn-pending-note a {
+  color: var(--color-terracotta-dark);
+  text-decoration: underline;
+}
+
 .btn-secondary {
   background: transparent;
   color: var(--color-white);

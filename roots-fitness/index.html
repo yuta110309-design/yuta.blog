@@ -82,6 +82,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Antique+B1&family=Shippori+Mincho:wght@400&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Yuji+Syuku&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Antique+B1&family=Shippori+Mincho:wght@400&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Yuji+Syuku&display=swap"></noscript>
 <link rel="stylesheet" href="style.css?v=1">
+<link rel="preload" as="image" href="images/daikanyama-exterior.jpg" fetchpriority="high">
 </head>
 <body data-stores-json="data/stores.json">
 
@@ -133,10 +134,10 @@
 <!-- ==================== 1. HERO ==================== -->
 <section class="hero" id="hero">
   <div class="hero-kenburns" aria-hidden="true">
-    <img src="images/daikanyama-exterior.jpg" alt="" loading="eager">
-    <img src="images/karuizawa-exterior.jpg" alt="" loading="eager">
-    <img src="images/daikanyama-interior.jpg" alt="" loading="eager">
-    <img src="images/karuizawa-interior.jpg" alt="" loading="eager">
+    <img src="images/daikanyama-exterior.jpg" alt="" loading="eager" fetchpriority="high">
+    <img src="images/karuizawa-exterior.jpg" alt="" loading="eager" fetchpriority="low">
+    <img src="images/daikanyama-interior.jpg" alt="" loading="eager" fetchpriority="low">
+    <img src="images/karuizawa-interior.jpg" alt="" loading="eager" fetchpriority="low">
   </div>
   <div class="hero-inner container">
     <span class="hero-eyebrow">Roots Fitness</span>

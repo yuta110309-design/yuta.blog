@@ -243,6 +243,14 @@
     var reservationConfig = null;
     var reservationConfigUrl =
       document.body.getAttribute("data-reservation-json") || "data/reservation-form.json";
+    var reservationSubmitBtn = reservationForm ? reservationForm.querySelector(".reservation-submit") : null;
+    var reservationSubmitLabel = reservationSubmitBtn ? reservationSubmitBtn.textContent : "";
+
+    function setReservationSubmitting(isSubmitting) {
+      if (!reservationSubmitBtn) return;
+      reservationSubmitBtn.disabled = isSubmitting;
+      reservationSubmitBtn.textContent = isSubmitting ? "送信中…" : reservationSubmitLabel;
+    }
 
     fetch(reservationConfigUrl)
       .then(function (res) {
@@ -256,8 +264,12 @@
       });
 
     function openReservationModal(triggerEl) {
+      var wasShowingSuccess = reservationSuccessStep && !reservationSuccessStep.hidden;
       if (reservationFormStep) reservationFormStep.hidden = false;
       if (reservationSuccessStep) reservationSuccessStep.hidden = true;
+      if (reservationErrorEl) reservationErrorEl.textContent = "";
+      if (reservationForm && wasShowingSuccess) reservationForm.reset();
+      setReservationSubmitting(false);
       openModal(reservationModal, triggerEl);
     }
 
@@ -286,6 +298,10 @@
       reservationForm.addEventListener("submit", function (e) {
         e.preventDefault();
 
+        if (reservationSubmitBtn && reservationSubmitBtn.disabled) {
+          return;
+        }
+
         if (reservationErrorEl) reservationErrorEl.textContent = "";
 
         if (!reservationForm.reportValidity()) {
@@ -312,6 +328,8 @@
           }
         });
 
+        setReservationSubmitting(true);
+
         fetch(reservationConfig.actionUrl, {
           method: "POST",
           mode: "no-cors",
@@ -319,6 +337,7 @@
         })
           .then(showReservationSuccess)
           .catch(function () {
+            setReservationSubmitting(false);
             if (reservationErrorEl) {
               reservationErrorEl.textContent =
                 "送信に失敗しました。通信環境をご確認のうえ再度お試しください。";

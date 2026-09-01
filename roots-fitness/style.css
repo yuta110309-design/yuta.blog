@@ -232,6 +232,7 @@ button {
 .header-cta {
   padding: 8px 9px;
   font-size: 0.66rem;
+  min-height: 44px;
 }
 
 /* 460px未満(iPhone標準サイズ帯を含む)では、ロゴ+CTA+ハンバーガーが
@@ -1012,8 +1013,8 @@ a.news-card:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: none;
   background: rgba(255, 255, 255, 0.85);
@@ -1036,17 +1037,19 @@ a.news-card:hover {
 .why-slider-dots {
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: 0;
   margin-top: 20px;
 }
 
 .why-slider-dot {
+  box-sizing: content-box;
   width: 8px;
   height: 8px;
-  padding: 0;
+  padding: 6px;
+  background-clip: content-box;
   border: none;
   border-radius: 50%;
-  background: rgba(46, 61, 40, 0.2);
+  background-color: rgba(46, 61, 40, 0.2);
   cursor: pointer;
   transition: background-color 0.25s var(--ease), width 0.25s var(--ease);
   -webkit-appearance: none;
@@ -1611,8 +1614,8 @@ a.news-card:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: none;
   background: rgba(255, 255, 255, 0.85);
@@ -1635,17 +1638,19 @@ a.news-card:hover {
 .trial-slider-dots {
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: 0;
   margin-top: 12px;
 }
 
 .trial-slider-dot {
+  box-sizing: content-box;
   width: 8px;
   height: 8px;
-  padding: 0;
+  padding: 6px;
+  background-clip: content-box;
   border: none;
   border-radius: 50%;
-  background: rgba(46, 61, 40, 0.2);
+  background-color: rgba(46, 61, 40, 0.2);
   cursor: pointer;
   transition: background-color 0.25s var(--ease), width 0.25s var(--ease);
   -webkit-appearance: none;
@@ -2041,7 +2046,7 @@ a.news-card:hover {
 }
 
 .faq-tab {
-  padding: 8px 16px;
+  padding: 11px 16px;
   border-radius: 999px;
   border: 1px solid rgba(46, 61, 40, 0.2);
   background: transparent;
@@ -2166,6 +2171,12 @@ a.news-card:hover {
 .access-card-info dd {
   margin: 0;
   color: var(--color-text);
+}
+
+.access-card-info dd a {
+  display: inline-block;
+  padding: 10px 4px;
+  margin: -10px -4px;
 }
 
 .access-map-link {
@@ -2371,8 +2382,13 @@ a.news-card:hover {
 .footer-nav-col ul {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 4px;
   margin-top: 12px;
+}
+
+.footer-nav-col ul a {
+  display: block;
+  padding: 6px 0;
 }
 
 .footer-sns-link {
@@ -2459,10 +2475,10 @@ a.news-card:hover {
 
 .reservation-modal-close {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 36px;
-  height: 36px;
+  top: 10px;
+  right: 10px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1px solid rgba(46, 61, 40, 0.2);
   background: transparent;
@@ -2754,8 +2770,8 @@ a.news-card:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1px solid rgba(46, 61, 40, 0.15);
   background: var(--color-white);
@@ -2777,17 +2793,19 @@ a.news-card:hover {
 
 .review-slider-dots {
   display: flex;
-  gap: 8px;
+  gap: 0;
   margin-bottom: 16px;
 }
 
 .review-slider-dot {
+  box-sizing: content-box;
   width: 8px;
   height: 8px;
-  padding: 0;
+  padding: 6px;
+  background-clip: content-box;
   border: none;
   border-radius: 50%;
-  background: rgba(46, 61, 40, 0.2);
+  background-color: rgba(46, 61, 40, 0.2);
   cursor: pointer;
   transition: background-color 0.25s var(--ease), width 0.25s var(--ease);
   -webkit-appearance: none;

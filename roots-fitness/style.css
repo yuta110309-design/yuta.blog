@@ -544,7 +544,7 @@ body.reservation-open {
   font-size: 0.75rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--color-terracotta);
+  color: var(--color-terracotta-dark);
   margin-bottom: 16px;
 }
 
@@ -653,7 +653,7 @@ a.news-card:hover {
   display: inline-block;
   margin-top: 12px;
   font-size: 0.8rem;
-  color: var(--color-terracotta);
+  color: var(--color-terracotta-dark);
 }
 
 .news-empty {
@@ -724,7 +724,7 @@ a.news-card:hover {
   font-family: var(--font-heading);
   font-size: 0.85rem;
   letter-spacing: 0.1em;
-  color: var(--color-terracotta);
+  color: var(--color-terracotta-dark);
   margin-bottom: 12px;
 }
 
@@ -872,7 +872,7 @@ a.news-card:hover {
   font-family: var(--font-heading);
   font-size: 0.85rem;
   letter-spacing: 0.04em;
-  color: var(--color-terracotta);
+  color: var(--color-terracotta-dark);
 }
 
 .founder-message-list-body {
@@ -932,7 +932,7 @@ a.news-card:hover {
   font-family: var(--font-heading);
   font-size: 0.95rem;
   letter-spacing: 0.1em;
-  color: var(--color-terracotta);
+  color: var(--color-terracotta-dark);
   margin-bottom: 14px;
 }
 
@@ -1192,7 +1192,7 @@ a.news-card:hover {
 .plan-schedule-title {
   font-size: 0.78rem;
   letter-spacing: 0.08em;
-  color: var(--color-terracotta);
+  color: var(--color-terracotta-dark);
   margin-bottom: 12px;
 }
 
@@ -1269,7 +1269,7 @@ a.news-card:hover {
 }
 
 .plan-schedule-row.is-morning .plan-schedule-label {
-  color: var(--color-terracotta);
+  color: var(--color-terracotta-dark);
 }
 
 .plan-schedule-row.is-morning .plan-schedule-range,
@@ -1399,7 +1399,7 @@ a.news-card:hover {
   font-family: var(--font-heading);
   font-size: 1.3rem;
   letter-spacing: 0.02em;
-  color: var(--color-terracotta);
+  color: var(--color-terracotta-dark);
 }
 
 .plan-card-price-main.plan-card-price-tbd {
@@ -1451,7 +1451,7 @@ a.news-card:hover {
 .plan-detail-price {
   font-family: var(--font-heading);
   font-size: 1.1rem;
-  color: var(--color-terracotta);
+  color: var(--color-terracotta-dark);
   margin: 4px 0 20px;
 }
 
@@ -1589,7 +1589,7 @@ a.news-card:hover {
   font-family: var(--font-heading);
   font-size: 0.8rem;
   letter-spacing: 0.1em;
-  color: var(--color-terracotta);
+  color: var(--color-terracotta-dark);
   margin-bottom: 8px;
 }
 
@@ -2005,7 +2005,7 @@ a.news-card:hover {
   font-family: var(--font-heading);
   font-size: 0.8rem;
   letter-spacing: 0.1em;
-  color: var(--color-terracotta);
+  color: var(--color-terracotta-dark);
   margin-bottom: 10px;
 }
 
@@ -2517,7 +2517,7 @@ a.news-card:hover {
 
 .form-field em,
 .form-field-radio em {
-  color: var(--color-terracotta);
+  color: var(--color-terracotta-dark);
   font-style: normal;
   margin-left: 2px;
 }
@@ -2641,7 +2641,7 @@ a.news-card:hover {
 }
 
 .review-star.is-filled {
-  color: var(--color-terracotta);
+  color: var(--color-terracotta-dark);
 }
 
 .review-summary-score {

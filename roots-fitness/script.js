@@ -478,6 +478,18 @@
           var categories = storeId === "online" ? onlineCategories : defaultCategories;
           panel.innerHTML = buildPanelHtml(categories, storeId);
         });
+
+        var feeNoteEl = document.querySelector("[data-plan-fee-note]");
+        if (feeNoteEl && data.enrollmentFee && typeof data.enrollmentFee.amount === "number") {
+          var feeText =
+            "パーソナル・セミパーソナル・ペアレッスンは、入会金" +
+            formatYen(data.enrollmentFee.amount) +
+            "が別途かかります(オンラインを除く)。";
+          if (data.enrollmentFee.campaignNote) {
+            feeText += " " + data.enrollmentFee.campaignNote;
+          }
+          feeNoteEl.textContent = feeText;
+        }
       })
       .catch(function () {
         planPanelsRoot.querySelectorAll("[data-plan-panel]").forEach(function (panel) {

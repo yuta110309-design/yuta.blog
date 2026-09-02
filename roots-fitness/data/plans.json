@@ -122,25 +122,14 @@
           "photoNote": "ペアレッスンのセッション風景"
         },
         {
-          "id": "pair-ticket32",
-          "name": "チケット32回",
-          "frequency": "32回(有効期限3ヶ月)",
-          "price": 192000,
+          "id": "pair-ticket24",
+          "name": "チケット24回",
+          "frequency": "24回(有効期限3ヶ月)",
+          "price": 168000,
           "priceUnit": "回券",
-          "unitPrice": 6000,
+          "unitPrice": 7000,
           "note": "",
           "recommendedFor": "お二人のペースで、数ヶ月かけてじっくり取り組みたい方に。",
-          "photoNote": "ペアレッスンのセッション風景"
-        },
-        {
-          "id": "pair-ticket48",
-          "name": "チケット48回",
-          "frequency": "48回(有効期限5ヶ月)",
-          "price": 240000,
-          "priceUnit": "回券",
-          "unitPrice": 5000,
-          "note": "",
-          "recommendedFor": "長期的に、お二人で習慣として続けていきたい方に。",
           "photoNote": "ペアレッスンのセッション風景"
         }
       ]

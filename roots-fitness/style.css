@@ -1703,31 +1703,47 @@ a.news-card:hover {
   width: 160px;
 }
 
-/* 数字(value)を主役として上に大きく置き、バッジ画像(images/results-badge-frame.png、
-   リング+根っこのイラスト)はその下に、桁数に左右されない固定サイズの装飾として添える。
-   これにより数字の桁数が増減してもリングとの重なり・はみ出しを気にせず表示できる。 */
-.results-badge-value {
-  font-family: var(--font-heading);
-  font-size: 1.9rem;
-  letter-spacing: 0.02em;
-  color: var(--color-deep-green);
-  white-space: nowrap;
-}
-
+/* バッジ画像(images/results-badge-frame.png、チャコール×ゴールドの2トーンのリース+根っこ)の
+   リング開口部は、画像の高さに対して上寄り(中心 y ≈ 31.4%)にあり、開口部の横幅は画像幅の
+   約54%。数字(value)はその開口部の中心に重ねて配置する。「20,000+」のように桁数が多い値は
+   results-badge-value-compact 修飾クラスでフォントサイズを縮小し、開口部からはみ出さないようにする。 */
 .results-badge-visual {
-  width: 84px;
+  position: relative;
+  width: 100%;
   aspect-ratio: 1 / 1;
-  margin-top: 10px;
 }
 
 .results-badge-mark {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
+.results-badge-value {
+  position: absolute;
+  left: 50%;
+  top: 31.4%;
+  transform: translate(-50%, -50%);
+  width: 58%;
+  text-align: center;
+}
+
+.results-badge-value {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  letter-spacing: 0.02em;
+  color: var(--color-deep-green);
+  white-space: nowrap;
+}
+
+.results-badge-value-compact {
+  font-size: 1.1rem;
+}
+
 .results-badge-label {
-  margin-top: 10px;
+  margin-top: 14px;
   text-align: center;
 }
 

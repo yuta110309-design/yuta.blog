@@ -354,6 +354,98 @@
   }
 
   /* ------------------------------------------------------------------ */
+  /* オフィシャルサポーター制度 申込フォーム(supporter.html専用)              */
+  /* 体験予約フォームと同じ仕組み(Googleフォームへno-corsでPOST)。            */
+  /* data/supporter-form.json が未設定(REPLACE_ME_)の間は、実際の送信は     */
+  /* 行われずコンソールに警告が出るのみ(UIの見た目・動作は確認できる)。       */
+  /* ------------------------------------------------------------------ */
+  var supporterForm = document.getElementById("supporter-form");
+
+  if (supporterForm) {
+    var supporterFormStep = document.querySelector('[data-supporter-step="form"]');
+    var supporterSuccessStep = document.querySelector('[data-supporter-step="success"]');
+    var supporterErrorEl = supporterForm.querySelector(".reservation-form-error");
+    var supporterConfig = null;
+    var supporterConfigUrl =
+      document.body.getAttribute("data-supporter-json") || "data/supporter-form.json";
+    var supporterSubmitBtn = supporterForm.querySelector(".reservation-submit");
+    var supporterSubmitLabel = supporterSubmitBtn ? supporterSubmitBtn.textContent : "";
+
+    function setSupporterSubmitting(isSubmitting) {
+      if (!supporterSubmitBtn) return;
+      supporterSubmitBtn.disabled = isSubmitting;
+      supporterSubmitBtn.textContent = isSubmitting ? "送信中…" : supporterSubmitLabel;
+    }
+
+    fetch(supporterConfigUrl)
+      .then(function (res) {
+        return res.ok ? res.json() : null;
+      })
+      .then(function (config) {
+        supporterConfig = config;
+      })
+      .catch(function () {
+        /* 設定が読み込めない場合はプレースホルダーのまま(送信時に警告) */
+      });
+
+    function showSupporterSuccess() {
+      if (supporterFormStep) supporterFormStep.hidden = true;
+      if (supporterSuccessStep) supporterSuccessStep.hidden = false;
+      supporterForm.reset();
+    }
+
+    supporterForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      if (supporterSubmitBtn && supporterSubmitBtn.disabled) {
+        return;
+      }
+
+      if (supporterErrorEl) supporterErrorEl.textContent = "";
+
+      if (!supporterForm.reportValidity()) {
+        return;
+      }
+
+      if (
+        !supporterConfig ||
+        !supporterConfig.actionUrl ||
+        supporterConfig.actionUrl.indexOf("REPLACE_ME") !== -1
+      ) {
+        console.warn(
+          "data/supporter-form.json が未設定のため、実際の送信は行われていません。"
+        );
+        showSupporterSuccess();
+        return;
+      }
+
+      var formData = new FormData();
+      var fields = supporterConfig.fields;
+      new FormData(supporterForm).forEach(function (value, key) {
+        if (fields[key]) {
+          formData.append(fields[key], value);
+        }
+      });
+
+      setSupporterSubmitting(true);
+
+      fetch(supporterConfig.actionUrl, {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
+      })
+        .then(showSupporterSuccess)
+        .catch(function () {
+          setSupporterSubmitting(false);
+          if (supporterErrorEl) {
+            supporterErrorEl.textContent =
+              "送信に失敗しました。通信環境をご確認のうえ再度お試しください。";
+          }
+        });
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
   /* Plan(料金プラン)タブ切替 + 描画                                        */
   /* [data-plans-source] 配下の [data-plan-panel="<storeId>"] それぞれに、  */
   /* data/plans.json のカテゴリ/プランをカード形式で描画する。               */

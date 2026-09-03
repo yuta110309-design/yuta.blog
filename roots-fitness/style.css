@@ -2515,7 +2515,8 @@ a.news-card:hover {
   margin: 4px 0 28px;
 }
 
-#reservation-form {
+#reservation-form,
+#supporter-form {
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -2593,6 +2594,25 @@ a.news-card:hover {
   gap: 6px;
   font-size: 0.92rem;
   color: var(--color-text);
+}
+
+.form-field-checkbox {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.form-field-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  flex-shrink: 0;
+  accent-color: var(--color-terracotta);
+}
+
+.form-field-checkbox span {
+  color: var(--color-text);
+  line-height: 1.6;
 }
 
 .reservation-form-note {

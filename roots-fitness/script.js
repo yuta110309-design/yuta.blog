@@ -622,11 +622,15 @@
             ? '<a href="' + store.fitkarteUrl + '" class="btn btn-line btn-small plan-detail-fitkarte-link" target="_blank" rel="noopener noreferrer">フィットカルテで予約する</a>'
             : "";
 
+        var planPhotoHtml = plan.photo
+          ? '<img class="plan-detail-photo-img" src="' + plan.photo + '" alt="' + plan.name + 'のセッション風景" loading="lazy">'
+          : '<div class="plan-detail-photo">' + PHOTO_PLACEHOLDER_ICON + (plan.photoNote || "セッション風景") + "</div>";
+
         planDetailBody.innerHTML =
           '<span class="section-eyebrow">Plan Detail</span>' +
           '<h2 id="plan-detail-modal-title" class="section-title">' + plan.name + "</h2>" +
           '<p class="plan-detail-price">' + priceLine + "</p>" +
-          '<div class="plan-detail-photo">' + PHOTO_PLACEHOLDER_ICON + (plan.photoNote || "セッション風景") + "</div>" +
+          planPhotoHtml +
           '<h3 class="plan-detail-subhead">こんな方におすすめ</h3>' +
           '<p class="plan-detail-recommend">' + (plan.recommendedFor || "準備中です。") + "</p>" +
           fitkarteLinkHtml;

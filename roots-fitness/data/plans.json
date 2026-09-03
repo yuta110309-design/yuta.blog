@@ -14,7 +14,8 @@
           "unitPrice": 13000,
           "note": "",
           "recommendedFor": "運動を習慣として始めたい方、まずは無理なくペースをつかみたい方に。",
-          "photoNote": "週1回コースのセッション風景"
+          "photoNote": "週1回コースのセッション風景",
+          "photo": "images/plan-personal.jpg"
         },
         {
           "id": "personal-weekly2",
@@ -25,7 +26,8 @@
           "unitPrice": 11000,
           "note": "",
           "recommendedFor": "着実に変化を感じたい方、目的に向けて集中して取り組みたい方に。",
-          "photoNote": "週2回コースのセッション風景"
+          "photoNote": "週2回コースのセッション風景",
+          "photo": "images/plan-personal.jpg"
         },
         {
           "id": "personal-unlimited",
@@ -36,7 +38,8 @@
           "unitPrice": 9000,
           "note": "",
           "recommendedFor": "頻度を気にせず、生活の一部としてトレーニングを続けたい方に。",
-          "photoNote": "通い放題(パーソナル)のセッション風景"
+          "photoNote": "通い放題(パーソナル)のセッション風景",
+          "photo": "images/plan-personal.jpg"
         },
         {
           "id": "personal-single",
@@ -47,7 +50,8 @@
           "unitPrice": null,
           "note": "会員以外・都度利用向け",
           "recommendedFor": "まずは1回試してみたい方、出張や旅行のタイミングで単発利用したい方に。",
-          "photoNote": "単発利用時のセッション風景"
+          "photoNote": "単発利用時のセッション風景",
+          "photo": "images/plan-personal.jpg"
         }
       ]
     },
@@ -55,9 +59,20 @@
       "id": "semi-personal",
       "name": "セミパーソナル",
       "schedule": {
-        "朝": ["9:00-10:00", "10:30-11:30"],
-        "昼": ["12:00-13:00", "13:30-14:30", "15:00-16:00", "16:30-17:30"],
-        "夜": ["18:00-19:00", "19:30-20:30"]
+        "朝": [
+          "9:00-10:00",
+          "10:30-11:30"
+        ],
+        "昼": [
+          "12:00-13:00",
+          "13:30-14:30",
+          "15:00-16:00",
+          "16:30-17:30"
+        ],
+        "夜": [
+          "18:00-19:00",
+          "19:30-20:30"
+        ]
       },
       "plans": [
         {
@@ -69,7 +84,8 @@
           "unitPrice": 6000,
           "note": "",
           "recommendedFor": "セミパーソナルを、まずは無理なく週1回のペースで試してみたい方に。",
-          "photoNote": "週1回コース(セミパーソナル)のセッション風景"
+          "photoNote": "週1回コース(セミパーソナル)のセッション風景",
+          "photo": "images/plan-semipersonal.jpg"
         },
         {
           "id": "semi-weekly2",
@@ -80,7 +96,8 @@
           "unitPrice": 5000,
           "note": "8回以上通われるなら、通い放題(¥33,000)がお得です。",
           "recommendedFor": "同じ空間に通う仲間とのペースを大切にしながら、着実に続けていきたい方に。",
-          "photoNote": "週2回コース(セミパーソナル)のセッション風景"
+          "photoNote": "週2回コース(セミパーソナル)のセッション風景",
+          "photo": "images/plan-semipersonal.jpg"
         },
         {
           "id": "semi-unlimited",
@@ -91,7 +108,8 @@
           "unitPrice": null,
           "note": "",
           "recommendedFor": "同じ場所に通う仲間と、無理なく続けていきたい方に。",
-          "photoNote": "セミパーソナル通い放題のセッション風景"
+          "photoNote": "セミパーソナル通い放題のセッション風景",
+          "photo": "images/plan-semipersonal.jpg"
         },
         {
           "id": "semi-single",
@@ -102,7 +120,8 @@
           "unitPrice": null,
           "note": "",
           "recommendedFor": "まずは1回試してみたい方、出張や旅行のタイミングで単発利用したい方に。",
-          "photoNote": "単発利用時のセッション風景"
+          "photoNote": "単発利用時のセッション風景",
+          "photo": "images/plan-semipersonal.jpg"
         }
       ]
     },
@@ -119,7 +138,8 @@
           "unitPrice": 8000,
           "note": "",
           "recommendedFor": "ご家族やご友人と、まずは短期間から一緒に体を動かしてみたい方に。",
-          "photoNote": "ペアレッスンのセッション風景"
+          "photoNote": "ペアレッスンのセッション風景",
+          "photo": "images/plan-pair.jpg"
         },
         {
           "id": "pair-ticket24",
@@ -130,7 +150,8 @@
           "unitPrice": 7000,
           "note": "",
           "recommendedFor": "お二人のペースで、数ヶ月かけてじっくり取り組みたい方に。",
-          "photoNote": "ペアレッスンのセッション風景"
+          "photoNote": "ペアレッスンのセッション風景",
+          "photo": "images/plan-pair.jpg"
         }
       ]
     }
@@ -150,7 +171,8 @@
             "unitPrice": null,
             "note": "月内なら回数無制限でご利用いただけます(対面(パーソナル/セミパーソナル)とは内容が異なります)",
             "recommendedFor": "月額制で、月内なら回数の制限なく何度でもご利用いただけます。朝(例: 7:00〜7:30)や夜寝る前(例: 22:00〜22:30)など、生活のリズムに合わせた20〜30分のストレッチ中心のメニューです。全国どこからでも、日常に短い習慣を取り入れたい方に。",
-            "photoNote": "オンラインセッションの様子"
+            "photoNote": "オンラインセッションの様子",
+            "photo": "images/plan-online.jpg"
           }
         ]
       }

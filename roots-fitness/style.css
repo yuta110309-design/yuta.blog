@@ -1389,7 +1389,8 @@ a.news-card:hover {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 4px 12px;
   margin-bottom: 10px;
 }
 
@@ -1398,6 +1399,7 @@ a.news-card:hover {
   font-size: 1rem;
   letter-spacing: 0.04em;
   color: var(--color-text);
+  white-space: nowrap;
 }
 
 .plan-card-freq {

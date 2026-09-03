@@ -2309,28 +2309,20 @@ a.news-card:hover {
    ========================================================================== */
 .cta-strip {
   position: relative;
-  background: var(--color-deep-green);
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.05) 1px, transparent 1px, transparent 5px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0px, rgba(0, 0, 0, 0.05) 1px, transparent 1px, transparent 9px),
+    linear-gradient(90deg, #8F5531 0%, #A9673D 12%, #7a5a3a 32%, #4E6144 55%, #2E3D28 80%, #1f2a1b 100%);
   color: var(--color-white);
   padding: 40px 0;
   overflow: hidden;
-}
-
-.cta-strip::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("images/why-two-locations.jpg");
-  background-size: cover;
-  background-position: center;
-  opacity: 0.42;
-  filter: saturate(0.75);
 }
 
 .cta-strip::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, rgba(51, 66, 44, 0.72) 0%, rgba(46, 61, 40, 0.76) 45%, rgba(35, 47, 30, 0.8) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.22));
 }
 
 .cta-strip-inner {
@@ -2369,7 +2361,10 @@ a.news-card:hover {
    Footer
    ========================================================================== */
 .site-footer {
-  background: var(--color-deep-green);
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.05) 1px, transparent 1px, transparent 5px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0px, rgba(0, 0, 0, 0.05) 1px, transparent 1px, transparent 9px),
+    linear-gradient(90deg, #8F5531 0%, #A9673D 12%, #7a5a3a 32%, #4E6144 55%, #2E3D28 80%, #1f2a1b 100%);
   color: rgba(255, 255, 255, 0.85);
   padding: 64px 0 32px;
   font-size: 0.85rem;

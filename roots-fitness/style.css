@@ -103,6 +103,16 @@ button {
   }
 }
 
+.pc-break {
+  display: none;
+}
+
+@media (min-width: 760px) {
+  .pc-break {
+    display: inline;
+  }
+}
+
 /* ==========================================================================
    Buttons / CTA
    ========================================================================== */
@@ -608,6 +618,15 @@ body.reservation-open {
   background: var(--color-bg-alt);
 }
 
+/* 背景色が同じ(通常同士 or section-alt同士)のセクションが隣り合う場合、
+   境界に色の切り替わりが無く、上下のpadding(88px+88px)がそのまま
+   間延びした余白に見えてしまう。直接隣接する場合のみ、後ろのセクションの
+   上padding分を詰めて1セクション分の余白に揃える。 */
+.section.section-alt + .section.section-alt,
+.section:not(.section-alt) + .section:not(.section-alt) {
+  padding-top: 0;
+}
+
 .section-dark {
   background: var(--color-deep-green);
   color: var(--color-white);
@@ -911,8 +930,18 @@ a.news-card:hover {
     line-height: 2.1;
   }
 
+  .founder-message-photo {
+    height: 460px;
+  }
+
   .founder-message-photo-img {
-    object-position: center 22%;
+    object-position: center 25%;
+  }
+}
+
+@media (min-width: 960px) {
+  .founder-message-photo {
+    height: 560px;
   }
 }
 
@@ -1902,7 +1931,7 @@ a.news-card:hover {
   flex: 0 0 min(80vw, 260px);
   scroll-snap-align: start;
   display: block;
-  background: var(--color-white);
+  background: linear-gradient(160deg, #33422c 0%, #2e3d28 60%, #232f1e 100%);
   border: 1px solid rgba(46, 61, 40, 0.1);
   border-radius: var(--radius);
   padding: 0;
@@ -1981,6 +2010,7 @@ a.news-card:hover {
 
 .trainer-card-body {
   display: block;
+  background: var(--color-white);
   padding: 20px;
 }
 

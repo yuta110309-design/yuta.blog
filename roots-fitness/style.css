@@ -248,9 +248,9 @@ button {
 }
 
 .header-cta {
-  padding: 8px 9px;
-  font-size: 0.66rem;
-  min-height: 44px;
+  padding: 6px 10px;
+  font-size: 0.64rem;
+  min-height: 30px;
 }
 
 /* 460px未満(iPhone標準サイズ帯を含む)では、ロゴ+CTA+ハンバーガーが

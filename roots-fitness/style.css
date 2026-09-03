@@ -2345,6 +2345,13 @@ a.news-card:hover {
   white-space: normal;
 }
 
+.cta-strip-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
 @media (min-width: 640px) {
   .cta-strip-inner {
     flex-direction: row;
@@ -2354,6 +2361,10 @@ a.news-card:hover {
 
   .cta-strip-text {
     font-size: 1.1rem;
+  }
+
+  .cta-strip-actions {
+    flex-shrink: 0;
   }
 }
 

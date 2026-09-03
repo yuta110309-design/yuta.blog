@@ -238,6 +238,21 @@
           <span>志望動機・自己PR</span>
           <textarea name="motivation" rows="4"></textarea>
         </label>
+        <label class="form-field">
+          <span>知ったキッカケ</span>
+          <select name="source">
+            <option value="">選択してください</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Google検索">Google検索</option>
+            <option value="ご紹介">ご紹介</option>
+            <option value="求人サイト">求人サイト</option>
+            <option value="その他">その他</option>
+          </select>
+        </label>
+        <label class="form-field">
+          <span>面接希望日(曜日・時間帯)</span>
+          <input type="text" name="interviewAvailability" placeholder="例:平日夜、土日午前など">
+        </label>
         <p class="reservation-form-error" role="alert"></p>
         <p class="reservation-form-note">送信後、内容を確認のうえ担当より面接日程等をご連絡いたします。</p>
         <button type="submit" class="btn btn-primary reservation-submit">応募する</button>

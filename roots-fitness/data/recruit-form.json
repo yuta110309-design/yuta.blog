@@ -8,6 +8,8 @@
     "phone": "REPLACE_ME_PHONE",
     "store": "REPLACE_ME_STORE",
     "experience": "REPLACE_ME_EXPERIENCE",
-    "motivation": "REPLACE_ME_MOTIVATION"
+    "motivation": "REPLACE_ME_MOTIVATION",
+    "source": "REPLACE_ME_SOURCE",
+    "interviewAvailability": "REPLACE_ME_INTERVIEW_AVAILABILITY"
   }
 }

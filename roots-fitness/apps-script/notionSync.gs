@@ -237,6 +237,8 @@ var RECRUIT_Q_PHONE = "お電話番号";
 var RECRUIT_Q_STORE = "応募店舗";
 var RECRUIT_Q_EXPERIENCE = "ご経験・資格";
 var RECRUIT_Q_MOTIVATION = "志望動機・自己PR";
+var RECRUIT_Q_SOURCE = "知ったキッカケ";
+var RECRUIT_Q_INTERVIEW_AVAILABILITY = "面接希望日";
 
 var RECRUIT_ADMIN_NOTIFY_EMAILS = "yuta110309@gmail.com,kawashima@proudc-inc.com";
 
@@ -249,13 +251,15 @@ function onRecruitFormSubmit(e) {
   var store = getValue(values, RECRUIT_Q_STORE);
   var experience = getValue(values, RECRUIT_Q_EXPERIENCE);
   var motivation = getValue(values, RECRUIT_Q_MOTIVATION);
+  var source = getValue(values, RECRUIT_Q_SOURCE);
+  var interviewAvailability = getValue(values, RECRUIT_Q_INTERVIEW_AVAILABILITY);
 
   // 採用応募フォームにしかない設問(応募店舗)が無ければ、他フォームの送信なので何もしない。
   if (!store || !name) {
     return;
   }
 
-  addRecruitToNotion(name, email, phone, store, experience, motivation);
+  addRecruitToNotion(name, email, phone, store, experience, motivation, source, interviewAvailability);
 
   if (email) {
     MailApp.sendEmail(
@@ -278,12 +282,14 @@ function onRecruitFormSubmit(e) {
       "メールアドレス: " + email + "\n" +
       "お電話番号: " + phone + "\n" +
       "ご経験・資格: " + experience + "\n" +
-      "志望動機・自己PR: " + motivation + "\n\n" +
+      "志望動機・自己PR: " + motivation + "\n" +
+      "知ったキッカケ: " + source + "\n" +
+      "面接希望日: " + interviewAvailability + "\n\n" +
       "詳細はGoogleフォームの回答スプレッドシートをご確認ください。"
   );
 }
 
-function addRecruitToNotion(name, email, phone, store, experience, motivation) {
+function addRecruitToNotion(name, email, phone, store, experience, motivation, source, interviewAvailability) {
   if (!name) return;
 
   var properties = {
@@ -295,6 +301,8 @@ function addRecruitToNotion(name, email, phone, store, experience, motivation) {
   if (phone) properties["電話番号"] = { phone_number: phone };
   if (experience) properties["経験・資格"] = { rich_text: [{ text: { content: experience } }] };
   if (motivation) properties["志望動機"] = { rich_text: [{ text: { content: motivation } }] };
+  if (source) properties["知ったキッカケ"] = { rich_text: [{ text: { content: source } }] };
+  if (interviewAvailability) properties["面接希望日"] = { rich_text: [{ text: { content: interviewAvailability } }] };
 
   postToNotion(RECRUIT_NOTION_DATABASE_ID, properties);
 }

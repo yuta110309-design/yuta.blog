@@ -1740,6 +1740,11 @@ a.news-card:hover {
   font-size: 2.15rem;
   letter-spacing: 0.02em;
   color: var(--color-deep-green);
+  white-space: nowrap;
+}
+
+.results-badge-value-compact {
+  font-size: 1.5rem;
 }
 
 .results-badge-label {

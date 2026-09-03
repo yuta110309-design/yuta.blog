@@ -12,7 +12,7 @@
   --color-text-soft: #5C5346;
   --color-white: #FFFFFF;
 
-  --font-heading: "Shippori Antique B1", "Shippori Mincho", serif;
+  --font-heading: "Noto Serif JP", "Shippori Mincho", serif;
   --font-body: "Zen Kaku Gothic New", sans-serif;
   --font-signature: "Yuji Syuku", "Shippori Antique B1", serif;
 
@@ -2318,7 +2318,7 @@ a.news-card:hover {
   background:
     repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.05) 1px, transparent 1px, transparent 5px),
     repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0px, rgba(0, 0, 0, 0.05) 1px, transparent 1px, transparent 9px),
-    linear-gradient(90deg, #8F5531 0%, #A9673D 12%, #7a5a3a 32%, #4E6144 55%, #2E3D28 80%, #1f2a1b 100%);
+    linear-gradient(90deg, #7C9481 0%, #6B8072 22%, #4E6144 55%, #2E3D28 85%, #1f2a1b 100%);
   color: var(--color-white);
   padding: 40px 0;
   overflow: hidden;
@@ -2381,7 +2381,7 @@ a.news-card:hover {
   background:
     repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.05) 1px, transparent 1px, transparent 5px),
     repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0px, rgba(0, 0, 0, 0.05) 1px, transparent 1px, transparent 9px),
-    linear-gradient(90deg, #8F5531 0%, #A9673D 12%, #7a5a3a 32%, #4E6144 55%, #2E3D28 80%, #1f2a1b 100%);
+    linear-gradient(90deg, #7C9481 0%, #6B8072 22%, #4E6144 55%, #2E3D28 85%, #1f2a1b 100%);
   color: rgba(255, 255, 255, 0.85);
   padding: 64px 0 32px;
   font-size: 0.85rem;

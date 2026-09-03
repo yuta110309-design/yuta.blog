@@ -172,6 +172,8 @@ var SUPPORTER_Q_EMAIL = "メールアドレス";
 var SUPPORTER_Q_STORE = "ご利用店舗";
 var SUPPORTER_Q_INSTAGRAM = "Instagramアカウント";
 
+var SUPPORTER_ADMIN_NOTIFY_EMAILS = "yuta110309@gmail.com,kawashima@proudc-inc.com";
+
 function onSupporterFormSubmit(e) {
   var values = e.namedValues;
 
@@ -196,6 +198,31 @@ function onSupporterFormSubmit(e) {
   if (instagram) properties["Instagram"] = { rich_text: [{ text: { content: instagram } }] };
 
   postToNotion(SUPPORTER_NOTION_DATABASE_ID, properties);
+
+  // 申込者へは「受付のみ」の確認メール(選考があるため、この時点では合否を伝えない)。
+  if (email) {
+    MailApp.sendEmail(
+      email,
+      "【Roots Fitness】スペシャルサポーター制度のお申し込みを受け付けました",
+      name + " 様\n\n" +
+        "この度は、Roots Fitness スペシャルサポーター制度にお申し込みいただき、誠にありがとうございます。\n" +
+        "内容を確認のうえ、選考させていただきます。今しばらくお時間をいただき、結果はあらためてご連絡いたします。\n\n" +
+        "ご不明な点がございましたら、このメールへの返信または公式LINEにてお気軽にご連絡ください。\n\n" +
+        "Roots Fitness"
+    );
+  }
+
+  MailApp.sendEmail(
+    SUPPORTER_ADMIN_NOTIFY_EMAILS,
+    "【スペシャルサポーター】新規申込みがありました(" + store + ")",
+    "スペシャルサポーター制度に新しい申込みがありました。\n\n" +
+      "お名前: " + name + "\n" +
+      "店舗: " + store + "\n" +
+      "電話番号: " + phone + "\n" +
+      "メールアドレス: " + email + "\n" +
+      "Instagram: " + instagram + "\n\n" +
+      "詳細はNotion(スペシャルサポーター制度 申込管理)またはGoogleフォームの回答スプレッドシートをご確認ください。"
+  );
 }
 
 /* ============================================================

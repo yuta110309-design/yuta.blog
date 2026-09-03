@@ -904,6 +904,10 @@ a.news-card:hover {
   background: var(--color-white);
   border: 1px solid rgba(46, 61, 40, 0.12);
   border-radius: 8px;
+}
+
+.founder-message-lead,
+.founder-message-list {
   max-width: 42em;
 }
 
@@ -1914,6 +1918,7 @@ a.news-card:hover {
 
 .trainer-cards {
   display: flex;
+  align-items: flex-start;
   gap: 14px;
   overflow-x: auto;
   scroll-snap-type: x proximity;
@@ -1931,7 +1936,7 @@ a.news-card:hover {
   flex: 0 0 min(80vw, 260px);
   scroll-snap-align: start;
   display: block;
-  background: linear-gradient(160deg, #33422c 0%, #2e3d28 60%, #232f1e 100%);
+  background: var(--color-white);
   border: 1px solid rgba(46, 61, 40, 0.1);
   border-radius: var(--radius);
   padding: 0;
@@ -1940,9 +1945,12 @@ a.news-card:hover {
   color: inherit;
   cursor: pointer;
   overflow: hidden;
-  -webkit-appearance: none;
-  appearance: none;
   transition: border-color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.trainer-card:focus-visible {
+  outline: 2px solid var(--color-terracotta);
+  outline-offset: 2px;
 }
 
 .trainer-card:hover {

@@ -1540,11 +1540,6 @@ a.news-card:hover {
 }
 
 /* 体験までの流れ(Trial flow) */
-.trial-flow {
-  margin-top: 64px;
-  padding-top: 56px;
-  border-top: 1px solid rgba(46, 61, 40, 0.12);
-}
 
 .trial-flow-title {
   font-size: 1.3rem;

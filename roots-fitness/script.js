@@ -787,7 +787,7 @@
     function buildTrainerCardHtml(trainer) {
       trainerById[trainer.id] = trainer;
       var photoHtml = trainer.photo
-        ? '<img class="trainer-card-photo-img" src="' + trainer.photo + '" alt="' + trainer.name + 'トレーナー" loading="lazy">'
+        ? '<img class="trainer-card-photo-img" src="' + trainer.photo + '" alt="' + trainer.name + 'トレーナー">'
         : PHOTO_PLACEHOLDER_ICON + (trainer.photoNote || "トレーナー写真");
       return (
         '<button type="button" class="trainer-card" data-trainer-detail="' + trainer.id + '">' +

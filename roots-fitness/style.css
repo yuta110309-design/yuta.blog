@@ -192,10 +192,8 @@ button {
   height: var(--header-height);
   display: flex;
   align-items: center;
-  background: rgba(248, 244, 236, 0.92);
-  backdrop-filter: saturate(140%) blur(6px);
-  border-bottom: 1px solid rgba(46, 61, 40, 0.08);
-  transition: background-color 0.3s var(--ease);
+  background: url("images/header-gradient.jpg") center/cover;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .header-inner {
@@ -216,7 +214,8 @@ button {
   font-family: var(--font-heading);
   font-size: 0.82rem;
   letter-spacing: 0.03em;
-  color: var(--color-deep-green);
+  color: var(--color-bg);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
 }
 
 .logo-mark {
@@ -293,7 +292,7 @@ button {
   width: 44px;
   height: 44px;
   background: transparent;
-  border: 1px solid rgba(46, 61, 40, 0.25);
+  border: 1px solid rgba(248, 244, 236, 0.4);
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -302,7 +301,7 @@ button {
   display: block;
   width: 18px;
   height: 1px;
-  background: var(--color-deep-green);
+  background: var(--color-bg);
   transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
 }
 

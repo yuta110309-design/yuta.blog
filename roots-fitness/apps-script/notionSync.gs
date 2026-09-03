@@ -242,6 +242,8 @@ var RECRUIT_Q_INTERVIEW_AVAILABILITY = "面接希望日";
 
 var RECRUIT_ADMIN_NOTIFY_EMAILS = "yuta110309@gmail.com,kawashima@proudc-inc.com";
 
+var RECRUIT_LINE_URL = "https://line.me/R/ti/p/@325frgjv";
+
 function onRecruitFormSubmit(e) {
   var values = e.namedValues;
 
@@ -268,6 +270,8 @@ function onRecruitFormSubmit(e) {
       name + " 様\n\n" +
         "この度は、Roots Fitness " + store + "店へのご応募、誠にありがとうございます。\n" +
         "内容を確認のうえ、担当より面接日程等をご連絡いたします。今しばらくお待ちください。\n\n" +
+        "公式LINEでは、店舗の最新情報や採用に関するご案内も配信しています。よろしければ選考結果を待つ間に、こちらもご登録ください。\n" +
+        RECRUIT_LINE_URL + "\n\n" +
         "ご不明な点がございましたら、このメールへの返信または公式LINEにてお気軽にご連絡ください。\n\n" +
         "Roots Fitness"
     );

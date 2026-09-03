@@ -9,8 +9,9 @@
  *
  * - 体験予約フォーム   → onFormSubmit
  * - サポーター申込フォーム → onSupporterFormSubmit
+ * - 採用応募フォーム   → onRecruitFormSubmit
  *
- * 変数名は SUPPORTER_ / RESERVATION_ の接頭辞で分けており、
+ * 変数名は SUPPORTER_ / RESERVATION_ / RECRUIT_ の接頭辞で分けており、
  * 今後フォームが増えても同じ命名ルールで追加できる。
  *
  * トリガー設定(左メニュー「トリガー」→「トリガーを追加」):
@@ -19,12 +20,12 @@
  * で1つずつ追加する。
  *
  * 【重要】この設定方法では「どのフォームの送信で発火するか」を個別に選べず、
- * 同じスプレッドシートに紐づく全フォームの送信で両方の関数が呼ばれる。
+ * 同じスプレッドシートに紐づく全フォームの送信で全関数が呼ばれる。
  * そのため各関数の先頭で、そのフォームにしか存在しない設問(体験予約なら
- * 「ご年齢」、サポーターなら「ご利用店舗」)が空でないかをチェックし、
- * 自分のフォームの送信でなければ何もせず終了するようにしている。
- * 新しいフォームを追加する場合も、同様に他のフォームには存在しない
- * 設問をガード条件に使うこと。
+ * 「ご年齢」、サポーターなら「ご利用店舗」、採用応募なら「応募店舗」)が
+ * 空でないかをチェックし、自分のフォームの送信でなければ何もせず終了する
+ * ようにしている。新しいフォームを追加する場合も、同様に他のフォームには
+ * 存在しない設問をガード条件に使うこと。
  */
 
 // Notionへのアクセスに使う共通のインテグレーショントークン(両フォームで同じものを使用)。
@@ -195,4 +196,78 @@ function onSupporterFormSubmit(e) {
   if (instagram) properties["Instagram"] = { rich_text: [{ text: { content: instagram } }] };
 
   postToNotion(SUPPORTER_NOTION_DATABASE_ID, properties);
+}
+
+/* ============================================================
+   採用応募フォーム
+   ============================================================ */
+
+var RECRUIT_NOTION_DATABASE_ID = "a7c0ea8be2d1492180b67b8bd2b6c9f2";
+
+var RECRUIT_Q_NAME = "お名前";
+var RECRUIT_Q_EMAIL = "メールアドレス";
+var RECRUIT_Q_PHONE = "お電話番号";
+var RECRUIT_Q_STORE = "応募店舗";
+var RECRUIT_Q_EXPERIENCE = "ご経験・資格";
+var RECRUIT_Q_MOTIVATION = "志望動機・自己PR";
+
+var RECRUIT_ADMIN_NOTIFY_EMAILS = "yuta110309@gmail.com,kawashima@proudc-inc.com";
+
+function onRecruitFormSubmit(e) {
+  var values = e.namedValues;
+
+  var name = getValue(values, RECRUIT_Q_NAME);
+  var email = getValue(values, RECRUIT_Q_EMAIL);
+  var phone = getValue(values, RECRUIT_Q_PHONE);
+  var store = getValue(values, RECRUIT_Q_STORE);
+  var experience = getValue(values, RECRUIT_Q_EXPERIENCE);
+  var motivation = getValue(values, RECRUIT_Q_MOTIVATION);
+
+  // 採用応募フォームにしかない設問(応募店舗)が無ければ、他フォームの送信なので何もしない。
+  if (!store || !name) {
+    return;
+  }
+
+  addRecruitToNotion(name, email, phone, store, experience, motivation);
+
+  if (email) {
+    MailApp.sendEmail(
+      email,
+      "【Roots Fitness】ご応募ありがとうございます",
+      name + " 様\n\n" +
+        "この度は、Roots Fitness " + store + "店へのご応募、誠にありがとうございます。\n" +
+        "内容を確認のうえ、担当より面接日程等をご連絡いたします。今しばらくお待ちください。\n\n" +
+        "ご不明な点がございましたら、このメールへの返信または公式LINEにてお気軽にご連絡ください。\n\n" +
+        "Roots Fitness"
+    );
+  }
+
+  MailApp.sendEmail(
+    RECRUIT_ADMIN_NOTIFY_EMAILS,
+    "【採用応募】新規応募がありました(" + store + ")",
+    "採用応募フォームに新しい応募がありました。\n\n" +
+      "お名前: " + name + "\n" +
+      "店舗: " + store + "\n" +
+      "メールアドレス: " + email + "\n" +
+      "お電話番号: " + phone + "\n" +
+      "ご経験・資格: " + experience + "\n" +
+      "志望動機・自己PR: " + motivation + "\n\n" +
+      "詳細はGoogleフォームの回答スプレッドシートをご確認ください。"
+  );
+}
+
+function addRecruitToNotion(name, email, phone, store, experience, motivation) {
+  if (!name) return;
+
+  var properties = {
+    "名前": { title: [{ text: { content: name } }] },
+    "ステータス": { select: { name: "未対応" } }
+  };
+  if (store) properties["店舗"] = { select: { name: store } };
+  if (email) properties["メールアドレス"] = { email: email };
+  if (phone) properties["電話番号"] = { phone_number: phone };
+  if (experience) properties["経験・資格"] = { rich_text: [{ text: { content: experience } }] };
+  if (motivation) properties["志望動機"] = { rich_text: [{ text: { content: motivation } }] };
+
+  postToNotion(RECRUIT_NOTION_DATABASE_ID, properties);
 }

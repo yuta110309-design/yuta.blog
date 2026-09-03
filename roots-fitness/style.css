@@ -2556,7 +2556,8 @@ a.news-card:hover {
 }
 
 .form-field input:not([type="radio"]):not([type="checkbox"]),
-.form-field select {
+.form-field select,
+.form-field textarea {
   font-family: var(--font-body);
   font-size: 0.95rem;
   padding: 12px 14px;
@@ -2566,10 +2567,12 @@ a.news-card:hover {
   color: var(--color-text);
   -webkit-appearance: none;
   appearance: none;
+  resize: vertical;
 }
 
 .form-field input:not([type="radio"]):not([type="checkbox"]):focus,
-.form-field select:focus {
+.form-field select:focus,
+.form-field textarea:focus {
   outline: 2px solid var(--color-terracotta);
   outline-offset: 1px;
 }

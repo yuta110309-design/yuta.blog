@@ -136,12 +136,8 @@
       <div><dt>応募要件</dt><dd>無資格可・新卒可・学歴不問・見学相談可(店長候補あり)。資格・経験不問。NSCA-CPT・JATI-ATI等のトレーナー資格やパーソナルトレーニングの実務経験がある方は歓迎しますが、必須ではありません。</dd></div>
     </dl>
 
-    <!-- TODO: job-medley掲載ページの正式な応募URLが確定したら、
-         下のbutton(準備中表示)をこの下のコメントアウトしてある本来のリンクに差し替える。
-         <a href="[job-medleyのURL]" class="btn btn-primary" target="_blank" rel="noopener noreferrer">応募する(代官山店)</a> -->
     <div class="plan-actions">
-      <button type="button" class="btn btn-pending" disabled aria-disabled="true">応募受付 準備中</button>
-      <p class="btn-pending-note">応募フォームを準備中です。お急ぎの方はページ上部の<a href="#" data-line-cta target="_blank" rel="noopener noreferrer">LINE</a>からお問い合わせください。</p>
+      <a href="#recruit-apply" class="btn btn-primary" data-recruit-store="代官山">応募する(代官山店)</a>
     </div>
   </div>
 </section>
@@ -200,12 +196,58 @@
       <div><dt>アクセス</dt><dd>長野県北佐久郡軽井沢町長倉字大道南2477-1 202 BEWELL / しなの鉄道線 中軽井沢駅から徒歩19分</dd></div>
     </dl>
 
-    <!-- TODO: job-medley掲載ページの正式な応募URLが確定したら、
-         下のbutton(準備中表示)をこの下のコメントアウトしてある本来のリンクに差し替える。
-         <a href="[job-medleyのURL]" class="btn btn-primary" target="_blank" rel="noopener noreferrer">応募する(軽井沢店)</a> -->
     <div class="plan-actions">
-      <button type="button" class="btn btn-pending" disabled aria-disabled="true">応募受付 準備中</button>
-      <p class="btn-pending-note">応募フォームを準備中です。お急ぎの方はページ上部の<a href="#" data-line-cta target="_blank" rel="noopener noreferrer">LINE</a>からお問い合わせください。</p>
+      <a href="#recruit-apply" class="btn btn-primary" data-recruit-store="軽井沢">応募する(軽井沢店)</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 応募フォーム ==================== -->
+<section class="section section-alt" id="recruit-apply">
+  <div class="container" style="max-width: 640px;">
+    <div data-recruit-step="form">
+      <span class="section-eyebrow">Apply</span>
+      <h2 class="section-title">応募する</h2>
+      <p class="reservation-modal-lead">下記フォームにご記入のうえご応募ください。内容を確認のうえ、担当より面接日程等をご案内いたします。</p>
+      <form id="recruit-form" novalidate>
+        <label class="form-field">
+          <span>お名前<em>*</em></span>
+          <input type="text" name="name" required autocomplete="name">
+        </label>
+        <label class="form-field">
+          <span>メールアドレス<em>*</em></span>
+          <input type="email" name="email" required autocomplete="email">
+        </label>
+        <label class="form-field">
+          <span>お電話番号<em>*</em></span>
+          <input type="tel" name="phone" required autocomplete="tel">
+        </label>
+        <fieldset class="form-field form-field-radio">
+          <legend>応募店舗<em>*</em></legend>
+          <div class="form-field-radio-options">
+            <label><input type="radio" name="store" value="代官山" required> 代官山</label>
+            <label><input type="radio" name="store" value="軽井沢"> 軽井沢</label>
+          </div>
+        </fieldset>
+        <label class="form-field">
+          <span>ご経験・資格</span>
+          <textarea name="experience" rows="3" placeholder="トレーナー経験、保有資格などがあればご記入ください(未経験の方は空欄で構いません)"></textarea>
+        </label>
+        <label class="form-field">
+          <span>志望動機・自己PR</span>
+          <textarea name="motivation" rows="4"></textarea>
+        </label>
+        <p class="reservation-form-error" role="alert"></p>
+        <p class="reservation-form-note">送信後、内容を確認のうえ担当より面接日程等をご連絡いたします。</p>
+        <button type="submit" class="btn btn-primary reservation-submit">応募する</button>
+      </form>
+    </div>
+
+    <div data-recruit-step="success" hidden>
+      <span class="section-eyebrow">Apply</span>
+      <h2 class="section-title">送信しました</h2>
+      <p>ご応募ありがとうございます。内容を確認のうえ、担当より面接日程等をご連絡いたします。お急ぎの場合や届かない場合は、下記LINEからもお気軽にご連絡ください。</p>
+      <a href="#" class="btn btn-line" data-line-cta target="_blank" rel="noopener noreferrer">LINEで相談する</a>
     </div>
   </div>
 </section>

@@ -446,6 +446,109 @@
   }
 
   /* ------------------------------------------------------------------ */
+  /* 採用応募フォーム(recruit.html専用)                                     */
+  /* 体験予約・サポーター申込と同じ仕組み(Googleフォームへno-corsでPOST)。      */
+  /* data/recruit-form.json が未設定(REPLACE_ME_)の間は、実際の送信は       */
+  /* 行われずコンソールに警告が出るのみ(UIの見た目・動作は確認できる)。        */
+  /* 「応募する(◯◯店)」ボタンは data-recruit-store 属性の値で店舗ラジオを     */
+  /* 事前選択してからフォームまでスクロールする。                              */
+  /* ------------------------------------------------------------------ */
+  var recruitForm = document.getElementById("recruit-form");
+
+  document.querySelectorAll("[data-recruit-store]").forEach(function (el) {
+    el.addEventListener("click", function () {
+      if (!recruitForm) return;
+      var value = el.getAttribute("data-recruit-store");
+      var radio = recruitForm.querySelector('input[name="store"][value="' + value + '"]');
+      if (radio) radio.checked = true;
+    });
+  });
+
+  if (recruitForm) {
+    var recruitFormStep = document.querySelector('[data-recruit-step="form"]');
+    var recruitSuccessStep = document.querySelector('[data-recruit-step="success"]');
+    var recruitErrorEl = recruitForm.querySelector(".reservation-form-error");
+    var recruitConfig = null;
+    var recruitConfigUrl =
+      document.body.getAttribute("data-recruit-json") || "data/recruit-form.json";
+    var recruitSubmitBtn = recruitForm.querySelector(".reservation-submit");
+    var recruitSubmitLabel = recruitSubmitBtn ? recruitSubmitBtn.textContent : "";
+
+    function setRecruitSubmitting(isSubmitting) {
+      if (!recruitSubmitBtn) return;
+      recruitSubmitBtn.disabled = isSubmitting;
+      recruitSubmitBtn.textContent = isSubmitting ? "送信中…" : recruitSubmitLabel;
+    }
+
+    fetch(recruitConfigUrl)
+      .then(function (res) {
+        return res.ok ? res.json() : null;
+      })
+      .then(function (config) {
+        recruitConfig = config;
+      })
+      .catch(function () {
+        /* 設定が読み込めない場合はプレースホルダーのまま(送信時に警告) */
+      });
+
+    function showRecruitSuccess() {
+      if (recruitFormStep) recruitFormStep.hidden = true;
+      if (recruitSuccessStep) recruitSuccessStep.hidden = false;
+      recruitForm.reset();
+    }
+
+    recruitForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      if (recruitSubmitBtn && recruitSubmitBtn.disabled) {
+        return;
+      }
+
+      if (recruitErrorEl) recruitErrorEl.textContent = "";
+
+      if (!recruitForm.reportValidity()) {
+        return;
+      }
+
+      if (
+        !recruitConfig ||
+        !recruitConfig.actionUrl ||
+        recruitConfig.actionUrl.indexOf("REPLACE_ME") !== -1
+      ) {
+        console.warn(
+          "data/recruit-form.json が未設定のため、実際の送信は行われていません。"
+        );
+        showRecruitSuccess();
+        return;
+      }
+
+      var formData = new FormData();
+      var fields = recruitConfig.fields;
+      new FormData(recruitForm).forEach(function (value, key) {
+        if (fields[key]) {
+          formData.append(fields[key], value);
+        }
+      });
+
+      setRecruitSubmitting(true);
+
+      fetch(recruitConfig.actionUrl, {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
+      })
+        .then(showRecruitSuccess)
+        .catch(function () {
+          setRecruitSubmitting(false);
+          if (recruitErrorEl) {
+            recruitErrorEl.textContent =
+              "送信に失敗しました。通信環境をご確認のうえ再度お試しください。";
+          }
+        });
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
   /* Plan(料金プラン)タブ切替 + 描画                                        */
   /* [data-plans-source] 配下の [data-plan-panel="<storeId>"] それぞれに、  */
   /* data/plans.json のカテゴリ/プランをカード形式で描画する。               */

@@ -1,0 +1,13 @@
+{
+  "_comment": "採用応募フォーム(recruit.html)の送信先設定。Googleフォームの回答送信エンドポイントと、各入力項目に対応するentry IDを設定する。取得手順は docs/recruit-form-setup.md を参照(体験予約フォームと同じ仕組み)。値が REPLACE_ME_ のままだと実際の送信は行われない(コンソールに警告が出るのみ)。",
+  "actionUrl": "REPLACE_ME_ACTION_URL",
+  "fields": {
+    "_comment": "key = サイト側のinput name、value = Googleフォームの entry.XXXXXXXXX",
+    "name": "REPLACE_ME_NAME",
+    "email": "REPLACE_ME_EMAIL",
+    "phone": "REPLACE_ME_PHONE",
+    "store": "REPLACE_ME_STORE",
+    "experience": "REPLACE_ME_EXPERIENCE",
+    "motivation": "REPLACE_ME_MOTIVATION"
+  }
+}

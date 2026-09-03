@@ -533,6 +533,7 @@
       return (
         '<div class="plan-schedule">' +
           '<h4 class="plan-schedule-title">時間割</h4>' +
+          '<p class="plan-schedule-hint">タップすると、開催時間の一覧が見られます。</p>' +
           Object.keys(schedule).map(function (label) {
             return buildScheduleRowHtml(label, schedule[label]);
           }).join("") +

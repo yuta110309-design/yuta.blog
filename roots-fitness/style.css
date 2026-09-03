@@ -1211,7 +1211,13 @@ a.news-card:hover {
   font-size: 0.78rem;
   letter-spacing: 0.08em;
   color: var(--color-terracotta-dark);
-  margin-bottom: 12px;
+  margin-bottom: 4px;
+}
+
+.plan-schedule-hint {
+  font-size: 0.76rem;
+  color: var(--color-text-soft);
+  margin: 0 0 12px;
 }
 
 .plan-schedule-row {

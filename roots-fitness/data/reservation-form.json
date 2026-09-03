@@ -1,13 +1,13 @@
 {
   "_comment": "体験予約フォーム(モーダル)の送信先設定。Googleフォームの回答送信エンドポイントと、各入力項目に対応するentry IDを設定する。取得手順は docs/reservation-form-setup.md を参照。値が REPLACE_ME_ のままだと実際の送信は行われない(コンソールに警告が出るのみ)。",
-  "actionUrl": "https://docs.google.com/forms/d/e/REPLACE_ME_FORM_ID/formResponse",
+  "actionUrl": "https://docs.google.com/forms/d/e/1FAIpQLSdIp9z5eGFq_PoItV_4rgesGZZPQjQehEVc-03IgeJIcuFMvg/formResponse",
   "fields": {
     "_comment": "key = サイト側のinput name、value = Googleフォームの entry.XXXXXXXXX",
-    "name": "entry.REPLACE_ME_NAME",
-    "age": "entry.REPLACE_ME_AGE",
-    "store": "entry.REPLACE_ME_STORE",
-    "email": "entry.REPLACE_ME_EMAIL",
-    "phone": "entry.REPLACE_ME_PHONE",
-    "source": "entry.REPLACE_ME_SOURCE"
+    "name": "entry.663731458",
+    "age": "entry.540608479",
+    "store": "entry.1143678727",
+    "email": "entry.45492632",
+    "phone": "entry.1841716219",
+    "source": "entry.812761824"
   }
 }

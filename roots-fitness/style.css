@@ -125,12 +125,12 @@ button {
 }
 
 .btn-primary {
-  background: var(--color-terracotta);
+  background: #B08D6E;
   color: var(--color-white);
 }
 
 .btn-primary:hover {
-  background: var(--color-terracotta-dark);
+  background: #9C7659;
 }
 
 .btn-pending {

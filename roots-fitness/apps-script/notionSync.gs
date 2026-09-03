@@ -80,6 +80,8 @@ var RESERVATION_Q_SOURCE = "知ったキッカケ";
 
 var RESERVATION_ADMIN_NOTIFY_EMAILS = "yuta110309@gmail.com,kawashima@proudc-inc.com";
 
+var RESERVATION_LINE_URL = "https://line.me/R/ti/p/@325frgjv";
+
 function onFormSubmit(e) {
   var values = e.namedValues;
 
@@ -108,6 +110,8 @@ function onFormSubmit(e) {
     template.bodyIntro + "\n\n" +
     "以下のリンクより、体験予約のお手続きにお進みください。\n" +
     template.fitkarteUrl + "\n\n" +
+    "公式LINEでも最新情報や詳細のご案内をお送りしています。よろしければこちらもご登録ください。\n" +
+    RESERVATION_LINE_URL + "\n\n" +
     "ご不明な点がございましたら、このメールへの返信または公式LINEにてお気軽にご連絡ください。\n\n" +
     "Roots Fitness";
 

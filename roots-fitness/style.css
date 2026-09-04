@@ -1937,7 +1937,7 @@ a.news-card:hover {
   scroll-snap-align: start;
   display: block;
   background: var(--color-white);
-  border: 1px solid rgba(46, 61, 40, 0.1);
+  border: 1px solid rgba(46, 61, 40, 0.08);
   border-radius: var(--radius);
   padding: 0;
   text-align: left;
@@ -1945,7 +1945,8 @@ a.news-card:hover {
   color: inherit;
   cursor: pointer;
   overflow: hidden;
-  transition: border-color 0.25s var(--ease), transform 0.25s var(--ease);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease);
 }
 
 .trainer-card:focus-visible {
@@ -1954,19 +1955,21 @@ a.news-card:hover {
 }
 
 .trainer-card:hover {
-  border-color: var(--color-terracotta);
+  border-color: rgba(46, 61, 40, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
 }
 
 .trainer-card-photo {
   position: relative;
-  height: 220px;
+  height: 240px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background: linear-gradient(160deg, #33422c 0%, #2e3d28 60%, #232f1e 100%);
-  color: rgba(255, 255, 255, 0.7);
+  background: linear-gradient(135deg, #3d4d37 0%, #34433d 50%, #2a342f 100%);
+  color: rgba(255, 255, 255, 0.6);
   font-size: 0.8rem;
   letter-spacing: 0.04em;
   text-align: center;
@@ -2019,31 +2022,33 @@ a.news-card:hover {
 .trainer-card-body {
   display: block;
   background: var(--color-white);
-  padding: 20px;
+  padding: 24px;
 }
 
 .trainer-card-name {
   display: block;
   font-family: var(--font-heading);
-  font-size: 1.05rem;
-  letter-spacing: 0.04em;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   color: var(--color-text);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .trainer-card-role {
   display: block;
-  font-size: 0.76rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
   color: var(--color-text-soft);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .trainer-card-summary {
   display: block;
   font-size: 0.85rem;
   color: var(--color-text-soft);
-  line-height: 1.8;
-  margin: 0 0 14px;
+  line-height: 1.9;
+  margin: 0 0 16px;
 }
 
 .trainer-detail-role {

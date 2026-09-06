@@ -17,7 +17,12 @@
       "area": "長野",
       "fitkarteUrl": "https://roots-fitness.fit-karte.com/mypage?s=roots-fitness-karuizawa&openExternalBrowser=1",
       "instagramUrl": "https://www.instagram.com/roots__fitness",
-      "status": "active"
+      "status": "active",
+      "rentalWear": {
+        "available": true,
+        "price": 300,
+        "priceUnit": "回"
+      }
     },
     {
       "id": "online",

@@ -898,6 +898,7 @@
       trainerGroups.addEventListener("click", function (e) {
         var btn = e.target.closest("[data-trainer-detail]");
         if (!btn) return;
+        e.preventDefault();
         var trainer = trainerById[btn.getAttribute("data-trainer-detail")];
         if (trainer) openTrainerDetailModal(trainer, btn);
       });

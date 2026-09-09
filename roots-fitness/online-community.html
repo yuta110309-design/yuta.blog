@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>オンラインコミュニティ | Roots Fitness</title>
+<meta name="description" content="Roots Fitness オンラインコミュニティ。ライブトレーニング配信、栄養ガイド、トレーナーサポートで、自宅から本質的な健康を手に入れる。">
+<link rel="canonical" href="https://roots-fitness.jp/online-community.html">
+<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="apple-touch-icon" href="images/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Shippori+Mincho:wght@400&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Yuji+Syuku&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Shippori+Mincho:wght@400&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Yuji+Syuku&display=swap"></noscript>
+<link rel="stylesheet" href="style.css?v=2">
+<style>
+.online-community-hero {
+  background: linear-gradient(135deg, #2E3D28 0%, #1a2318 100%);
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.online-community-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.online-community-hero p {
+  font-size: 1.1rem;
+  margin-bottom: 40px;
+  opacity: 0.95;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin: 60px 0;
+}
+
+.feature-card {
+  padding: 40px 30px;
+  border-radius: 12px;
+  color: white;
+  text-align: center;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.feature-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.feature-card p {
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.feature-card.blue { background: #4B7EC4; }
+.feature-card.green { background: #5DADE2; }
+.feature-card.orange { background: #F39C12; }
+.feature-card.red { background: #E74C3C; }
+.feature-card.pink { background: #D64C75; }
+
+.trainers-section {
+  background: #f5f5f5;
+  padding: 60px 0;
+  margin: 60px 0;
+}
+
+.trainer-item {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+  padding: 30px;
+  background: white;
+  border-radius: 8px;
+  align-items: start;
+}
+
+.trainer-photo {
+  width: 180px;
+  height: 180px;
+  background: #e0e0e0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: #999;
+}
+
+.trainer-info h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #2E3D28;
+}
+
+.trainer-role {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.trainer-bio {
+  line-height: 1.8;
+  color: #555;
+}
+
+.reviews-section {
+  padding: 60px 0;
+}
+
+.review-item {
+  margin-bottom: 40px;
+  padding: 30px;
+  background: #f9f9f9;
+  border-left: 4px solid #2E3D28;
+  border-radius: 4px;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.review-avatar {
+  width: 50px;
+  height: 50px;
+  background: #d0d0d0;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.review-name {
+  font-weight: 600;
+  color: #2E3D28;
+}
+
+.review-store {
+  font-size: 0.85rem;
+  color: #999;
+  margin-top: 3px;
+}
+
+.review-stars {
+  color: #F39C12;
+  margin-bottom: 10px;
+}
+
+.review-text {
+  line-height: 1.8;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.pricing-section {
+  background: #f5f5f5;
+  padding: 60px 0;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.pricing-card {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.pricing-card h3 {
+  font-size: 1.3rem;
+  color: #2E3D28;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.pricing-features {
+  text-align: left;
+  margin: 20px 0;
+  padding: 20px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.pricing-features li {
+  list-style: none;
+  margin: 12px 0;
+  padding-left: 25px;
+  position: relative;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.pricing-features li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #2E3D28;
+  font-weight: bold;
+}
+
+.pricing-price {
+  font-size: 2.5rem;
+  color: #E74C3C;
+  margin: 20px 0;
+  font-weight: 700;
+}
+
+.pricing-unit {
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.entry-fee {
+  background: #fff3cd;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #856404;
+}
+
+.entry-fee-note {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 10px;
+}
+
+.faq-section {
+  padding: 60px 0;
+}
+
+.faq-item {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+}
+
+.faq-question {
+  font-weight: 600;
+  color: #2E3D28;
+  margin-bottom: 10px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-question:hover {
+  color: #4B7EC4;
+}
+
+.faq-toggle {
+  font-size: 1.2rem;
+}
+
+.faq-answer {
+  color: #555;
+  line-height: 1.8;
+  display: none;
+  padding: 15px 0;
+}
+
+.faq-answer.active {
+  display: block;
+}
+
+.steps-section {
+  background: #f5f5f5;
+  padding: 60px 0;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.step-item {
+  background: white;
+  padding: 35px 25px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.step-number {
+  background: #2E3D28;
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 auto 20px;
+}
+
+.step-item h3 {
+  font-size: 1.1rem;
+  color: #2E3D28;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.step-item p {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .online-community-hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .trainer-item {
+    grid-template-columns: 1fr;
+  }
+
+  .trainer-photo {
+    width: 100%;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="Roots Fitness ホームへ">
+      <img class="logo-mark" src="images/logo.png" alt="" width="34" height="34">
+      <span class="logo-word">Roots Fitness</span>
+    </a>
+    <div class="header-actions">
+      <button type="button" class="btn btn-primary header-cta" data-open-reservation>体験予約はこちら</button>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="nav-panel">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-panel" id="nav-panel" aria-label="グローバルナビゲーション">
+  <span class="nav-panel-eyebrow">Menu</span>
+  <ul class="nav-panel-list">
+    <li><a href="index.html#concept">Concept<span class="nav-item-arrow">コンセプト</span></a></li>
+    <li><a href="index.html#plan">Plan<span class="nav-item-arrow">料金プラン</span></a></li>
+    <li><a href="index.html#trainer">Trainer<span class="nav-item-arrow">トレーナー</span></a></li>
+    <li><a href="online-community.html">オンラインコミュニティ</a></li>
+    <li><a href="voice.html">お客様の声<span class="nav-item-arrow">Voice</span></a></li>
+    <li><a href="index.html#faq">FAQ<span class="nav-item-arrow">よくある質問</span></a></li>
+  </ul>
+  <div class="nav-panel-foot">
+    <a href="#" class="btn btn-secondary" data-line-cta target="_blank" rel="noopener noreferrer">友だち追加で、最新情報をいち早く</a>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="online-community-hero">
+  <div class="container">
+    <span class="section-eyebrow" style="color: rgba(255,255,255,0.8);">Online Community</span>
+    <h1>自宅でも、本質的な健康を。</h1>
+    <p>ライブトレーニング、栄養ガイド、トレーナーサポート。<br>Roots Fitness のオンラインコミュニティで、毎日の健康をサポート。</p>
+    <button type="button" class="btn btn-primary" style="margin-top: 20px; background: white; color: #2E3D28;" data-open-reservation>今すぐ参加する</button>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title" style="margin-bottom: 40px;">5つの機能で、理想の身体へ</h2>
+    <div class="features-grid">
+      <div class="feature-card blue">
+        <h3>🎥 ライブトレーニング配信</h3>
+        <p>トレーナーとリアルタイムで繋がる。自宅にいながら、プロのトレーニングを受けられます。</p>
+      </div>
+      <div class="feature-card green">
+        <h3>📚 栄養・食事ガイド</h3>
+        <p>トレーニングと同じくらい大切な栄養管理。コラム形式でわかりやすく解説します。</p>
+      </div>
+      <div class="feature-card orange">
+        <h3>👥 メンバーコミュニティ</h3>
+        <p>同じ目標を持つメンバーとの交流。一緒に頑張る仲間が見つかります。</p>
+      </div>
+      <div class="feature-card red">
+        <h3>👨‍🏫 トレーナー1対1サポート</h3>
+        <p>個別の悩みや質問に対応。あなたのレベルや目標に合わせたアドバイスを受けられます。</p>
+      </div>
+      <div class="feature-card pink">
+        <h3>🤖 AIコーチ機能（準備中）</h3>
+        <p>24時間サポート。今後さらに便利になる予定です。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trainers Section -->
+<section class="section trainers-section">
+  <div class="container">
+    <h2 class="section-title" style="margin-bottom: 40px;">トレーナー紹介</h2>
+
+    <div class="trainer-item">
+      <div class="trainer-photo">梅澤亮太<br>トレーナー</div>
+      <div class="trainer-info">
+        <h3>梅澤亮太</h3>
+        <p class="trainer-role">パーソナルトレーナー（軽井沢店）</p>
+        <p class="trainer-bio">大原学園スポーツビジネスコース卒業。ミスターモデルジャパン長野県大会4位。体や健康に関する悩みはお一人おひとり違います。それぞれの目標に寄り添い、ただ体を変えるだけではなく、体を動かすことで得られる楽しさや日々の生活がより充実していく喜びもお伝えできるよう、全力でサポートさせていただきます。</p>
+      </div>
+    </div>
+
+    <div class="trainer-item">
+      <div class="trainer-photo">戸澤恭子<br>トレーナー</div>
+      <div class="trainer-info">
+        <h3>戸澤恭子</h3>
+        <p class="trainer-role">アロマトレーナー / ストレッチトレーナー（軽井沢店）</p>
+        <p class="trainer-bio">アスリートアロマトレーナー、パーソナルストレッチトレーナー。目的地（思い描く姿）にたどり着くためのナビゲーターとして、お客様との対話を特に大切にしています。一人ひとりの身体の状態に合わせ、アロマトリートメントやストレッチを取り入れながら、身体を整えていきます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Reviews Section -->
+<section class="section reviews-section">
+  <div class="container">
+    <h2 class="section-title" style="margin-bottom: 40px;">メンバーの声</h2>
+
+    <h3 style="color: #2E3D28; font-size: 1.3rem; margin-top: 40px; margin-bottom: 25px;">📍 代官山店</h3>
+
+    <div class="review-item">
+      <div class="review-header">
+        <div class="review-avatar"></div>
+        <div>
+          <div class="review-name">r m さん</div>
+          <div class="review-store">代官山エリア</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">自重トレーニングが中心なので体に無理なく続けられそうで、初心者でも安心してトレーニングできます。ジム内は芝が敷かれていて、木の器具の香りがとても心地よく、代官山らしいおしゃれな空間でした。スタッフの方も優しく丁寧にサポートしてくれるので、運動が苦手な人にもおすすめのジムです。</div>
+    </div>
+
+    <div class="review-item">
+      <div class="review-header">
+        <div class="review-avatar"></div>
+        <div>
+          <div class="review-name">心斎橋長堀フェムテック鍼灸整骨院</div>
+          <div class="review-store">代官山エリア</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">空間づくりのレベルの高さに驚きました。清潔感があり、細部までこだわりを感じる素敵なジムです。トレーナーさんのトレーニングや身体づくりに対する考え方も非常に勉強になりました。『ここなら安心して通いたい』と思える環境が整っていると感じます。</div>
+    </div>
+
+    <h3 style="color: #2E3D28; font-size: 1.3rem; margin-top: 50px; margin-bottom: 25px;">📍 軽井沢店</h3>
+
+    <div class="review-item">
+      <div class="review-header">
+        <div class="review-avatar"></div>
+        <div>
+          <div class="review-name">福島淳平 さん</div>
+          <div class="review-store">軽井沢</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">パーソナル通い放題のプランで利用させてもらっています。普通のジムにはない器具があったり、ここでしかできないトレーニングもできたりして、非常に助かっています。女性やこれからトレーニングを始めたいという方にはもちろんピッタリですが、すでに筋トレを習慣にしている方にもお勧めできるジムです！</div>
+    </div>
+
+    <div class="review-item">
+      <div class="review-header">
+        <div class="review-avatar"></div>
+        <div>
+          <div class="review-name">koga さん</div>
+          <div class="review-store">軽井沢</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">軽井沢のパーソナルジムなら、絶対ココ。Roots FITNESS LOUNGE KARUIZAWAさんに行ってきましたが、正直、今まで行ったジムの中でもトップクラスに感動しました。設備の綺麗さがレベル違いで、細かいところまで手入れが行き届いているのが一目でわかります。トレーナーさんも本当に素晴らしく、『どこを意識するのか』『なぜこの動きが必要なのか』を丁寧に説明してくださいます。</div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="section pricing-section">
+  <div class="container">
+    <h2 class="section-title" style="margin-bottom: 40px;">料金プラン</h2>
+
+    <div class="entry-fee">
+      <strong>入会金：5,500円（税込）</strong>
+      <p class="entry-fee-note">※ 既に Roots Fitness に入会されている方は入会金不要です</p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>🎥 動画視聴プラン</h3>
+        <div class="pricing-price">3,980<span class="pricing-unit">円/月（税抜）</span></div>
+        <ul class="pricing-features">
+          <li>ライブトレーニング配信</li>
+          <li>栄養・食事ガイド</li>
+          <li>メンバーコミュニティ</li>
+          <li>過去ライブの動画閲覧</li>
+        </ul>
+      </div>
+
+      <div class="pricing-card">
+        <h3>👨‍🏫 サポートプラン</h3>
+        <div class="pricing-price">5,980<span class="pricing-unit">円/月（税抜）</span></div>
+        <ul class="pricing-features">
+          <li>動画視聴プランの全て</li>
+          <li>トレーナー1対1サポート</li>
+          <li>個別フィードバック</li>
+          <li>優先的なアドバイス</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title" style="margin-bottom: 40px;">よくある質問</h2>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.parentElement.querySelector('.faq-answer').classList.toggle('active')">
+        <span>キャンセル・解約はできますか？</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">できます。いつでもキャンセル・解約が可能です。お気軽にお問い合わせください。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.parentElement.querySelector('.faq-answer').classList.toggle('active')">
+        <span>ライブを見逃してしまった場合はどうなりますか？</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">次回のライブトレーニング配信にぜひご参加ください。新しいセッションで、別のトレーニングをお楽しみいただけます。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.parentElement.querySelector('.faq-answer').classList.toggle('active')">
+        <span>動画は保存できますか？</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">動画の保存はできません。コミュニティ内でのみ視聴が可能です。ライブ配信にリアルタイムでご参加いただくか、過去ライブの動画をいつでも視聴できます。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.parentElement.querySelector('.faq-answer').classList.toggle('active')">
+        <span>どのデバイスで視聴できますか？</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">スマートフォン、タブレット、パソコンでご視聴いただけます。インターネット環境があれば、いつでもどこでもご利用可能です。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.parentElement.querySelector('.faq-answer').classList.toggle('active')">
+        <span>初心者でも大丈夫ですか？</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">もちろん大丈夫です。初心者向けのトレーニングセッションも用意しており、トレーナーが丁寧にサポートします。ご質問もお気軽にどうぞ。</div>
+    </div>
+  </div>
+</section>
+
+<!-- Steps Section -->
+<section class="section steps-section">
+  <div class="container">
+    <h2 class="section-title" style="margin-bottom: 40px;">参加は簡単3ステップ</h2>
+
+    <div class="steps-grid">
+      <div class="step-item">
+        <div class="step-number">1</div>
+        <h3>申し込み</h3>
+        <p>下のボタンから申し込みページへ。ご希望のプランを選択してください。</p>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">2</div>
+        <h3>入会金をお支払い</h3>
+        <p>銀行振込またはクレジットカード決済をお選びいただけます。</p>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">3</div>
+        <h3>すぐに利用開始</h3>
+        <p>登録後すぐに、すべてのコンテンツをご利用いただけます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-strip">
+  <div class="container cta-strip-inner">
+    <p class="cta-strip-text">自宅から、本質的な健康へ。</p>
+    <button type="button" class="btn btn-primary" data-open-reservation>今すぐ参加する</button>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <nav class="footer-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="index.html#plan">料金プラン</a></li>
+        <li><a href="index.html#trainer">トレーナー</a></li>
+        <li><a href="online-community.html">オンラインコミュニティ</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <p class="copyright">&copy; 2024 Roots Fitness. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

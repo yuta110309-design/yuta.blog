@@ -560,7 +560,7 @@
         </div>
       </div>
       <p style="font-size: 0.8rem; margin: 15px 0 20px 0; opacity: 0.8;">※パーソナルコース、既存会員のみ対象</p>
-      <a href="https://app.notion.com/p/04298fd2ad344f9cb2f6e4a934ee44d0?v=fb8d0c4da56b46f79c14c3617b3df9f0&source=copy_link" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background: white; color: #2E3D28; display: inline-block; text-decoration: none; padding: 12px 36px; font-weight: 600; font-size: 0.95rem;">詳細・申し込み</a>
+      <button type="button" class="btn btn-primary" style="background: white; color: #2E3D28; display: inline-block; text-decoration: none; padding: 12px 36px; font-weight: 600; font-size: 0.95rem; border: none; cursor: pointer;" data-open-supporter-modal>詳細・申し込み</button>
     </div>
 
     <div class="why-grid service-perks">
@@ -748,6 +748,55 @@
     </div>
   </div>
 </footer>
+
+<!-- ==================== SUPPORTER MODAL(スペシャルサポーター申し込みフォーム) ==================== -->
+<div class="reservation-modal" id="supporter-modal" aria-hidden="true">
+  <div class="reservation-modal-backdrop" data-close-supporter-modal></div>
+  <div class="reservation-modal-panel" role="dialog" aria-modal="true" aria-labelledby="supporter-modal-title">
+    <button type="button" class="reservation-modal-close" data-close-supporter-modal aria-label="閉じる">×</button>
+
+    <div data-supporter-step="form">
+      <span class="section-eyebrow">SPECIAL PROGRAM</span>
+      <h2 id="supporter-modal-title" class="section-title">スペシャルサポーター制度</h2>
+      <p class="reservation-modal-lead">下記フォームにご記入ください。ご入力いただいたメールアドレス宛に、詳細情報をお送りします。</p>
+      <form id="supporter-form" novalidate>
+        <label class="form-field">
+          <span>お名前<em>*</em></span>
+          <input type="text" name="name" required autocomplete="name">
+        </label>
+        <label class="form-field">
+          <span>ご年齢<em>*</em></span>
+          <input type="number" name="age" min="10" max="99" inputmode="numeric" required>
+        </label>
+        <fieldset class="form-field form-field-radio">
+          <legend>所属店舗<em>*</em></legend>
+          <div class="form-field-radio-options">
+            <label><input type="radio" name="store" value="代官山" required> 代官山</label>
+            <label><input type="radio" name="store" value="軽井沢"> 軽井沢</label>
+          </div>
+        </fieldset>
+        <label class="form-field">
+          <span>メールアドレス<em>*</em></span>
+          <input type="email" name="email" required autocomplete="email">
+        </label>
+        <label class="form-field">
+          <span>お電話番号<em>*</em></span>
+          <input type="tel" name="phone" required autocomplete="tel">
+        </label>
+        <p class="reservation-form-error" role="alert"></p>
+        <p class="reservation-form-note">送信後、ご登録いただいたメールアドレス宛に、スペシャルサポーター制度の詳細をお送りします。</p>
+        <button type="submit" class="btn btn-primary reservation-submit">送信する</button>
+      </form>
+    </div>
+
+    <div class="reservation-modal-success" data-supporter-step="success" hidden>
+      <span class="section-eyebrow">SPECIAL PROGRAM</span>
+      <h2 class="section-title">送信しました</h2>
+      <p>ご入力ありがとうございます。詳細情報をご登録のメールアドレス宛にお送りします。</p>
+      <a href="#" class="btn btn-line" data-line-cta target="_blank" rel="noopener noreferrer">LINEで相談する</a>
+    </div>
+  </div>
+</div>
 
 <!-- ==================== RESERVATION MODAL(体験予約フォーム) ==================== -->
 <div class="reservation-modal" id="reservation-modal" aria-hidden="true">

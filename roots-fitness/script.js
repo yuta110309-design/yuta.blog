@@ -373,7 +373,7 @@
     var signatureCtx = null;
     var isDrawing = false;
 
-    var GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/d/YOUR_SCRIPT_ID/usercallable";
+    var GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxKLE6kMqJzvsm8u08F8lB2dM_j583VHZWHBbY6M-mOiwmV86T7yYLlx4eBUh06NTsE/usercallable";
 
     function setSupporterSubmitting(isSubmitting) {
       if (!supporterSubmitBtn) return;

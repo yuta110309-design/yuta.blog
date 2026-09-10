@@ -365,11 +365,15 @@
     var supporterFormStep = document.querySelector('[data-supporter-step="form"]');
     var supporterSuccessStep = document.querySelector('[data-supporter-step="success"]');
     var supporterErrorEl = supporterForm.querySelector(".reservation-form-error");
-    var supporterConfig = null;
-    var supporterConfigUrl =
-      document.body.getAttribute("data-supporter-json") || "data/supporter-form.json";
     var supporterSubmitBtn = supporterForm.querySelector(".reservation-submit");
     var supporterSubmitLabel = supporterSubmitBtn ? supporterSubmitBtn.textContent : "";
+    var signatureCanvas = document.getElementById("signature-canvas");
+    var signatureClearBtn = document.getElementById("signature-clear");
+    var signatureDataInput = document.getElementById("signature-data");
+    var signatureCtx = null;
+    var isDrawing = false;
+
+    var GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxKLE6kMqJzvsm8u08F8lB2dM_j583VHZWHBbY6M-mOiwmV86T7yYLlx4eBUh06NTsE/usercallable";
 
     function setSupporterSubmitting(isSubmitting) {
       if (!supporterSubmitBtn) return;
@@ -377,22 +381,93 @@
       supporterSubmitBtn.textContent = isSubmitting ? "送信中…" : supporterSubmitLabel;
     }
 
-    fetch(supporterConfigUrl)
-      .then(function (res) {
-        return res.ok ? res.json() : null;
-      })
-      .then(function (config) {
-        supporterConfig = config;
-      })
-      .catch(function () {
-        /* 設定が読み込めない場合はプレースホルダーのまま(送信時に警告) */
-      });
-
     function showSupporterSuccess() {
       if (supporterFormStep) supporterFormStep.hidden = true;
       if (supporterSuccessStep) supporterSuccessStep.hidden = false;
       supporterForm.reset();
+      if (signatureCanvas && signatureCtx) {
+        signatureCtx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+      }
     }
+
+    function initSignatureCanvas() {
+      if (!signatureCanvas) return;
+
+      signatureCtx = signatureCanvas.getContext("2d");
+      if (!signatureCtx) return;
+
+      var rect = signatureCanvas.getBoundingClientRect();
+      var dpr = window.devicePixelRatio || 1;
+
+      signatureCanvas.width = rect.width * dpr;
+      signatureCanvas.height = rect.height * dpr;
+      signatureCtx.scale(dpr, dpr);
+      signatureCtx.lineCap = "round";
+      signatureCtx.lineJoin = "round";
+      signatureCtx.lineWidth = 2;
+      signatureCtx.strokeStyle = "#2B2318";
+
+      signatureCanvas.addEventListener("mousedown", function (e) {
+        isDrawing = true;
+        var rect = signatureCanvas.getBoundingClientRect();
+        signatureCtx.beginPath();
+        signatureCtx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+      });
+
+      signatureCanvas.addEventListener("mousemove", function (e) {
+        if (!isDrawing) return;
+        var rect = signatureCanvas.getBoundingClientRect();
+        signatureCtx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+        signatureCtx.stroke();
+      });
+
+      signatureCanvas.addEventListener("mouseup", function () {
+        isDrawing = false;
+        if (signatureDataInput) {
+          signatureDataInput.value = signatureCanvas.toDataURL("image/png");
+        }
+      });
+
+      signatureCanvas.addEventListener("mouseleave", function () {
+        isDrawing = false;
+      });
+
+      signatureCanvas.addEventListener("touchstart", function (e) {
+        isDrawing = true;
+        var rect = signatureCanvas.getBoundingClientRect();
+        var touch = e.touches[0];
+        signatureCtx.beginPath();
+        signatureCtx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+      });
+
+      signatureCanvas.addEventListener("touchmove", function (e) {
+        e.preventDefault();
+        if (!isDrawing) return;
+        var rect = signatureCanvas.getBoundingClientRect();
+        var touch = e.touches[0];
+        signatureCtx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+        signatureCtx.stroke();
+      });
+
+      signatureCanvas.addEventListener("touchend", function () {
+        isDrawing = false;
+        if (signatureDataInput) {
+          signatureDataInput.value = signatureCanvas.toDataURL("image/png");
+        }
+      });
+    }
+
+    if (signatureClearBtn) {
+      signatureClearBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (signatureCanvas && signatureCtx) {
+          signatureCtx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+          if (signatureDataInput) signatureDataInput.value = "";
+        }
+      });
+    }
+
+    initSignatureCanvas();
 
     supporterForm.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -407,36 +482,37 @@
         return;
       }
 
-      if (
-        !supporterConfig ||
-        !supporterConfig.actionUrl ||
-        supporterConfig.actionUrl.indexOf("REPLACE_ME") !== -1
-      ) {
-        console.warn(
-          "data/supporter-form.json が未設定のため、実際の送信は行われていません。"
-        );
-        showSupporterSuccess();
-        return;
-      }
-
-      var formData = new FormData();
-      var fields = supporterConfig.fields;
-      new FormData(supporterForm).forEach(function (value, key) {
-        if (fields[key]) {
-          formData.append(fields[key], value);
-        }
-      });
-
       setSupporterSubmitting(true);
 
-      fetch(supporterConfig.actionUrl, {
+      var formData = {
+        name: supporterForm.name.value,
+        age: supporterForm.age.value,
+        store: supporterForm.store.value,
+        email: supporterForm.email.value,
+        phone: supporterForm.phone.value,
+        signature: signatureDataInput.value
+      };
+
+      fetch(GOOGLE_APPS_SCRIPT_URL, {
         method: "POST",
-        mode: "no-cors",
-        body: formData
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
       })
-        .then(showSupporterSuccess)
-        .catch(function () {
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (data) {
+          if (data.success) {
+            showSupporterSuccess();
+          } else {
+            throw new Error(data.error || "Unknown error");
+          }
+        })
+        .catch(function (err) {
           setSupporterSubmitting(false);
+          console.error("Error:", err);
           if (supporterErrorEl) {
             supporterErrorEl.textContent =
               "送信に失敗しました。通信環境をご確認のうえ再度お試しください。";
@@ -1214,5 +1290,45 @@
       el.classList.add("reveal");
       revealObserver.observe(el);
     });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Services Carousel (3つのサービス)                                  */
+  /* ------------------------------------------------------------------ */
+  window.scrollToCarouselItem = function (index) {
+    var carousel = document.getElementById("servicesCarousel");
+    var items = carousel.querySelectorAll(".carousel-item");
+    var nav = document.getElementById("carouselNav");
+    var buttons = nav.querySelectorAll("button");
+
+    items.forEach(function (item, i) {
+      item.classList.toggle("active", i === index);
+    });
+
+    buttons.forEach(function (btn, i) {
+      btn.classList.toggle("active", i === index);
+    });
+
+    var scrollPosition = index * (items[0].offsetWidth + 25);
+    carousel.scrollLeft = scrollPosition;
+  };
+
+  if (window.innerWidth < 1024) {
+    var carousel = document.getElementById("servicesCarousel");
+    if (carousel) {
+      carousel.addEventListener("scroll", function () {
+        var items = carousel.querySelectorAll(".carousel-item");
+        var nav = document.getElementById("carouselNav");
+        var buttons = nav.querySelectorAll("button");
+
+        var scrollPos = carousel.scrollLeft;
+        var itemWidth = items[0].offsetWidth + 25;
+        var activeIndex = Math.round(scrollPos / itemWidth);
+
+        buttons.forEach(function (btn, i) {
+          btn.classList.toggle("active", i === activeIndex);
+        });
+      });
+    }
   }
 })();

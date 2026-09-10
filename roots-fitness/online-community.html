@@ -33,40 +33,124 @@
   opacity: 0.95;
 }
 
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
+.services-carousel {
+  position: relative;
+  overflow: hidden;
   margin: 60px 0;
 }
 
-.feature-card {
-  padding: 40px 30px;
-  border-radius: 12px;
+.carousel-container {
+  display: flex;
+  gap: 25px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 20px 0;
+  scroll-snap-type: x mandatory;
+}
+
+.carousel-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.carousel-container::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+}
+
+.carousel-container::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.3);
+  border-radius: 3px;
+}
+
+.carousel-item {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  padding: 0;
+  display: none;
+}
+
+.carousel-item.active {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .carousel-item {
+    flex: 0 0 calc(50% - 13px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .carousel-item {
+    flex: 0 0 calc(33.333% - 17px);
+  }
+}
+
+.service-card {
+  padding: 45px 35px;
+  border-radius: 16px;
   color: white;
   text-align: center;
-  min-height: 300px;
+  min-height: 320px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 }
 
-.feature-card h3 {
-  font-size: 1.3rem;
-  margin-bottom: 15px;
-  font-weight: 600;
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.16);
 }
 
-.feature-card p {
-  font-size: 0.95rem;
-  line-height: 1.8;
+.service-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
-.feature-card.blue { background: #4B7EC4; }
-.feature-card.green { background: #5DADE2; }
-.feature-card.orange { background: #F39C12; }
-.feature-card.red { background: #E74C3C; }
-.feature-card.pink { background: #D64C75; }
+.service-card p {
+  font-size: 1rem;
+  line-height: 1.85;
+  opacity: 0.95;
+}
+
+.service-card.service-1 {
+  background: linear-gradient(135deg, #3d6b47 0%, #2d5037 100%);
+}
+
+.service-card.service-2 {
+  background: linear-gradient(135deg, #4a7c54 0%, #3a6c44 100%);
+}
+
+.service-card.service-3 {
+  background: linear-gradient(135deg, #588c65 0%, #468a5d 100%);
+}
+
+.carousel-nav {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 35px;
+}
+
+.carousel-nav button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(46,61,40,0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.carousel-nav button.active {
+  background: #2E3D28;
+  width: 32px;
+  border-radius: 6px;
+}
 
 .trainers-section {
   background: #f5f5f5;
@@ -398,31 +482,38 @@
   </div>
 </section>
 
-<!-- Features Section -->
-<section class="section">
+<!-- Services Section -->
+<section class="section" style="background: linear-gradient(135deg, rgba(46,61,40,0.03) 0%, rgba(46,61,40,0.06) 100%);">
   <div class="container">
-    <h2 class="section-title" style="margin-bottom: 40px;">5つの機能で、理想の身体へ</h2>
-    <div class="features-grid">
-      <div class="feature-card blue">
-        <h3>🎥 ライブトレーニング配信</h3>
-        <p>トレーナーとリアルタイムで繋がる。自宅にいながら、プロのトレーニングを受けられます。</p>
+    <h2 class="section-title" style="margin-bottom: 50px;">3つのサービスで、本質的な健康を</h2>
+
+    <div class="services-carousel">
+      <div class="carousel-container" id="servicesCarousel">
+        <div class="carousel-item active">
+          <div class="service-card service-1">
+            <h3>🎥 ライブトレーニング配信</h3>
+            <p>トレーナーとリアルタイムで繋がる。自宅にいながら、プロのトレーニングを受けられます。</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="service-card service-2">
+            <h3>📚 栄養・食事ガイド</h3>
+            <p>トレーニングと同じくらい大切な栄養管理。コラム形式でわかりやすく解説します。</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="service-card service-3">
+            <h3>👥 メンバーコミュニティ</h3>
+            <p>同じ目標を持つメンバーとの交流。一緒に頑張る仲間が見つかります。</p>
+          </div>
+        </div>
       </div>
-      <div class="feature-card green">
-        <h3>📚 栄養・食事ガイド</h3>
-        <p>トレーニングと同じくらい大切な栄養管理。コラム形式でわかりやすく解説します。</p>
-      </div>
-      <div class="feature-card orange">
-        <h3>👥 メンバーコミュニティ</h3>
-        <p>同じ目標を持つメンバーとの交流。一緒に頑張る仲間が見つかります。</p>
-      </div>
-      <div class="feature-card red">
-        <h3>👨‍🏫 トレーナー1対1サポート</h3>
-        <p>個別の悩みや質問に対応。あなたのレベルや目標に合わせたアドバイスを受けられます。</p>
-      </div>
-      <div class="feature-card pink">
-        <h3>🤖 AIコーチ機能（準備中）</h3>
-        <p>24時間サポート。今後さらに便利になる予定です。</p>
-      </div>
+    </div>
+
+    <div class="carousel-nav" id="carouselNav">
+      <button class="active" onclick="scrollToCarouselItem(0)"></button>
+      <button onclick="scrollToCarouselItem(1)"></button>
+      <button onclick="scrollToCarouselItem(2)"></button>
     </div>
   </div>
 </section>

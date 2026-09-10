@@ -1291,4 +1291,44 @@
       revealObserver.observe(el);
     });
   }
+
+  /* ------------------------------------------------------------------ */
+  /* Services Carousel (3つのサービス)                                  */
+  /* ------------------------------------------------------------------ */
+  window.scrollToCarouselItem = function (index) {
+    var carousel = document.getElementById("servicesCarousel");
+    var items = carousel.querySelectorAll(".carousel-item");
+    var nav = document.getElementById("carouselNav");
+    var buttons = nav.querySelectorAll("button");
+
+    items.forEach(function (item, i) {
+      item.classList.toggle("active", i === index);
+    });
+
+    buttons.forEach(function (btn, i) {
+      btn.classList.toggle("active", i === index);
+    });
+
+    var scrollPosition = index * (items[0].offsetWidth + 25);
+    carousel.scrollLeft = scrollPosition;
+  };
+
+  if (window.innerWidth < 1024) {
+    var carousel = document.getElementById("servicesCarousel");
+    if (carousel) {
+      carousel.addEventListener("scroll", function () {
+        var items = carousel.querySelectorAll(".carousel-item");
+        var nav = document.getElementById("carouselNav");
+        var buttons = nav.querySelectorAll("button");
+
+        var scrollPos = carousel.scrollLeft;
+        var itemWidth = items[0].offsetWidth + 25;
+        var activeIndex = Math.round(scrollPos / itemWidth);
+
+        buttons.forEach(function (btn, i) {
+          btn.classList.toggle("active", i === activeIndex);
+        });
+      });
+    }
+  }
 })();

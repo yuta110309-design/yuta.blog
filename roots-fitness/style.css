@@ -1234,6 +1234,148 @@ a.news-card:hover {
 }
 
 /* ==========================================================================
+   Services Carousel (3つのサービス)
+   ========================================================================== */
+.services-carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  gap: 16px;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.carousel-container::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-item {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  min-width: 0;
+}
+
+.service-card {
+  padding: 45px 35px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #3d6b47 0%, #2d5037 100%);
+  color: var(--color-white);
+  text-align: center;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  box-shadow: 0 4px 20px rgba(45, 80, 55, 0.15);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 280px;
+}
+
+.service-card h3 {
+  font-size: clamp(1.1rem, 5vw, 1.4rem);
+  margin-bottom: 16px;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.service-card p {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  opacity: 0.95;
+  margin: 0;
+}
+
+.service-card.service-1 {
+  background: linear-gradient(135deg, #4a7c54 0%, #3a6c44 100%);
+}
+
+.service-card.service-2 {
+  background: linear-gradient(135deg, #588c65 0%, #468a5d 100%);
+}
+
+.service-card.service-3 {
+  background: linear-gradient(135deg, #3d6b47 0%, #2d5037 100%);
+}
+
+.carousel-nav {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.carousel-nav button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(46, 61, 40, 0.25);
+  cursor: pointer;
+  transition: background 0.3s var(--ease), transform 0.3s var(--ease);
+  padding: 0;
+}
+
+.carousel-nav button.active {
+  background: var(--color-deep-green);
+  transform: scale(1.4);
+}
+
+/* PC版: 3列グリッド表示 */
+@media (min-width: 960px) {
+  .carousel-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    overflow-x: visible;
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+    padding-bottom: 0;
+  }
+
+  .carousel-item {
+    flex: none;
+    scroll-snap-align: none;
+  }
+
+  .service-card {
+    min-height: 320px;
+  }
+
+  .service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(45, 80, 55, 0.25);
+  }
+
+  .carousel-nav {
+    display: none;
+  }
+}
+
+/* タブレット版: 2列 */
+@media (min-width: 640px) and (max-width: 959px) {
+  .carousel-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    overflow-x: auto;
+  }
+
+  .carousel-item {
+    flex: none;
+  }
+
+  .carousel-nav {
+    display: flex;
+  }
+}
+
+/* ==========================================================================
    Plan(料金プラン)
    ========================================================================== */
 .plan-fee-note {
@@ -1453,6 +1595,43 @@ a.news-card:hover {
   border-radius: 20px;
   padding: 20px;
   box-shadow: 0 2px 14px rgba(46, 61, 40, 0.07);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.plan-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 28px rgba(46, 61, 40, 0.12);
+}
+
+/* PC版: 3列グリッド表示 */
+@media (min-width: 1024px) {
+  .plan-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    overflow-x: visible;
+    scroll-snap-type: none;
+    padding-bottom: 0;
+  }
+
+  .plan-card {
+    flex: none;
+    scroll-snap-align: none;
+  }
+}
+
+/* タブレット版: 2列 */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .plan-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    overflow-x: auto;
+  }
+
+  .plan-card {
+    flex: none;
+  }
 }
 
 .plan-card-type-badge {

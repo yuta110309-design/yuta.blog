@@ -1357,17 +1357,14 @@ a.news-card:hover {
   }
 }
 
-/* タブレット版: 2列 */
+/* タブレット版: スマートフォンと同じ1列横スクロール */
 @media (min-width: 640px) and (max-width: 959px) {
   .carousel-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    overflow-x: auto;
   }
 
   .carousel-item {
-    flex: none;
+    flex: 0 0 min(85vw, 360px);
   }
 
   .carousel-nav {

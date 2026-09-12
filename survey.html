@@ -59,7 +59,7 @@
           <div class="survey-pills" data-field="willReturn" role="radiogroup" aria-label="また参加したいか">
             <button type="button" class="survey-pill">はい</button>
             <button type="button" class="survey-pill">いいえ</button>
-            <button type="button" class="survey-pill">わからない</button>
+            <button type="button" class="survey-pill">機会があれば</button>
           </div>
         </div>
 
@@ -79,11 +79,13 @@
         </div>
 
         <div class="survey-q">
-          <p class="survey-q-label">次に開催してほしい特別イベントは？</p>
-          <div class="survey-pills" data-field="nextEvent" role="radiogroup" aria-label="次回希望イベント">
+          <p class="survey-q-label">次に開催してほしい特別イベントは？（複数選択可）</p>
+          <div class="survey-pills" data-field="nextEvent" data-multi="true" role="group" aria-label="次回希望イベント（複数選択可）">
             <button type="button" class="survey-pill">温泉</button>
             <button type="button" class="survey-pill">キャンプ</button>
             <button type="button" class="survey-pill">スキー</button>
+            <button type="button" class="survey-pill">山登り</button>
+            <button type="button" class="survey-pill">スポーツ</button>
             <button type="button" class="survey-pill">その他</button>
           </div>
           <input type="text" id="survey-next-event-other" class="field-input" placeholder="具体的に教えてください" hidden>

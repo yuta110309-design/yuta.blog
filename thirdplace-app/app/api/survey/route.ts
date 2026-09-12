@@ -9,9 +9,9 @@ const CORS_HEADERS = {
 };
 
 const HIGHLIGHT_OPTIONS = ['ピラティス', 'サウナ', 'BBQ', '交流タイム'];
-const RETURN_OPTIONS = ['はい', 'いいえ', 'わからない'];
+const RETURN_OPTIONS = ['はい', 'いいえ', '機会があれば'];
 const PRICE_OPTIONS = ['安い', '妥当', '高い'];
-const NEXT_EVENT_OPTIONS = ['温泉', 'キャンプ', 'スキー', 'その他'];
+const NEXT_EVENT_OPTIONS = ['温泉', 'キャンプ', 'スキー', '山登り', 'スポーツ', 'その他'];
 
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204, headers: CORS_HEADERS });
@@ -45,8 +45,9 @@ export async function POST(req: NextRequest) {
     nps > 10 ||
     !priceImpression ||
     !PRICE_OPTIONS.includes(priceImpression) ||
-    !nextEvent ||
-    !NEXT_EVENT_OPTIONS.includes(nextEvent)
+    !Array.isArray(nextEvent) ||
+    nextEvent.length === 0 ||
+    !nextEvent.every((v: unknown) => typeof v === 'string' && NEXT_EVENT_OPTIONS.includes(v))
   ) {
     return NextResponse.json({ error: '必須項目が不足しているか、不正な値です' }, { status: 400, headers: CORS_HEADERS });
   }
@@ -83,7 +84,7 @@ async function syncSurveyToNotion({
   willReturn: string;
   nps: number;
   priceImpression: string;
-  nextEvent: string;
+  nextEvent: string[];
   nextEventOther?: string;
   comment?: string;
 }) {
@@ -106,7 +107,7 @@ async function syncSurveyToNotion({
           また参加したいか: { select: { name: willReturn } },
           'おすすめ度(NPS 0-10)': { number: nps },
           参加費の印象: { select: { name: priceImpression } },
-          次回希望イベント: { select: { name: nextEvent } },
+          次回希望イベント: { multi_select: nextEvent.map((name: string) => ({ name })) },
           '次回希望イベント（自由記述）': {
             rich_text: nextEventOther ? [{ text: { content: nextEventOther } }] : []
           },

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>アンケート | THE THIRDPLACE EBISU</title>
+<meta name="description" content="9/17 軽井沢サウナリトリート 事後アンケート（1分で終わります）">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"></noscript>
+<link rel="stylesheet" href="style.css?v=33">
+<link rel="stylesheet" href="survey.css?v=1">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo" href="index.html" aria-label="THE THIRDPLACE EBISU トップへ">
+      <svg class="logo-mark" viewBox="0 0 34 26" aria-hidden="true">
+        <circle cx="11" cy="9" r="8" />
+        <circle cx="23" cy="9" r="8" />
+        <circle class="logo-mark-accent" cx="17" cy="17" r="8" />
+      </svg>
+      <span class="logo-word">THE THIRD<span class="place">PLACE</span> EBISU</span>
+    </a>
+  </div>
+</header>
+
+<section class="section survey-section">
+  <div class="container">
+
+    <div id="survey-form-view">
+      <p class="eyebrow">Survey — 軽井沢サウナリトリート</p>
+      <h1 class="section-title">ご参加ありがとうございました！</h1>
+      <p class="section-intro">今後のイベントづくりの参考にしたいので、1分だけお付き合いください。すべてタップで回答できます。</p>
+
+      <form id="survey-form">
+
+        <div class="survey-q">
+          <p class="survey-q-label">総合満足度は？</p>
+          <div class="survey-stars" id="survey-stars" role="radiogroup" aria-label="総合満足度"></div>
+        </div>
+
+        <div class="survey-q">
+          <p class="survey-q-label">一番良かったコンテンツは？</p>
+          <div class="survey-pills" data-field="highlight" role="radiogroup" aria-label="一番良かったコンテンツ">
+            <button type="button" class="survey-pill">ピラティス</button>
+            <button type="button" class="survey-pill">サウナ</button>
+            <button type="button" class="survey-pill">BBQ</button>
+            <button type="button" class="survey-pill">交流タイム</button>
+          </div>
+        </div>
+
+        <div class="survey-q">
+          <p class="survey-q-label">また参加したいですか？</p>
+          <div class="survey-pills" data-field="willReturn" role="radiogroup" aria-label="また参加したいか">
+            <button type="button" class="survey-pill">はい</button>
+            <button type="button" class="survey-pill">いいえ</button>
+            <button type="button" class="survey-pill">わからない</button>
+          </div>
+        </div>
+
+        <div class="survey-q">
+          <p class="survey-q-label">知人に勧めたいですか？（0〜10）</p>
+          <div class="survey-nps" id="survey-nps" role="radiogroup" aria-label="おすすめ度"></div>
+          <div class="survey-nps-scale"><span>勧めない</span><span>勧めたい</span></div>
+        </div>
+
+        <div class="survey-q">
+          <p class="survey-q-label">参加費（¥17,500〜）は妥当でしたか？</p>
+          <div class="survey-pills" data-field="priceImpression" role="radiogroup" aria-label="参加費の印象">
+            <button type="button" class="survey-pill">安い</button>
+            <button type="button" class="survey-pill">妥当</button>
+            <button type="button" class="survey-pill">高い</button>
+          </div>
+        </div>
+
+        <div class="survey-q">
+          <p class="survey-q-label">次に開催してほしい特別イベントは？</p>
+          <div class="survey-pills" data-field="nextEvent" role="radiogroup" aria-label="次回希望イベント">
+            <button type="button" class="survey-pill">温泉</button>
+            <button type="button" class="survey-pill">キャンプ</button>
+            <button type="button" class="survey-pill">スキー</button>
+            <button type="button" class="survey-pill">その他</button>
+          </div>
+          <input type="text" id="survey-next-event-other" class="field-input" placeholder="具体的に教えてください" hidden>
+        </div>
+
+        <div class="survey-q">
+          <p class="survey-q-label">良かった点・改善してほしい点（任意）</p>
+          <textarea id="survey-comment" class="field-input" rows="3" placeholder="自由にご記入ください"></textarea>
+        </div>
+
+        <div class="survey-q">
+          <p class="survey-q-label">お名前（任意）</p>
+          <input type="text" id="survey-name" class="field-input" placeholder="山田太郎">
+        </div>
+
+        <p class="field-error" id="survey-error" hidden></p>
+        <button type="button" class="btn btn-primary survey-submit" id="survey-submit">回答を送信する</button>
+      </form>
+    </div>
+
+    <div id="survey-success-view" hidden>
+      <p class="eyebrow">Thank You</p>
+      <h1 class="section-title">ご回答ありがとうございました。</h1>
+      <p class="section-intro">いただいた声は、次のイベントづくりに活かします。<br class="mobile-break">またお会いできるのを楽しみにしています。</p>
+      <a class="btn btn-primary" href="index.html">トップページへ戻る</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <p class="footer-copy">© 2026 THE THIRDPLACE EBISU. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="survey.js?v=1"></script>
+</body>
+</html>

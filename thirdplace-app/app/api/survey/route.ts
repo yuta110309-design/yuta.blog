@@ -8,7 +8,6 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Headers': 'Content-Type'
 };
 
-const SATISFACTION_OPTIONS = ['★★★★★', '★★★★', '★★★', '★★', '★'];
 const HIGHLIGHT_OPTIONS = ['ピラティス', 'サウナ', 'BBQ', '交流タイム'];
 const RETURN_OPTIONS = ['はい', 'いいえ', 'わからない'];
 const PRICE_OPTIONS = ['安い', '妥当', '高い'];
@@ -34,8 +33,9 @@ export async function POST(req: NextRequest) {
   } = body;
 
   if (
-    !satisfaction ||
-    !SATISFACTION_OPTIONS.includes(satisfaction) ||
+    typeof satisfaction !== 'number' ||
+    satisfaction < 1 ||
+    satisfaction > 5 ||
     !highlight ||
     !HIGHLIGHT_OPTIONS.includes(highlight) ||
     !willReturn ||
@@ -78,7 +78,7 @@ async function syncSurveyToNotion({
   comment
 }: {
   name?: string;
-  satisfaction: string;
+  satisfaction: number;
   highlight: string;
   willReturn: string;
   nps: number;
@@ -101,7 +101,7 @@ async function syncSurveyToNotion({
         parent: { database_id: dbId },
         properties: {
           '回答者名（任意）': { title: name ? [{ text: { content: name } }] : [] },
-          総合満足度: { select: { name: satisfaction } },
+          総合満足度: { number: satisfaction },
           一番良かったコンテンツ: { select: { name: highlight } },
           また参加したいか: { select: { name: willReturn } },
           'おすすめ度(NPS 0-10)': { number: nps },

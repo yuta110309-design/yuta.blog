@@ -1,50 +1,37 @@
 const SURVEY_API_BASE = 'https://yuta-blog.vercel.app';
 
-const STAR_COUNT = 5;
-const starsEl = document.getElementById('survey-stars');
-let satisfactionValue = 0; // 1-5
-for (let i = 1; i <= STAR_COUNT; i++) {
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.className = 'survey-star';
-  btn.textContent = '★';
-  btn.setAttribute('aria-label', `${i}つ星`);
-  btn.dataset.value = String(i);
-  btn.addEventListener('click', () => {
-    satisfactionValue = i;
-    renderStars();
-  });
-  btn.addEventListener('mouseenter', () => renderStars(i));
-  btn.addEventListener('mouseleave', () => renderStars());
-  starsEl.appendChild(btn);
-}
-function renderStars(hoverValue) {
-  const active = hoverValue || satisfactionValue;
-  Array.from(starsEl.children).forEach((btn, idx) => {
-    const isOn = idx < active;
-    btn.classList.toggle('is-active', isOn && !hoverValue);
-    btn.classList.toggle('is-hover', isOn && !!hoverValue);
-  });
-}
-function satisfactionLabel() {
-  return '★'.repeat(satisfactionValue);
+// 1タップで選べる数字ボタン行（総合満足度・NPSで共用）
+function buildNumberRow(container, min, max, ariaLabelFn, onSelect) {
+  for (let i = min; i <= max; i++) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'survey-nps-btn';
+    btn.textContent = String(i);
+    btn.setAttribute('aria-label', ariaLabelFn(i));
+    btn.dataset.value = String(i);
+    btn.addEventListener('click', () => {
+      Array.from(container.children).forEach((b) => b.classList.toggle('is-active', b === btn));
+      onSelect(i);
+    });
+    container.appendChild(btn);
+  }
 }
 
-const NPS_MIN = 0, NPS_MAX = 10;
-const npsEl = document.getElementById('survey-nps');
-let npsValue = null;
-for (let i = NPS_MIN; i <= NPS_MAX; i++) {
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.className = 'survey-nps-btn';
-  btn.textContent = String(i);
-  btn.dataset.value = String(i);
-  btn.addEventListener('click', () => {
-    npsValue = i;
-    Array.from(npsEl.children).forEach((b) => b.classList.toggle('is-active', b === btn));
-  });
-  npsEl.appendChild(btn);
-}
+let satisfactionValue = null; // 1-5
+buildNumberRow(
+  document.getElementById('survey-satisfaction'),
+  1, 5,
+  (i) => `満足度${i}`,
+  (i) => { satisfactionValue = i; }
+);
+
+let npsValue = null; // 0-10
+buildNumberRow(
+  document.getElementById('survey-nps'),
+  0, 10,
+  (i) => `おすすめ度${i}`,
+  (i) => { npsValue = i; }
+);
 
 // ピル選択（1グループにつき1つだけアクティブにする）
 document.querySelectorAll('.survey-pills').forEach((group) => {
@@ -88,7 +75,7 @@ submitBtn.addEventListener('click', async () => {
 
   const payload = {
     name: document.getElementById('survey-name').value.trim() || undefined,
-    satisfaction: satisfactionLabel(),
+    satisfaction: satisfactionValue,
     highlight,
     willReturn,
     nps: npsValue,

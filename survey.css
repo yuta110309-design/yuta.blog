@@ -17,17 +17,6 @@
   margin-bottom: 14px;
 }
 
-/* 星評価 */
-.survey-stars { display: flex; gap: 6px; }
-.survey-star {
-  width: 42px; height: 42px;
-  background: none; border: 1px solid var(--line-strong);
-  color: var(--muted); font-size: 20px; line-height: 1;
-  cursor: pointer; transition: color 0.15s, border-color 0.15s;
-}
-.survey-star.is-active,
-.survey-star.is-hover { color: var(--sage-deep); border-color: var(--sage); }
-
 /* 選択式ピル（複数候補から1つタップ） */
 .survey-pills { display: flex; flex-wrap: wrap; gap: 10px; }
 .survey-pill {
@@ -68,7 +57,6 @@
 .survey-submit { width: 100%; text-align: center; margin-top: 8px; }
 
 @media (max-width: 640px) {
-  .survey-star { width: 38px; height: 38px; font-size: 18px; }
   .survey-nps-btn { width: 30px; height: 30px; font-size: 11px; }
   .survey-nps { gap: 5px; }
 }

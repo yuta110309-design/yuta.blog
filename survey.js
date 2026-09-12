@@ -35,13 +35,21 @@ buildNumberRow(
 
 // ピル選択（1グループにつき1つだけアクティブにする）
 document.querySelectorAll('.survey-pills').forEach((group) => {
+  const isMulti = group.dataset.multi === 'true';
   group.querySelectorAll('.survey-pill').forEach((pill) => {
     pill.addEventListener('click', () => {
-      group.querySelectorAll('.survey-pill').forEach((p) => p.classList.remove('is-active'));
-      pill.classList.add('is-active');
+      if (isMulti) {
+        pill.classList.toggle('is-active');
+      } else {
+        group.querySelectorAll('.survey-pill').forEach((p) => p.classList.remove('is-active'));
+        pill.classList.add('is-active');
+      }
       if (group.dataset.field === 'nextEvent') {
         const otherInput = document.getElementById('survey-next-event-other');
-        otherInput.hidden = pill.textContent !== 'その他';
+        const otherActive = Array.from(group.querySelectorAll('.survey-pill.is-active')).some(
+          (p) => p.textContent === 'その他'
+        );
+        otherInput.hidden = !otherActive;
         if (otherInput.hidden) otherInput.value = '';
       }
     });
@@ -53,6 +61,12 @@ function getPillValue(field) {
   return active ? active.textContent : null;
 }
 
+function getPillValues(field) {
+  return Array.from(document.querySelectorAll(`.survey-pills[data-field="${field}"] .survey-pill.is-active`)).map(
+    (p) => p.textContent
+  );
+}
+
 const errorEl = document.getElementById('survey-error');
 const submitBtn = document.getElementById('survey-submit');
 
@@ -60,9 +74,9 @@ submitBtn.addEventListener('click', async () => {
   const highlight = getPillValue('highlight');
   const willReturn = getPillValue('willReturn');
   const priceImpression = getPillValue('priceImpression');
-  const nextEvent = getPillValue('nextEvent');
+  const nextEvent = getPillValues('nextEvent');
 
-  if (!satisfactionValue || !highlight || !willReturn || npsValue === null || !priceImpression || !nextEvent) {
+  if (!satisfactionValue || !highlight || !willReturn || npsValue === null || !priceImpression || nextEvent.length === 0) {
     errorEl.textContent = '未回答の項目があります。すべての質問（自由記述以外）にお答えください。';
     errorEl.hidden = false;
     errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });

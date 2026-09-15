@@ -45,7 +45,7 @@
           "id": "personal-single",
           "name": "単発(都度)",
           "frequency": "1回",
-          "price": 13000,
+          "price": 9000,
           "priceUnit": "回",
           "unitPrice": null,
           "note": "会員以外・都度利用向け",

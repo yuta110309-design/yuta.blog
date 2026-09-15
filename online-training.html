@@ -18,15 +18,134 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<link rel="stylesheet" href="style-new.css?v=3000">
+<link rel="stylesheet" href="style-new.css?v=9999">
 <style>
-/* Fastly CDN キャッシュ対策：強制的にカードサイズを縮小 */
+/* ========== Fastly CDN キャッシュ対策：デザイン全面改善を強制適用 ========== */
+
+/* カードサイズ調整 */
 .why-card-photo {
   height: 140px !important;
 }
+
+/* プランカード：気品で洗練されたデザイン */
 .plan-card {
   flex: 0 0 min(80vw, 240px) !important;
   max-width: 240px !important;
+  background: linear-gradient(145deg, rgba(61, 107, 71, 0.95) 0%, rgba(45, 80, 55, 0.92) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 16px !important;
+  padding: 28px 24px !important;
+  box-shadow:
+    0 8px 32px rgba(45, 80, 55, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+  transition:
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.plan-card:hover {
+  transform: translateY(-6px) translateZ(0) !important;
+  box-shadow:
+    0 16px 48px rgba(45, 80, 55, 0.18),
+    0 4px 12px rgba(0, 0, 0, 0.12),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  background: linear-gradient(145deg, rgba(61, 107, 71, 0.98) 0%, rgba(45, 80, 55, 0.95) 100%) !important;
+}
+
+/* バッジ：上品なデザイン */
+.plan-card-type-badge {
+  padding: 7px 16px !important;
+  border-radius: 20px !important;
+  font-size: 0.65rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  margin-bottom: 18px !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+.plan-card-type-badge-monthly {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: rgba(255, 255, 255, 0.96) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+}
+
+/* タイトル：視覚的階層を強化 */
+.plan-card-head {
+  margin-bottom: 18px !important;
+  padding-bottom: 18px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.plan-card-name {
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 価格：より目立たせながらも洗練 */
+.plan-card-price {
+  margin-bottom: 24px !important;
+  margin-top: 8px !important;
+}
+
+.plan-card-price-main {
+  font-size: 1.8rem !important;
+  color: rgba(255, 255, 255, 0.98) !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  margin-top: 6px !important;
+  display: block !important;
+}
+
+/* 特徴：上品なチェックマーク */
+.plan-card-features li {
+  padding: 10px 0 !important;
+  font-size: 0.88rem !important;
+  line-height: 1.5 !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  letter-spacing: 0.01em !important;
+}
+
+.plan-card-features li:before {
+  width: 22px !important;
+  height: 22px !important;
+  font-size: 0.95rem !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 4px !important;
+  margin-top: 2px !important;
+}
+
+/* ボタン：優雅なホバー効果 */
+.plan-card-detail-btn {
+  margin-top: auto !important;
+  padding: 13px 16px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 10px !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.plan-card-detail-btn:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: rgba(255, 255, 255, 1) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
 </style>
 <script>

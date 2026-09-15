@@ -138,7 +138,7 @@
 
   var storesDataUrl = document.body.getAttribute("data-stores-json") || "data/stores.json";
 
-  fetch(storesDataUrl)
+  fetch(storesDataUrl + "?v=4")
     .then(function (res) {
       return res.ok ? res.json() : null;
     })
@@ -203,7 +203,7 @@
     var src = el.getAttribute("data-news-source");
     var limit = parseInt(el.getAttribute("data-news-limit"), 10) || null;
 
-    fetch(src)
+    fetch(src + (src.includes("?") ? "\u0026v=4" : "?v=4"))
       .then(function (res) {
         return res.ok ? res.json() : { items: [] };
       })
@@ -252,7 +252,7 @@
       reservationSubmitBtn.textContent = isSubmitting ? "送信中…" : reservationSubmitLabel;
     }
 
-    fetch(reservationConfigUrl)
+    fetch(reservationConfigUrl + "?v=4")
       .then(function (res) {
         return res.ok ? res.json() : null;
       })
@@ -556,7 +556,7 @@
       recruitSubmitBtn.textContent = isSubmitting ? "送信中…" : recruitSubmitLabel;
     }
 
-    fetch(recruitConfigUrl)
+    fetch(recruitConfigUrl + "?v=4")
       .then(function (res) {
         return res.ok ? res.json() : null;
       })
@@ -889,7 +889,7 @@
       );
     }
 
-    fetch(trainerGroups.getAttribute("data-trainers-source"))
+    fetch(trainerGroups.getAttribute("data-trainers-source") + "?v=4")
       .then(function (res) {
         return res.ok ? res.json() : { trainers: [] };
       })
@@ -1166,7 +1166,7 @@
       );
     }
 
-    fetch(reviewGroups.getAttribute("data-reviews-source"))
+    fetch(reviewGroups.getAttribute("data-reviews-source") + "?v=4")
       .then(function (res) {
         return res.ok ? res.json() : { stores: [] };
       })
@@ -1229,7 +1229,7 @@
   }
 
   if (faqList && faqTabs) {
-    fetch(faqList.getAttribute("data-faq-source"))
+    fetch(faqList.getAttribute("data-faq-source") + "?v=4")
       .then(function (res) {
         return res.ok ? res.json() : { categories: [] };
       })

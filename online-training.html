@@ -1,7 +1,18 @@
-<!-- CACHE_BUST: 20250915-185500-badge-title-update -->
+<!-- CACHE_BUST: 20250915-190000-force-refresh -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+<script>
+// Fastly CDN キャッシュを強制的に無効化
+(function() {
+  const lastUpdate = '20250915-190000';
+  const cached = localStorage.getItem('online-training-version');
+  if (cached !== lastUpdate) {
+    localStorage.setItem('online-training-version', lastUpdate);
+    location.reload(true); // ブラウザキャッシュも無視してリロード
+  }
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>オンライントレーニング | Roots Fitness</title>

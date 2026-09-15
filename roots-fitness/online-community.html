@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Shippori+Mincho:wght@400&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Yuji+Syuku&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Shippori+Mincho:wght@400&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Yuji+Syuku&display=swap"></noscript>
 <link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/all.min.css">
 <style>
 .online-community-hero {
   background: linear-gradient(135deg, #2E3D28 0%, #1a2318 100%);
@@ -412,6 +413,68 @@
   line-height: 1.6;
 }
 
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.feature-card {
+  padding: 40px 30px;
+  border-radius: 12px;
+  color: white;
+  text-align: center;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+}
+
+.feature-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.feature-card h3 i {
+  margin-right: 10px;
+}
+
+.feature-card p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  opacity: 0.95;
+}
+
+.feature-card.blue {
+  background: linear-gradient(135deg, #3d6b47 0%, #2d5037 100%);
+}
+
+.feature-card.green {
+  background: linear-gradient(135deg, #4a7c54 0%, #3a6c44 100%);
+}
+
+.feature-card.orange {
+  background: linear-gradient(135deg, #cc7722 0%, #bb6611 100%);
+}
+
+.feature-card.red {
+  background: linear-gradient(135deg, #d64545 0%, #c53535 100%);
+}
+
+.feature-card.pink {
+  background: linear-gradient(135deg, #e87ba0 0%, #d7699f 100%);
+}
+
 @media (max-width: 768px) {
   .online-community-hero h1 {
     font-size: 1.8rem;
@@ -487,33 +550,27 @@
   <div class="container">
     <h2 class="section-title" style="margin-bottom: 50px;">3つのサービスで、<br class="mobile-break">本質的な健康を</h2>
 
-    <div class="services-carousel">
-      <div class="carousel-container" id="servicesCarousel">
-        <div class="carousel-item active">
-          <div class="service-card service-1">
-            <h3>ライブトレーニング配信</h3>
-            <p>トレーナーとリアルタイムで繋がる。自宅にいながら、プロのトレーニングを受けられます。</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <div class="service-card service-2">
-            <h3>栄養・食事ガイド</h3>
-            <p>トレーニングと同じくらい大切な栄養管理。コラム形式でわかりやすく解説します。</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <div class="service-card service-3">
-            <h3>メンバーコミュニティ</h3>
-            <p>同じ目標を持つメンバーとの交流。一緒に頑張る仲間が見つかります。</p>
-          </div>
-        </div>
+    <div class="features-grid">
+      <div class="feature-card blue">
+        <h3><i class="fas fa-video"></i> ライブトレーニング配信</h3>
+        <p>トレーナーとリアルタイムで繋がる。自宅にいながら、プロのトレーニングを受けられます。配信終了後24時間限定で動画視聴可能。</p>
       </div>
-    </div>
-
-    <div class="carousel-nav" id="carouselNav">
-      <button class="active" onclick="scrollToCarouselItem(0)"></button>
-      <button onclick="scrollToCarouselItem(1)"></button>
-      <button onclick="scrollToCarouselItem(2)"></button>
+      <div class="feature-card green">
+        <h3><i class="fas fa-book"></i> 栄養・食事ガイド</h3>
+        <p>トレーニングと同じくらい大切な栄養管理。コラム形式でわかりやすく解説します。</p>
+      </div>
+      <div class="feature-card orange">
+        <h3><i class="fas fa-users"></i> メンバーコミュニティ</h3>
+        <p>同じ目標を持つメンバーとの交流。一緒に頑張る仲間が見つかります。</p>
+      </div>
+      <div class="feature-card red">
+        <h3><i class="fas fa-comments"></i> トレーナー & AIコーチ</h3>
+        <p>プロのトレーナーと24時間対応のAIコーチが対応。リアルタイムとAIの両面からサポートします。</p>
+      </div>
+      <div class="feature-card pink">
+        <h3><i class="fas fa-calendar-alt"></i> 月1回のリアルイベント</h3>
+        <p>代官山でのヨガイベントへ招待。月1回開催。会員は無料、非会員は1回3,000円。</p>
+      </div>
     </div>
   </div>
 </section>

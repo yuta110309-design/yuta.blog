@@ -18,7 +18,17 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<link rel="stylesheet" href="style-new.css">
+<link rel="stylesheet" href="style-new.css?v=3000">
+<style>
+/* Fastly CDN キャッシュ対策：強制的にカードサイズを縮小 */
+.why-card-photo {
+  height: 140px !important;
+}
+.plan-card {
+  flex: 0 0 min(80vw, 240px) !important;
+  max-width: 240px !important;
+}
+</style>
 <script>
 // キャッシュバイパス: ブラウザとCDNのキャッシュをバイパスするタイムスタンプを追加
 if (!sessionStorage.getItem('page-loaded')) {

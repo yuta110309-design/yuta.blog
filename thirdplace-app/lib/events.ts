@@ -45,7 +45,7 @@ export const EVENTS: EventConfig[] = [
     id: 'futsal',
     emoji: '⚽',
     title: 'フットサル（男女混合）',
-    location: '代々木 or 渋谷（会場調整中）',
+    location: '国立代々木競技場フットサルコート',
     description:
       '初めましての方も歓迎の、男女混合でゆるく楽しむフットサル部活動です。運動が得意でなくても大丈夫。体を動かしながら、仕事でも家でもない新しいつながりをつくる時間にしませんか。',
     recurrence: { mode: 'once', dateISO: '2026-09-21T19:00:00', time: '19:00' },
@@ -57,7 +57,7 @@ export const EVENTS: EventConfig[] = [
       { key: 'job', label: 'お仕事', type: 'text', notionProperty: 'お仕事' }
     ],
     emailDetails: [
-      { label: '集合場所', value: '代々木・千駄ヶ谷エリア（会場が確定次第、別途ご案内します）' },
+      { label: '集合場所', value: '国立代々木競技場フットサルコート' },
       { label: '参加費', value: '¥2,000（当日、現金またはPayPayでお支払いください）' },
       { label: '持ち物', value: '運動できる服装、室内用シューズ（フットサルシューズ推奨）、飲み物' },
       { label: '当日の流れ', value: '準備運動 → ミニゲーム形式で対戦 → 終了後は希望者で軽く歓談' },

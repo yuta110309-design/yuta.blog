@@ -163,14 +163,26 @@
         "name": "オンライン",
         "plans": [
           {
-            "id": "online-monthly",
-            "name": "オンラインプラン",
-            "frequency": "月額 / 1回20〜30分",
-            "price": 3000,
+            "id": "online-video",
+            "name": "動画視聴プラン",
+            "frequency": "月額",
+            "price": 3980,
             "priceUnit": "月",
             "unitPrice": null,
-            "note": "月内なら回数無制限でご利用いただけます(対面(パーソナル/セミパーソナル)とは内容が異なります)",
-            "recommendedFor": "月額制で、月内なら回数の制限なく何度でもご利用いただけます。朝(例: 7:00〜7:30)や夜寝る前(例: 22:00〜22:30)など、生活のリズムに合わせた20〜30分のストレッチ中心のメニューです。全国どこからでも、日常に短い習慣を取り入れたい方に。",
+            "note": "税抜",
+            "recommendedFor": "ライブトレーニング配信、栄養・食事ガイド、メンバーコミュニティ、過去ライブの動画閲覧が含まれます。",
+            "photoNote": "オンラインセッションの様子",
+            "photo": "images/plan-online.jpg"
+          },
+          {
+            "id": "online-support",
+            "name": "サポートプラン",
+            "frequency": "月額",
+            "price": 5980,
+            "priceUnit": "月",
+            "unitPrice": null,
+            "note": "税抜",
+            "recommendedFor": "動画視聴プランの全て、トレーナー1対1サポート、個別フィードバック、優先的なアドバイスが含まれます。",
             "photoNote": "オンラインセッションの様子",
             "photo": "images/plan-online.jpg"
           }

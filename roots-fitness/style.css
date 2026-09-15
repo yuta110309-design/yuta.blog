@@ -1588,17 +1588,27 @@ a.news-card:hover {
   flex: 0 0 min(80vw, 280px);
   scroll-snap-align: start;
   background: linear-gradient(135deg, #3d6b47 0%, #2d5037 100%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 4px 20px rgba(45, 80, 55, 0.2);
-  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 28px 24px;
+  box-shadow: 0 8px 32px rgba(45, 80, 55, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
   color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 .plan-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 35px rgba(45, 80, 55, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(45, 80, 55, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* オンラインプランカード: モバイル表示の幅制限 */
+.online-plan-card {
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* PC版: 3列グリッド表示 */
@@ -1615,6 +1625,11 @@ a.news-card:hover {
   .plan-card {
     flex: none;
     scroll-snap-align: none;
+  }
+
+  .online-plan-card {
+    max-width: 100%;
+    margin: 0;
   }
 }
 
@@ -1634,16 +1649,20 @@ a.news-card:hover {
 
 .plan-card-type-badge {
   display: inline-block;
-  padding: 4px 12px;
-  border-radius: 999px;
-  font-size: 0.7rem;
-  letter-spacing: 0.04em;
-  margin-bottom: 12px;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
 }
 
 .plan-card-type-badge-monthly {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .plan-card-type-badge-ticket {
@@ -1662,13 +1681,16 @@ a.news-card:hover {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 4px 12px;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .plan-card-name {
   font-family: var(--font-heading);
-  font-size: 1rem;
-  letter-spacing: 0.04em;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   color: white;
   white-space: nowrap;
 }
@@ -1684,26 +1706,29 @@ a.news-card:hover {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
 .plan-card-price-main {
   font-family: var(--font-heading);
-  font-size: 1.3rem;
-  letter-spacing: 0.02em;
-  color: #FFD700;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .plan-card-price-main.plan-card-price-tbd {
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.7);
 }
 
 .plan-card-price-unit {
   font-family: var(--font-body);
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.8);
-  margin-left: 2px;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.75);
+  margin-left: 4px;
 }
 
 .plan-card-price-sub {
@@ -1717,27 +1742,61 @@ a.news-card:hover {
   color: rgba(255, 255, 255, 0.75);
 }
 
+.plan-card-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.plan-card-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.plan-card-features li:before {
+  content: "✓";
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
 .plan-card-detail-btn {
   display: block;
   width: 100%;
-  margin-top: 16px;
-  padding: 10px;
+  margin-top: 20px;
+  padding: 12px;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
   font-family: var(--font-body);
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: white;
   -webkit-appearance: none;
   appearance: none;
-  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
+  transition: all 0.25s var(--ease);
+  cursor: pointer;
 }
 
 .plan-card-detail-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
   color: white;
-  border-color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateX(2px);
 }
 
 .plan-detail-price {

@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Shippori+Mincho:wght@400&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Yuji+Syuku&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Shippori+Mincho:wght@400&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Yuji+Syuku&display=swap"></noscript>
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=8">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/all.min.css">
 <style>
 .online-community-hero {
@@ -475,6 +475,89 @@
   background: linear-gradient(135deg, #e87ba0 0%, #d7699f 100%);
 }
 
+.accordion-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.accordion-item {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.accordion-button {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  background: inherit;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.accordion-button:hover {
+  padding: 16px;
+  opacity: 0.9;
+}
+
+.accordion-toggle {
+  font-size: 16px;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.accordion-content {
+  padding: 0 16px 16px 16px;
+  color: white;
+  font-size: 13px;
+  line-height: 1.6;
+  max-height: 500px;
+  overflow: hidden;
+  animation: slideDown 0.3s ease;
+}
+
+.accordion-content p {
+  margin: 0;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+.accordion-item.blue {
+  background: linear-gradient(135deg, #3d6b47 0%, #2d5037 100%);
+}
+
+.accordion-item.green {
+  background: linear-gradient(135deg, #4a7c54 0%, #3a6c44 100%);
+}
+
+.accordion-item.orange {
+  background: linear-gradient(135deg, #cc7722 0%, #bb6611 100%);
+}
+
+.accordion-item.red {
+  background: linear-gradient(135deg, #d64545 0%, #c53535 100%);
+}
+
+.accordion-item.pink {
+  background: linear-gradient(135deg, #e87ba0 0%, #d7699f 100%);
+}
+
 @media (max-width: 768px) {
   .online-community-hero h1 {
     font-size: 1.8rem;
@@ -501,6 +584,22 @@
   }
 }
 </style>
+<script>
+function toggleAccordion(button) {
+  const item = button.closest('.accordion-item');
+  const content = item.querySelector('.accordion-content');
+  const toggle = button.querySelector('.accordion-toggle');
+  const isOpen = content.style.display !== 'none';
+
+  if (isOpen) {
+    content.style.display = 'none';
+    toggle.textContent = '▶';
+  } else {
+    content.style.display = 'block';
+    toggle.textContent = '▼';
+  }
+}
+</script>
 </head>
 <body>
 
@@ -550,26 +649,55 @@
   <div class="container">
     <h2 class="section-title" style="margin-bottom: 40px;">5つのサービスで、理想の身体へ</h2>
 
-    <div class="features-grid">
-      <div class="feature-card blue">
-        <h3><i class="fas fa-video"></i> ライブトレーニング配信</h3>
-        <p>トレーナーとリアルタイムで繋がる。自宅にいながら、プロのトレーニングを受けられます。配信終了後24時間限定で動画視聴可能。</p>
+    <div class="accordion-container">
+      <div class="accordion-item blue">
+        <button class="accordion-button" onclick="toggleAccordion(this)">
+          <span><i class="fas fa-video"></i> ライブトレーニング配信</span>
+          <span class="accordion-toggle">▼</span>
+        </button>
+        <div class="accordion-content">
+          <p>トレーナーとリアルタイムで繋がる。自宅にいながら、プロのトレーニングを受けられます。配信終了後24時間限定で動画視聴可能。</p>
+        </div>
       </div>
-      <div class="feature-card green">
-        <h3><i class="fas fa-book"></i> 栄養・食事ガイド</h3>
-        <p>トレーニングと同じくらい大切な栄養管理。コラム形式でわかりやすく解説します。</p>
+
+      <div class="accordion-item green">
+        <button class="accordion-button" onclick="toggleAccordion(this)">
+          <span><i class="fas fa-book"></i> 栄養・食事ガイド</span>
+          <span class="accordion-toggle">▶</span>
+        </button>
+        <div class="accordion-content" style="display: none;">
+          <p>トレーニングと同じくらい大切な栄養管理。コラム形式でわかりやすく解説します。</p>
+        </div>
       </div>
-      <div class="feature-card orange">
-        <h3><i class="fas fa-users"></i> メンバーコミュニティ</h3>
-        <p>同じ目標を持つメンバーとの交流。一緒に頑張る仲間が見つかります。</p>
+
+      <div class="accordion-item orange">
+        <button class="accordion-button" onclick="toggleAccordion(this)">
+          <span><i class="fas fa-users"></i> メンバーコミュニティ</span>
+          <span class="accordion-toggle">▶</span>
+        </button>
+        <div class="accordion-content" style="display: none;">
+          <p>同じ目標を持つメンバーとの交流。一緒に頑張る仲間が見つかります。</p>
+        </div>
       </div>
-      <div class="feature-card red">
-        <h3><i class="fas fa-comments"></i> トレーナー & AIコーチ</h3>
-        <p>プロのトレーナーと24時間対応のAIコーチが対応。リアルタイムとAIの両面からサポートします。</p>
+
+      <div class="accordion-item red">
+        <button class="accordion-button" onclick="toggleAccordion(this)">
+          <span><i class="fas fa-comments"></i> トレーナー & AIコーチ</span>
+          <span class="accordion-toggle">▶</span>
+        </button>
+        <div class="accordion-content" style="display: none;">
+          <p>プロのトレーナーと24時間対応のAIコーチが対応。リアルタイムとAIの両面からサポートします。</p>
+        </div>
       </div>
-      <div class="feature-card pink">
-        <h3><i class="fas fa-calendar-alt"></i> 月1回のリアルイベント</h3>
-        <p>代官山でのヨガイベントへ招待。月1回開催。会員は無料、非会員は1回3,000円。</p>
+
+      <div class="accordion-item pink">
+        <button class="accordion-button" onclick="toggleAccordion(this)">
+          <span><i class="fas fa-calendar-alt"></i> 月1回のリアルイベント</span>
+          <span class="accordion-toggle">▶</span>
+        </button>
+        <div class="accordion-content" style="display: none;">
+          <p>代官山でのヨガイベントへ招待。月1回開催。会員は無料、非会員は1回3,000円。</p>
+        </div>
       </div>
     </div>
   </div>

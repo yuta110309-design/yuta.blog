@@ -737,7 +737,7 @@
       return html || '<p class="plan-loading">現在この店舗のプランは準備中です。</p>';
     }
 
-    fetch(planPanelsRoot.getAttribute("data-plans-source"))
+    fetch(planPanelsRoot.getAttribute("data-plans-source") + "?v=4")
       .then(function (res) {
         return res.ok ? res.json() : { categories: [] };
       })

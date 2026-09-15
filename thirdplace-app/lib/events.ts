@@ -49,7 +49,7 @@ export const EVENTS: EventConfig[] = [
     description:
       '初めましての方も歓迎の、男女混合でゆるく楽しむフットサル部活動です。運動が得意でなくても大丈夫。体を動かしながら、仕事でも家でもない新しいつながりをつくる時間にしませんか。',
     recurrence: { mode: 'once', dateISO: '2026-09-21T19:00:00', time: '19:00' },
-    deadlineDaysBefore: 7,
+    deadlineDaysBefore: 0,
     capacity: 25,
     extraFields: [
       { key: 'referrer', label: '紹介者のお名前（いれば）', type: 'text', notionProperty: '紹介者名' },

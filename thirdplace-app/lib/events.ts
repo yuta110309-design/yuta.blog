@@ -42,29 +42,6 @@ export const EVENTS: EventConfig[] = [
     ]
   },
   {
-    id: 'futsal',
-    emoji: '⚽',
-    title: 'フットサル（男女混合）',
-    location: '国立代々木競技場フットサルコート',
-    description:
-      '初めましての方も歓迎の、男女混合でゆるく楽しむフットサル部活動です。運動が得意でなくても大丈夫。体を動かしながら、仕事でも家でもない新しいつながりをつくる時間にしませんか。',
-    recurrence: { mode: 'once', dateISO: '2026-09-21T19:00:00', time: '19:00' },
-    deadlineDaysBefore: 0,
-    capacity: 25,
-    extraFields: [
-      { key: 'referrer', label: '紹介者のお名前（いれば）', type: 'text', notionProperty: '紹介者名' },
-      { key: 'payment', label: '当日決済方法', type: 'select', options: ['現金', 'PayPay'], notionProperty: '決済方法' },
-      { key: 'job', label: 'お仕事', type: 'text', notionProperty: 'お仕事' }
-    ],
-    emailDetails: [
-      { label: '集合場所', value: '国立代々木競技場フットサルコート' },
-      { label: '参加費', value: '¥2,000（当日、現金またはPayPayでお支払いください）' },
-      { label: '持ち物', value: '運動できる服装、室内用シューズ（フットサルシューズ推奨）、飲み物' },
-      { label: '当日の流れ', value: '準備運動 → ミニゲーム形式で対戦 → 終了後は希望者で軽く歓談' },
-      { label: 'ひとこと', value: '男女混合・運動が得意でない方も歓迎です。初めましての方もお気軽にどうぞ。' }
-    ]
-  },
-  {
     id: 'toride',
     emoji: '🌾',
     title: '畑HYROX（特別開催）— 茨城・取手',

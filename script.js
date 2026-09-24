@@ -137,17 +137,7 @@ const RSVP_DEVICE_ID = getDeviceId();
 // occ_date bucketing lines up with the same Supabase responses rows.
 const RSVP_EVENTS = {
   yoruran: { recurrence: { mode: 'weekly', weekday: 1, time: '20:00' }, deadlineDaysBefore: 0, capacity: 10 },
-  toride: { recurrence: { mode: 'once', dateISO: '2026-11-01T11:00:00' }, deadlineDaysBefore: null, capacity: 15 },
-  futsal: {
-    recurrence: { mode: 'once', dateISO: '2026-09-21T19:00:00' },
-    deadlineDaysBefore: 0,
-    capacity: 25,
-    extraFields: [
-      { key: 'referrer', label: '紹介者のお名前（いれば）', type: 'text' },
-      { key: 'payment', label: '当日決済方法', type: 'select', options: ['現金', 'PayPay'] },
-      { key: 'job', label: 'お仕事', type: 'text' }
-    ]
-  }
+  toride: { recurrence: { mode: 'once', dateISO: '2026-11-01T11:00:00' }, deadlineDaysBefore: null, capacity: 15 }
 };
 
 function rsvpPad(n) {

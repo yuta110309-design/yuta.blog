@@ -235,6 +235,35 @@ if (eventRows.length && APP_API_BASE) {
     const countTag = row.querySelector('.event-rsvp-count');
     if (countTag) countTag.textContent = '👥 参加 ' + nextGoCount + '/' + cfg.capacity + '名';
 
+    // カードを開かなくても開催日の候補が分かるよう、折りたたみ時から常に表示する
+    const datesPreview = row.querySelector('.event-dates-preview');
+    if (datesPreview) {
+      if (isWeekly && occurrenceOptions.length > 1) {
+        datesPreview.hidden = false;
+        datesPreview.innerHTML =
+          '<span class="event-dates-preview-label">開催日を選べます</span><div class="rsvp-date-row">' +
+          occurrenceOptions
+            .map((o) => {
+              const key = rsvpDateKey(o);
+              const closed = isPastDeadline(o);
+              return (
+                '<button type="button" class="rsvp-date-btn" data-occdate="' +
+                key +
+                '"' +
+                (closed ? ' disabled' : '') +
+                '>' +
+                rsvpFormatDateLabel(o) +
+                '</button>'
+              );
+            })
+            .join('') +
+          '</div>';
+      } else {
+        datesPreview.hidden = true;
+        datesPreview.innerHTML = '';
+      }
+    }
+
     const body = row.querySelector('.event-rsvp-body');
     if (!body) return;
     const draft = row._rsvpDraft || { name: '', email: '', status: null, occDate: null, saved: false, extra: {} };
@@ -476,6 +505,11 @@ if (eventRows.length && APP_API_BASE) {
     const meta = row.querySelector('.event-meta');
     if (meta) meta.appendChild(countTag);
 
+    const datesPreview = document.createElement('div');
+    datesPreview.className = 'event-dates-preview';
+    datesPreview.hidden = true;
+    if (meta) meta.insertAdjacentElement('afterend', datesPreview);
+
     const body = document.createElement('div');
     body.className = 'event-rsvp-body';
     body.hidden = true;
@@ -490,6 +524,20 @@ if (eventRows.length && APP_API_BASE) {
     toggle.addEventListener('click', () => {
       body.hidden = !body.hidden;
       toggle.textContent = body.hidden ? '出欠を回答する' : '閉じる';
+    });
+
+    // カード折りたたみ状態の日程チップをタップしたら、その日程を選んだ状態で
+    // 回答フォームを開く（開かないと日程が分からない、を解消する）。
+    datesPreview.addEventListener('click', (e) => {
+      const chip = e.target.closest('[data-occdate]');
+      if (!chip || chip.disabled) return;
+      row._rsvpDraft = row._rsvpDraft || { name: '', email: '', status: null, occDate: null, saved: false, extra: {} };
+      row._rsvpDraft.occDate = chip.dataset.occdate;
+      row._rsvpDraft.saved = false;
+      body.hidden = false;
+      toggle.textContent = '閉じる';
+      renderRow(row);
+      body.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   });
 

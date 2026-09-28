@@ -401,6 +401,9 @@ button.link-arrow { background: none; border: none; border-bottom: 1px solid var
 
 .event-rsvp-count { color: var(--sage-deep); font-weight: 500; }
 
+.event-dates-preview { margin: -4px 0 14px; }
+.event-dates-preview-label { display: block; font-size: 11px; color: var(--ink-soft); margin-bottom: 6px; }
+
 .rsvp-toggle {
   display: block;
   margin-top: 12px;

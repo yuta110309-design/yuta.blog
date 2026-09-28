@@ -80,6 +80,10 @@ export async function POST(req: NextRequest) {
       extraFields: eventCfg?.extraFields
     });
   }
+  // 参加（go）の回答が入るたびに、運営メンバーにも通知する。
+  if (status === 'go') {
+    await sendAdminNotification({ name, eventTitle, dateLabel, extra, extraFields: eventCfg?.extraFields });
+  }
   // 前日リマインド用に、参加（go）表明者のメールアドレスだけを別テーブルに保存する
   // （response_emailsは匿名ロールからSELECTできないため、公開responsesテーブルより安全）。
   // 参加以外に変わった場合は、翌日以降にリマインドが届かないよう削除する。
@@ -201,6 +205,62 @@ async function sendConfirmationEmail({
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('出欠確認メールの送信に失敗しました:', err);
+  }
+}
+
+// 通知メール送信に失敗しても回答の登録自体は成功として扱う（データの保存を優先する）。
+async function sendAdminNotification({
+  name,
+  eventTitle,
+  dateLabel,
+  extra,
+  extraFields
+}: {
+  name: string;
+  eventTitle: string;
+  dateLabel: string;
+  extra?: Record<string, string>;
+  extraFields?: { key: string; label: string }[];
+}) {
+  const apiKey = process.env.RESEND_API_KEY;
+  // 運営メンバーそれぞれに直接届くよう、カンマ区切りで複数アドレスを指定できるようにする
+  const to = process.env.NOTIFY_EMAIL_TO?.split(',').map((addr) => addr.trim()).filter(Boolean);
+  if (!apiKey || !to || to.length === 0) {
+    // eslint-disable-next-line no-console
+    console.warn('RESEND_API_KEY または NOTIFY_EMAIL_TO が未設定のため、予約通知メールをスキップしました。');
+    return;
+  }
+
+  const answeredExtras = (extraFields ?? [])
+    .map((f) => (extra?.[f.key] ? `${f.label}: ${extra[f.key]}` : null))
+    .filter((v): v is string => Boolean(v));
+
+  try {
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        from: process.env.NOTIFY_EMAIL_FROM || 'THE THIRDPLACE EBISU <onboarding@resend.dev>',
+        to,
+        subject: `【予約通知】${eventTitle}${dateLabel ? `（${dateLabel}）` : ''} - ${name}様`,
+        text: [
+          `新しい参加予約がありました。`,
+          ``,
+          `お名前: ${name}`,
+          `イベント: ${eventTitle}`,
+          dateLabel ? `日程: ${dateLabel}` : null,
+          ...(answeredExtras.length > 0 ? ['', 'ご回答いただいた内容:', ...answeredExtras] : [])
+        ]
+          .filter((l): l is string => l !== null && l !== undefined)
+          .join('\n')
+      })
+    });
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('予約通知メールの送信に失敗しました:', err);
   }
 }
 

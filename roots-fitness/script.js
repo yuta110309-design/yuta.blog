@@ -1,0 +1,1334 @@
+(function () {
+  "use strict";
+
+  /* 写真未確定のプレースホルダーで使う共通アイコン(index.html側の #photo-pending シンボルを参照)。 */
+  var PHOTO_PLACEHOLDER_ICON =
+    '<svg class="photo-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#photo-pending"></use></svg>';
+
+  /* モーダル共通のフォーカス制御(予約・プラン詳細・トレーナー詳細で共用)。      */
+  /* 開いたときはモーダル内の閉じるボタンへ、閉じたときは開くきっかけになった      */
+  /* 要素へフォーカスを戻す(キーボード操作時にフォーカスが迷子にならないように)。 */
+  var modalLastFocused = new Map();
+
+  function openModal(modal, triggerEl) {
+    modalLastFocused.set(modal, triggerEl || document.activeElement);
+    modal.classList.add("is-open");
+    document.body.classList.add("reservation-open");
+    var closeBtn = modal.querySelector(".reservation-modal-close");
+    if (closeBtn) closeBtn.focus();
+  }
+
+  function closeModal(modal) {
+    modal.classList.remove("is-open");
+    document.body.classList.remove("reservation-open");
+    var toFocus = modalLastFocused.get(modal);
+    modalLastFocused.delete(modal);
+    if (toFocus && typeof toFocus.focus === "function") {
+      toFocus.focus();
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Hamburger nav toggle                                                */
+  /* ------------------------------------------------------------------ */
+  var toggle = document.getElementById("nav-toggle");
+  var panel = document.getElementById("nav-panel");
+
+  function openNav() {
+    panel.classList.add("is-open");
+    toggle.setAttribute("aria-expanded", "true");
+    document.body.classList.add("nav-open");
+  }
+
+  function closeNav() {
+    panel.classList.remove("is-open");
+    toggle.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("nav-open");
+  }
+
+  if (toggle && panel) {
+    toggle.addEventListener("click", function () {
+      var isOpen = panel.classList.contains("is-open");
+      if (isOpen) {
+        closeNav();
+      } else {
+        openNav();
+      }
+    });
+
+    panel.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", closeNav);
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closeNav();
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Why Roots スライダー(横スライド + 矢印 + ドットページネーション)          */
+  /* 共通のスライダー処理(setupCardSlider)を使う。定義は下の方にあるが、       */
+  /* 関数宣言は巻き上げられるため、ここで呼び出しても問題ない。                 */
+  /* ------------------------------------------------------------------ */
+  var whyCards = document.getElementById("why-cards");
+  var whyDots = document.getElementById("why-slider-dots");
+
+  if (whyCards && whyDots) {
+    setupCardSlider(whyCards, document.querySelector("[data-why-prev]"), document.querySelector("[data-why-next]"), whyDots);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 体験までの流れ スライダー(横スライド + 矢印 + ドットページネーション)       */
+  /* ------------------------------------------------------------------ */
+  var trialSteps = document.getElementById("trial-steps");
+  var trialDots = document.getElementById("trial-slider-dots");
+
+  if (trialSteps && trialDots) {
+    setupCardSlider(trialSteps, document.querySelector("[data-trial-prev]"), document.querySelector("[data-trial-next]"), trialDots);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 店舗設定(FitKarte予約URL / Instagram URL / LINE URL)の読み込み          */
+  /* data/stores.json を編集するだけで店舗の追加・URL差し替えが可能。        */
+  /* data-store-cta="<storeId>" を持つ要素の href を自動設定する。          */
+  /* data-instagram-cta="<storeId>" を持つ要素には店舗別Instagram URLを、    */
+  /* data-line-cta を持つ要素には公式LINEのURLを自動設定する。               */
+  /* ------------------------------------------------------------------ */
+  var storeMapCache = {};
+
+  function applyStoreLinks(config) {
+    if (!config || !config.stores) return;
+
+    var storeMap = {};
+    config.stores.forEach(function (store) {
+      storeMap[store.id] = store;
+    });
+    storeMapCache = storeMap;
+
+    document.querySelectorAll("[data-store-cta]").forEach(function (el) {
+      var storeId = el.getAttribute("data-store-cta");
+      var store = storeMap[storeId];
+      if (store && store.fitkarteUrl) {
+        el.setAttribute("href", store.fitkarteUrl);
+        el.setAttribute("target", "_blank");
+        el.setAttribute("rel", "noopener noreferrer");
+      }
+    });
+
+    document.querySelectorAll("[data-instagram-cta]").forEach(function (el) {
+      var storeId = el.getAttribute("data-instagram-cta");
+      var store = storeMap[storeId];
+      if (store && store.instagramUrl) {
+        el.setAttribute("href", store.instagramUrl);
+        el.setAttribute("target", "_blank");
+        el.setAttribute("rel", "noopener noreferrer");
+      }
+    });
+
+    if (config.line && config.line.url) {
+      document.querySelectorAll("[data-line-cta]").forEach(function (el) {
+        el.setAttribute("href", config.line.url);
+        el.setAttribute("target", "_blank");
+        el.setAttribute("rel", "noopener noreferrer");
+      });
+    }
+  }
+
+  var storesDataUrl = document.body.getAttribute("data-stores-json") || "data/stores.json";
+
+  fetch(storesDataUrl + "?v=5")
+    .then(function (res) {
+      return res.ok ? res.json() : null;
+    })
+    .then(applyStoreLinks)
+    .catch(function () {
+      /* オフライン等でfetchできない場合はプレースホルダーのままにする */
+    });
+
+  /* ------------------------------------------------------------------ */
+  /* News                                                                 */
+  /* [data-news-source] を持つ要素にJSONを読み込み、カードを描画する。         */
+  /* data-news-limit があれば件数を絞る(新しい日付順)。                     */
+  /* 投稿の追加・編集は data/news.json を直接編集するだけでよい。            */
+  /* ------------------------------------------------------------------ */
+  function formatNewsDate(dateStr) {
+    return dateStr.replace(/-/g, ".");
+  }
+
+  /* 予約投稿(小出し配信)用: 閲覧者の端末のローカル日付を YYYY-MM-DD で返す。
+     data/news.json に未来の日付でitemを仕込んでおくと、その日を迎えるまで
+     非表示になる(コード修正・再デプロイ不要)。 */
+  function todayIsoDate() {
+    var d = new Date();
+    var mm = String(d.getMonth() + 1).padStart(2, "0");
+    var dd = String(d.getDate()).padStart(2, "0");
+    return d.getFullYear() + "-" + mm + "-" + dd;
+  }
+
+  function buildNewsCardHtml(item) {
+    var titleHtml =
+      '<p class="news-card-title">' + item.title + "</p>" +
+      (item.link ? '<span class="news-card-arrow">続きを見る →</span>' : "");
+
+    var innerHtml =
+      '<div class="news-card-meta">' +
+        '<span class="news-card-date">' + formatNewsDate(item.date) + "</span>" +
+        '<span class="news-card-badge">' + item.category + "</span>" +
+      "</div>" +
+      titleHtml +
+      '<p class="news-card-body">' + item.body + "</p>";
+
+    if (item.link) {
+      var isExternal = /^https?:\/\//.test(item.link);
+      return (
+        '<a class="news-card" href="' + item.link + '"' +
+        (isExternal ? ' target="_blank" rel="noopener noreferrer"' : "") +
+        ">" + innerHtml + "</a>"
+      );
+    }
+    return '<div class="news-card">' + innerHtml + "</div>";
+  }
+
+  function renderNewsInto(el, items) {
+    if (!items.length) {
+      el.innerHTML = '<p class="news-empty">現在お知らせはありません。</p>';
+      return;
+    }
+    el.innerHTML = items.map(buildNewsCardHtml).join("");
+  }
+
+  document.querySelectorAll("[data-news-source]").forEach(function (el) {
+    var src = el.getAttribute("data-news-source");
+    var limit = parseInt(el.getAttribute("data-news-limit"), 10) || null;
+
+    fetch(src + (src.includes("?") ? "\u0026v=4" : "?v=5"))
+      .then(function (res) {
+        return res.ok ? res.json() : { items: [] };
+      })
+      .then(function (data) {
+        var today = todayIsoDate();
+        var items = (data.items || [])
+          .filter(function (item) {
+            return item.date <= today;
+          })
+          .slice()
+          .sort(function (a, b) {
+            return a.date < b.date ? 1 : -1;
+          });
+        if (limit) {
+          items = items.slice(0, limit);
+        }
+        renderNewsInto(el, items);
+      })
+      .catch(function () {
+        el.innerHTML = '<p class="news-empty">お知らせの読み込みに失敗しました。</p>';
+      });
+  });
+
+  /* ------------------------------------------------------------------ */
+  /* 体験予約フォーム(モーダル)                                            */
+  /* [data-open-reservation] クリックでモーダルを開き、送信時は             */
+  /* data/reservation-form.json の設定に従ってGoogleフォームへPOSTする。    */
+  /* 設定手順: docs/reservation-form-setup.md                             */
+  /* ------------------------------------------------------------------ */
+  var reservationModal = document.getElementById("reservation-modal");
+
+  if (reservationModal) {
+    var reservationForm = document.getElementById("reservation-form");
+    var reservationFormStep = reservationModal.querySelector('[data-reservation-step="form"]');
+    var reservationSuccessStep = reservationModal.querySelector('[data-reservation-step="success"]');
+    var reservationErrorEl = reservationModal.querySelector(".reservation-form-error");
+    var reservationConfig = null;
+    var reservationConfigUrl =
+      document.body.getAttribute("data-reservation-json") || "data/reservation-form.json";
+    var reservationSubmitBtn = reservationForm ? reservationForm.querySelector(".reservation-submit") : null;
+    var reservationSubmitLabel = reservationSubmitBtn ? reservationSubmitBtn.textContent : "";
+
+    function setReservationSubmitting(isSubmitting) {
+      if (!reservationSubmitBtn) return;
+      reservationSubmitBtn.disabled = isSubmitting;
+      reservationSubmitBtn.textContent = isSubmitting ? "送信中…" : reservationSubmitLabel;
+    }
+
+    fetch(reservationConfigUrl + "?v=5")
+      .then(function (res) {
+        return res.ok ? res.json() : null;
+      })
+      .then(function (config) {
+        reservationConfig = config;
+      })
+      .catch(function () {
+        /* 設定が読み込めない場合はプレースホルダーのまま(送信時に警告) */
+      });
+
+    function openReservationModal(triggerEl) {
+      var wasShowingSuccess = reservationSuccessStep && !reservationSuccessStep.hidden;
+      if (reservationFormStep) reservationFormStep.hidden = false;
+      if (reservationSuccessStep) reservationSuccessStep.hidden = true;
+      if (reservationErrorEl) reservationErrorEl.textContent = "";
+      if (reservationForm && wasShowingSuccess) reservationForm.reset();
+      setReservationSubmitting(false);
+      openModal(reservationModal, triggerEl);
+    }
+
+    function closeReservationModal() {
+      closeModal(reservationModal);
+    }
+
+    document.querySelectorAll("[data-open-reservation]").forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        openReservationModal(el);
+      });
+    });
+
+    reservationModal.querySelectorAll("[data-close-reservation]").forEach(function (el) {
+      el.addEventListener("click", closeReservationModal);
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && reservationModal.classList.contains("is-open")) {
+        closeReservationModal();
+      }
+    });
+
+    if (reservationForm) {
+      reservationForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        if (reservationSubmitBtn && reservationSubmitBtn.disabled) {
+          return;
+        }
+
+        if (reservationErrorEl) reservationErrorEl.textContent = "";
+
+        if (!reservationForm.reportValidity()) {
+          return;
+        }
+
+        if (
+          !reservationConfig ||
+          !reservationConfig.actionUrl ||
+          reservationConfig.actionUrl.indexOf("REPLACE_ME") !== -1
+        ) {
+          console.warn(
+            "data/reservation-form.json が未設定のため、実際の送信は行われていません(docs/reservation-form-setup.md を参照)。"
+          );
+          showReservationSuccess();
+          return;
+        }
+
+        var formData = new FormData();
+        var fields = reservationConfig.fields;
+        new FormData(reservationForm).forEach(function (value, key) {
+          if (fields[key]) {
+            formData.append(fields[key], value);
+          }
+        });
+
+        setReservationSubmitting(true);
+
+        fetch(reservationConfig.actionUrl, {
+          method: "POST",
+          mode: "no-cors",
+          body: formData
+        })
+          .then(showReservationSuccess)
+          .catch(function () {
+            setReservationSubmitting(false);
+            if (reservationErrorEl) {
+              reservationErrorEl.textContent =
+                "送信に失敗しました。通信環境をご確認のうえ再度お試しください。";
+            }
+          });
+      });
+    }
+
+    function showReservationSuccess() {
+      if (reservationFormStep) reservationFormStep.hidden = true;
+      if (reservationSuccessStep) reservationSuccessStep.hidden = false;
+      if (reservationForm) reservationForm.reset();
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* スペシャルサポーター制度 申込フォーム(supporter.html専用)              */
+  /* 体験予約フォームと同じ仕組み(Googleフォームへno-corsでPOST)。            */
+  /* data/supporter-form.json が未設定(REPLACE_ME_)の間は、実際の送信は     */
+  /* 行われずコンソールに警告が出るのみ(UIの見た目・動作は確認できる)。       */
+  /* ------------------------------------------------------------------ */
+  var supporterForm = document.getElementById("supporter-form");
+
+  if (supporterForm) {
+    var supporterFormStep = document.querySelector('[data-supporter-step="form"]');
+    var supporterSuccessStep = document.querySelector('[data-supporter-step="success"]');
+    var supporterErrorEl = supporterForm.querySelector(".reservation-form-error");
+    var supporterSubmitBtn = supporterForm.querySelector(".reservation-submit");
+    var supporterSubmitLabel = supporterSubmitBtn ? supporterSubmitBtn.textContent : "";
+    var signatureCanvas = document.getElementById("signature-canvas");
+    var signatureClearBtn = document.getElementById("signature-clear");
+    var signatureDataInput = document.getElementById("signature-data");
+    var signatureCtx = null;
+    var isDrawing = false;
+
+    var GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxKLE6kMqJzvsm8u08F8lB2dM_j583VHZWHBbY6M-mOiwmV86T7yYLlx4eBUh06NTsE/usercallable";
+
+    function setSupporterSubmitting(isSubmitting) {
+      if (!supporterSubmitBtn) return;
+      supporterSubmitBtn.disabled = isSubmitting;
+      supporterSubmitBtn.textContent = isSubmitting ? "送信中…" : supporterSubmitLabel;
+    }
+
+    function showSupporterSuccess() {
+      if (supporterFormStep) supporterFormStep.hidden = true;
+      if (supporterSuccessStep) supporterSuccessStep.hidden = false;
+      supporterForm.reset();
+      if (signatureCanvas && signatureCtx) {
+        signatureCtx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+      }
+    }
+
+    function initSignatureCanvas() {
+      if (!signatureCanvas) return;
+
+      signatureCtx = signatureCanvas.getContext("2d");
+      if (!signatureCtx) return;
+
+      var rect = signatureCanvas.getBoundingClientRect();
+      var dpr = window.devicePixelRatio || 1;
+
+      signatureCanvas.width = rect.width * dpr;
+      signatureCanvas.height = rect.height * dpr;
+      signatureCtx.scale(dpr, dpr);
+      signatureCtx.lineCap = "round";
+      signatureCtx.lineJoin = "round";
+      signatureCtx.lineWidth = 2;
+      signatureCtx.strokeStyle = "#2B2318";
+
+      signatureCanvas.addEventListener("mousedown", function (e) {
+        isDrawing = true;
+        var rect = signatureCanvas.getBoundingClientRect();
+        signatureCtx.beginPath();
+        signatureCtx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+      });
+
+      signatureCanvas.addEventListener("mousemove", function (e) {
+        if (!isDrawing) return;
+        var rect = signatureCanvas.getBoundingClientRect();
+        signatureCtx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+        signatureCtx.stroke();
+      });
+
+      signatureCanvas.addEventListener("mouseup", function () {
+        isDrawing = false;
+        if (signatureDataInput) {
+          signatureDataInput.value = signatureCanvas.toDataURL("image/png");
+        }
+      });
+
+      signatureCanvas.addEventListener("mouseleave", function () {
+        isDrawing = false;
+      });
+
+      signatureCanvas.addEventListener("touchstart", function (e) {
+        isDrawing = true;
+        var rect = signatureCanvas.getBoundingClientRect();
+        var touch = e.touches[0];
+        signatureCtx.beginPath();
+        signatureCtx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+      });
+
+      signatureCanvas.addEventListener("touchmove", function (e) {
+        e.preventDefault();
+        if (!isDrawing) return;
+        var rect = signatureCanvas.getBoundingClientRect();
+        var touch = e.touches[0];
+        signatureCtx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+        signatureCtx.stroke();
+      });
+
+      signatureCanvas.addEventListener("touchend", function () {
+        isDrawing = false;
+        if (signatureDataInput) {
+          signatureDataInput.value = signatureCanvas.toDataURL("image/png");
+        }
+      });
+    }
+
+    if (signatureClearBtn) {
+      signatureClearBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (signatureCanvas && signatureCtx) {
+          signatureCtx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+          if (signatureDataInput) signatureDataInput.value = "";
+        }
+      });
+    }
+
+    initSignatureCanvas();
+
+    supporterForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      if (supporterSubmitBtn && supporterSubmitBtn.disabled) {
+        return;
+      }
+
+      if (supporterErrorEl) supporterErrorEl.textContent = "";
+
+      if (!supporterForm.reportValidity()) {
+        return;
+      }
+
+      setSupporterSubmitting(true);
+
+      var formData = {
+        name: supporterForm.name.value,
+        age: supporterForm.age.value,
+        store: supporterForm.store.value,
+        email: supporterForm.email.value,
+        phone: supporterForm.phone.value,
+        signature: signatureDataInput.value
+      };
+
+      fetch(GOOGLE_APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      })
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (data) {
+          if (data.success) {
+            showSupporterSuccess();
+          } else {
+            throw new Error(data.error || "Unknown error");
+          }
+        })
+        .catch(function (err) {
+          setSupporterSubmitting(false);
+          console.error("Error:", err);
+          if (supporterErrorEl) {
+            supporterErrorEl.textContent =
+              "送信に失敗しました。通信環境をご確認のうえ再度お試しください。";
+          }
+        });
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 採用応募フォーム(recruit.html専用)                                     */
+  /* 体験予約・サポーター申込と同じ仕組み(Googleフォームへno-corsでPOST)。      */
+  /* data/recruit-form.json が未設定(REPLACE_ME_)の間は、実際の送信は       */
+  /* 行われずコンソールに警告が出るのみ(UIの見た目・動作は確認できる)。        */
+  /* 「応募する(◯◯店)」ボタンは data-recruit-store 属性の値で店舗ラジオを     */
+  /* 事前選択してからフォームまでスクロールする。                              */
+  /* ------------------------------------------------------------------ */
+  var recruitForm = document.getElementById("recruit-form");
+
+  document.querySelectorAll("[data-recruit-store]").forEach(function (el) {
+    el.addEventListener("click", function () {
+      if (!recruitForm) return;
+      var value = el.getAttribute("data-recruit-store");
+      var radio = recruitForm.querySelector('input[name="store"][value="' + value + '"]');
+      if (radio) radio.checked = true;
+    });
+  });
+
+  if (recruitForm) {
+    var recruitFormStep = document.querySelector('[data-recruit-step="form"]');
+    var recruitSuccessStep = document.querySelector('[data-recruit-step="success"]');
+    var recruitErrorEl = recruitForm.querySelector(".reservation-form-error");
+    var recruitConfig = null;
+    var recruitConfigUrl =
+      document.body.getAttribute("data-recruit-json") || "data/recruit-form.json";
+    var recruitSubmitBtn = recruitForm.querySelector(".reservation-submit");
+    var recruitSubmitLabel = recruitSubmitBtn ? recruitSubmitBtn.textContent : "";
+
+    function setRecruitSubmitting(isSubmitting) {
+      if (!recruitSubmitBtn) return;
+      recruitSubmitBtn.disabled = isSubmitting;
+      recruitSubmitBtn.textContent = isSubmitting ? "送信中…" : recruitSubmitLabel;
+    }
+
+    fetch(recruitConfigUrl + "?v=5")
+      .then(function (res) {
+        return res.ok ? res.json() : null;
+      })
+      .then(function (config) {
+        recruitConfig = config;
+      })
+      .catch(function () {
+        /* 設定が読み込めない場合はプレースホルダーのまま(送信時に警告) */
+      });
+
+    function showRecruitSuccess() {
+      if (recruitFormStep) recruitFormStep.hidden = true;
+      if (recruitSuccessStep) recruitSuccessStep.hidden = false;
+      recruitForm.reset();
+    }
+
+    recruitForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      if (recruitSubmitBtn && recruitSubmitBtn.disabled) {
+        return;
+      }
+
+      if (recruitErrorEl) recruitErrorEl.textContent = "";
+
+      if (!recruitForm.reportValidity()) {
+        return;
+      }
+
+      if (
+        !recruitConfig ||
+        !recruitConfig.actionUrl ||
+        recruitConfig.actionUrl.indexOf("REPLACE_ME") !== -1
+      ) {
+        console.warn(
+          "data/recruit-form.json が未設定のため、実際の送信は行われていません。"
+        );
+        showRecruitSuccess();
+        return;
+      }
+
+      var formData = new FormData();
+      var fields = recruitConfig.fields;
+      new FormData(recruitForm).forEach(function (value, key) {
+        if (fields[key]) {
+          formData.append(fields[key], value);
+        }
+      });
+
+      setRecruitSubmitting(true);
+
+      fetch(recruitConfig.actionUrl, {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
+      })
+        .then(showRecruitSuccess)
+        .catch(function () {
+          setRecruitSubmitting(false);
+          if (recruitErrorEl) {
+            recruitErrorEl.textContent =
+              "送信に失敗しました。通信環境をご確認のうえ再度お試しください。";
+          }
+        });
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Plan(料金プラン)タブ切替 + 描画                                        */
+  /* [data-plans-source] 配下の [data-plan-panel="<storeId>"] それぞれに、  */
+  /* data/plans.json のカテゴリ/プランをカード形式で描画する。               */
+  /* プランに "stores" 指定がなければ全タブ共通、指定があればそのタブのみ表示。*/
+  /* storeId が "online" の場合は data.online.categories(一律月額プラン)を  */
+  /* 使う。各カードの「詳細を見る」ボタンは、おすすめの人・セッション風景を    */
+  /* plan-detail-modal に表示する。                                        */
+  /* ------------------------------------------------------------------ */
+  var planTabs = document.querySelectorAll("[data-plan-tab]");
+  var planPanelsRoot = document.querySelector("[data-plans-source]");
+
+  if (planTabs.length && planPanelsRoot) {
+    var planById = {};
+
+    function formatYen(amount) {
+      return "¥" + amount.toLocaleString("ja-JP");
+    }
+
+    var PLAN_TYPE_LABEL = { "月": "月額制", "回券": "回数券", "回": "都度払い" };
+    var PLAN_TYPE_CLASS = { "月": "monthly", "回券": "ticket", "回": "single" };
+
+    function buildPlanCardHtml(plan) {
+      planById[plan.id] = plan;
+      var typeLabel = PLAN_TYPE_LABEL[plan.priceUnit];
+
+      var priceHtml;
+      if (plan.price === null || plan.price === undefined) {
+        priceHtml = '<span class="plan-card-price-main plan-card-price-tbd">' + (plan.note || "料金未定") + "</span>";
+      } else {
+        priceHtml =
+          '<span class="plan-card-price-main">' + formatYen(plan.price) +
+          '<span class="plan-card-price-unit">/' + plan.priceUnit + "</span></span>" +
+          (plan.unitPrice
+            ? '<span class="plan-card-price-sub">単価 ' + formatYen(plan.unitPrice) + "</span>"
+            : "");
+      }
+
+      return (
+        '<div class="plan-card">' +
+          (typeLabel
+            ? '<span class="plan-card-type-badge plan-card-type-badge-' + PLAN_TYPE_CLASS[plan.priceUnit] + '">' + typeLabel + "</span>"
+            : "") +
+          '<div class="plan-card-head">' +
+            '<span class="plan-card-name">' + plan.name + "</span>" +
+            (plan.frequency ? '<span class="plan-card-freq">' + plan.frequency + "</span>" : "") +
+          "</div>" +
+          '<div class="plan-card-price">' + priceHtml + "</div>" +
+          (plan.note && plan.price !== null && plan.price !== undefined
+            ? '<p class="plan-card-note">' + plan.note + "</p>"
+            : "") +
+          '<button type="button" class="plan-card-detail-btn" data-plan-detail="' + plan.id + '">詳細を見る</button>' +
+        "</div>"
+      );
+    }
+
+    function planAppliesToStore(plan, storeId) {
+      return !plan.stores || plan.stores.indexOf(storeId) !== -1;
+    }
+
+    var SCHEDULE_TIME_CLASS = { "朝": "is-morning", "昼": "is-noon", "夜": "is-night" };
+
+    function buildScheduleRowHtml(label, times) {
+      var timeClass = SCHEDULE_TIME_CLASS[label] || "";
+      var rangeHint = times.length
+        ? times[0].split("-")[0] + "〜" + times[times.length - 1].split("-")[1]
+        : "";
+      return (
+        '<details class="plan-schedule-row ' + timeClass + '">' +
+          '<summary class="plan-schedule-summary">' +
+            '<span class="plan-schedule-label">' + label + "</span>" +
+            '<span class="plan-schedule-range">' + rangeHint + "</span>" +
+            '<span class="plan-schedule-chevron" aria-hidden="true">›</span>' +
+          "</summary>" +
+          '<div class="plan-schedule-times">' +
+            times.map(function (t) {
+              return '<span class="plan-schedule-chip">' + t + "</span>";
+            }).join("") +
+          "</div>" +
+        "</details>"
+      );
+    }
+
+    function buildScheduleHtml(schedule) {
+      if (!schedule) return "";
+      return (
+        '<div class="plan-schedule">' +
+          '<h4 class="plan-schedule-title">時間割</h4>' +
+          '<p class="plan-schedule-hint">タップすると、開催時間の一覧が見られます。</p>' +
+          Object.keys(schedule).map(function (label) {
+            return buildScheduleRowHtml(label, schedule[label]);
+          }).join("") +
+        "</div>"
+      );
+    }
+
+    function buildPanelHtml(categories, storeId) {
+      var html = "";
+      categories.forEach(function (category) {
+        var plans = category.plans.filter(function (plan) {
+          return planAppliesToStore(plan, storeId);
+        });
+        if (!plans.length) return;
+        html +=
+          '<div class="plan-category">' +
+            '<h3 class="plan-category-title">' + category.name + "</h3>" +
+            buildScheduleHtml(category.schedule) +
+            '<div class="plan-cards">' + plans.map(buildPlanCardHtml).join("") + "</div>" +
+          "</div>";
+      });
+      return html || '<p class="plan-loading">現在この店舗のプランは準備中です。</p>';
+    }
+
+    fetch(planPanelsRoot.getAttribute("data-plans-source") + "?v=5")
+      .then(function (res) {
+        return res.ok ? res.json() : { categories: [] };
+      })
+      .then(function (data) {
+        var defaultCategories = data.categories || [];
+        var onlineCategories = data.online && data.online.categories ? data.online.categories : defaultCategories;
+
+        planPanelsRoot.querySelectorAll("[data-plan-panel]").forEach(function (panel) {
+          var storeId = panel.getAttribute("data-plan-panel");
+          var categories = storeId === "online" ? onlineCategories : defaultCategories;
+          panel.innerHTML = buildPanelHtml(categories, storeId);
+        });
+
+        var feeNoteEl = document.querySelector("[data-plan-fee-note]");
+        if (feeNoteEl && data.enrollmentFee && typeof data.enrollmentFee.amount === "number") {
+          var feeText =
+            "パーソナル・セミパーソナル・ペアレッスンは、入会金" +
+            formatYen(data.enrollmentFee.amount) +
+            "が別途かかります(オンラインを除く)。";
+          if (data.enrollmentFee.campaignNote) {
+            feeText += " " + data.enrollmentFee.campaignNote;
+          }
+          feeNoteEl.textContent = feeText;
+        }
+      })
+      .catch(function () {
+        planPanelsRoot.querySelectorAll("[data-plan-panel]").forEach(function (panel) {
+          panel.innerHTML = '<p class="plan-loading">料金プランの読み込みに失敗しました。</p>';
+        });
+      });
+
+    planTabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        var target = tab.getAttribute("data-plan-tab");
+
+        planTabs.forEach(function (t) {
+          var isActive = t === tab;
+          t.classList.toggle("is-active", isActive);
+          t.setAttribute("aria-selected", isActive ? "true" : "false");
+        });
+
+        planPanelsRoot.querySelectorAll("[data-plan-panel]").forEach(function (panel) {
+          panel.hidden = panel.getAttribute("data-plan-panel") !== target;
+        });
+      });
+    });
+
+    /* Plan detail modal(どんな人におすすめか / セッション風景) */
+    var planDetailModal = document.getElementById("plan-detail-modal");
+    var planDetailBody = document.getElementById("plan-detail-modal-body");
+
+    if (planDetailModal && planDetailBody) {
+      function openPlanDetailModal(plan, triggerEl, storeId) {
+        var priceLine =
+          plan.price === null || plan.price === undefined
+            ? plan.note || "料金未定"
+            : formatYen(plan.price) + " / " + plan.priceUnit + (plan.unitPrice ? "(単価 " + formatYen(plan.unitPrice) + ")" : "");
+
+        var store = storeMapCache[storeId];
+        var fitkarteLinkHtml =
+          store && store.fitkarteUrl
+            ? '<a href="' + store.fitkarteUrl + '" class="btn btn-line btn-small plan-detail-fitkarte-link" target="_blank" rel="noopener noreferrer">フィットカルテで予約する</a>'
+            : "";
+
+        var planPhotoHtml = plan.photo
+          ? '<img class="plan-detail-photo-img" src="' + plan.photo + '" alt="' + plan.name + 'のセッション風景" loading="lazy">'
+          : '<div class="plan-detail-photo">' + PHOTO_PLACEHOLDER_ICON + (plan.photoNote || "セッション風景") + "</div>";
+
+        planDetailBody.innerHTML =
+          '<span class="section-eyebrow">Plan Detail</span>' +
+          '<h2 id="plan-detail-modal-title" class="section-title">' + plan.name + "</h2>" +
+          '<p class="plan-detail-price">' + priceLine + "</p>" +
+          planPhotoHtml +
+          '<h3 class="plan-detail-subhead">こんな方におすすめ</h3>' +
+          '<p class="plan-detail-recommend">' + (plan.recommendedFor || "準備中です。") + "</p>" +
+          fitkarteLinkHtml;
+
+        openModal(planDetailModal, triggerEl);
+      }
+
+      function closePlanDetailModal() {
+        closeModal(planDetailModal);
+      }
+
+      planPanelsRoot.addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-plan-detail]");
+        if (!btn) return;
+        var plan = planById[btn.getAttribute("data-plan-detail")];
+        var panel = btn.closest("[data-plan-panel]");
+        var storeId = panel ? panel.getAttribute("data-plan-panel") : null;
+        if (plan) openPlanDetailModal(plan, btn, storeId);
+      });
+
+      planDetailModal.querySelectorAll("[data-close-plan-detail]").forEach(function (el) {
+        el.addEventListener("click", closePlanDetailModal);
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && planDetailModal.classList.contains("is-open")) {
+          closePlanDetailModal();
+        }
+      });
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Trainer                                                               */
+  /* [data-trainers-source] に data/trainers.json を読み込み、店舗(store)     */
+  /* ごとにグルーピングして横スライドのカードで表示する。                       */
+  /* カードをタップすると経歴・実績・想いをモーダル展開する。                    */
+  /* トレーナーの追加・編集は data/trainers.json を編集するだけでよい。        */
+  /* ------------------------------------------------------------------ */
+  var trainerGroups = document.querySelector("[data-trainers-source]");
+
+  function trainerRoleLine(trainer) {
+    var storeLabel = trainer.store === "online" ? trainer.storeName : trainer.storeName + "店";
+    return storeLabel + " / " + trainer.role;
+  }
+
+  if (trainerGroups) {
+    var trainerById = {};
+
+    function buildTrainerCardHtml(trainer) {
+      trainerById[trainer.id] = trainer;
+      var photoHtml = trainer.photo
+        ? '<img class="trainer-card-photo-img" src="' + trainer.photo + '" alt="' + trainer.name + 'トレーナー">'
+        : PHOTO_PLACEHOLDER_ICON + (trainer.photoNote || "トレーナー写真");
+      return (
+        '<div class="trainer-card" role="button" tabindex="0" data-trainer-detail="' + trainer.id + '">' +
+          '<span class="trainer-card-photo' + (trainer.photo ? " has-photo" : "") + '">' +
+            photoHtml +
+            '<span class="trainer-card-tap-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span>' +
+          "</span>" +
+          '<span class="trainer-card-body">' +
+            '<span class="trainer-card-name">' + trainer.name + "</span>" +
+            '<span class="trainer-card-role">' + trainer.role + "</span>" +
+            '<span class="trainer-card-summary">' + trainer.summary + "</span>" +
+          "</span>" +
+        "</div>"
+      );
+    }
+
+    function buildTrainerGroupHtml(group) {
+      return (
+        '<div class="trainer-group">' +
+          '<h3 class="trainer-group-title">' + group.storeName + "</h3>" +
+          '<div class="trainer-cards">' + group.trainers.map(buildTrainerCardHtml).join("") + "</div>" +
+        "</div>"
+      );
+    }
+
+    fetch(trainerGroups.getAttribute("data-trainers-source") + "?v=5")
+      .then(function (res) {
+        return res.ok ? res.json() : { trainers: [] };
+      })
+      .then(function (data) {
+        var trainers = data.trainers || [];
+
+        if (!trainers.length) {
+          trainerGroups.innerHTML = '<p class="plan-loading">現在準備中です。</p>';
+          return;
+        }
+
+        var groupOrder = [];
+        var groupsByStore = {};
+        trainers.forEach(function (trainer) {
+          var key = trainer.store || trainer.storeName || "";
+          if (!groupsByStore[key]) {
+            groupsByStore[key] = { storeName: trainer.storeName, trainers: [] };
+            groupOrder.push(key);
+          }
+          groupsByStore[key].trainers.push(trainer);
+        });
+
+        trainerGroups.innerHTML = groupOrder.map(function (key) {
+          return buildTrainerGroupHtml(groupsByStore[key]);
+        }).join("");
+      })
+      .catch(function () {
+        trainerGroups.innerHTML = '<p class="plan-loading">トレーナー情報の読み込みに失敗しました。</p>';
+      });
+
+    var trainerDetailModal = document.getElementById("trainer-detail-modal");
+    var trainerDetailBody = document.getElementById("trainer-detail-modal-body");
+
+    if (trainerDetailModal && trainerDetailBody) {
+      var ALL_WEEKDAYS = ["月", "火", "水", "木", "金", "土", "日"];
+
+      function buildTrainerDaysHtml(trainer) {
+        var activeDays = trainer.days || [];
+        if (!activeDays.length) {
+          return (
+            '<div class="trainer-detail-days">' +
+              '<span class="trainer-detail-days-label">担当曜日</span>' +
+              '<p class="trainer-detail-days-note">曜日は確定次第掲載します。</p>' +
+            "</div>"
+          );
+        }
+        return (
+          '<div class="trainer-detail-days">' +
+            '<span class="trainer-detail-days-label">担当曜日</span>' +
+            '<div class="trainer-detail-days-list">' +
+              ALL_WEEKDAYS.map(function (day) {
+                var isActive = activeDays.indexOf(day) !== -1;
+                return '<span class="trainer-day' + (isActive ? " is-active" : "") + '">' + day + "</span>";
+              }).join("") +
+            "</div>" +
+          "</div>"
+        );
+      }
+
+      function openTrainerDetailModal(trainer, triggerEl) {
+        var photoHtml = trainer.photo
+          ? '<img class="plan-detail-photo-img" src="' + trainer.photo + '" alt="' + trainer.name + 'トレーナー" loading="lazy">'
+          : '<div class="plan-detail-photo">' + PHOTO_PLACEHOLDER_ICON + (trainer.photoNote || "トレーナー写真") + "</div>";
+        trainerDetailBody.innerHTML =
+          '<span class="section-eyebrow">Trainer</span>' +
+          '<h2 id="trainer-detail-modal-title" class="section-title">' + trainer.name + "</h2>" +
+          '<p class="trainer-detail-role">' + trainerRoleLine(trainer) + "</p>" +
+          buildTrainerDaysHtml(trainer) +
+          photoHtml +
+          '<h3 class="plan-detail-subhead">経歴・実績</h3>' +
+          '<p class="plan-detail-recommend">' + trainer.career + "</p>" +
+          '<h3 class="plan-detail-subhead" style="margin-top: 20px;">トレーナーとしての想い</h3>' +
+          '<p class="plan-detail-recommend">' + trainer.message + "</p>";
+
+        openModal(trainerDetailModal, triggerEl);
+      }
+
+      function closeTrainerDetailModal() {
+        closeModal(trainerDetailModal);
+      }
+
+      trainerGroups.addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-trainer-detail]");
+        if (!btn) return;
+        e.preventDefault();
+        var trainer = trainerById[btn.getAttribute("data-trainer-detail")];
+        if (trainer) openTrainerDetailModal(trainer, btn);
+      });
+
+      trainerGroups.addEventListener("keydown", function (e) {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        var btn = e.target.closest("[data-trainer-detail]");
+        if (!btn) return;
+        e.preventDefault();
+        var trainer = trainerById[btn.getAttribute("data-trainer-detail")];
+        if (trainer) openTrainerDetailModal(trainer, btn);
+      });
+
+      trainerDetailModal.querySelectorAll("[data-close-trainer-detail]").forEach(function (el) {
+        el.addEventListener("click", closeTrainerDetailModal);
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && trainerDetailModal.classList.contains("is-open")) {
+          closeTrainerDetailModal();
+        }
+      });
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 汎用の横スライダー(矢印+ドット)セットアップ。                          */
+  /* Why Roots・口コミなど、同じ操作性のスライダーを複数箇所で使うための共通処理。*/
+  /* ------------------------------------------------------------------ */
+  function setupCardSlider(cardsEl, prevBtn, nextBtn, dotsEl) {
+    var cardEls = Array.prototype.slice.call(cardsEl.children);
+    var dotEls = dotsEl ? Array.prototype.slice.call(dotsEl.querySelectorAll("[data-slider-dot]")) : [];
+
+    function step() {
+      return cardEls[0] ? cardEls[0].getBoundingClientRect().width + 14 : cardsEl.clientWidth;
+    }
+
+    function currentIndex() {
+      return Math.round(cardsEl.scrollLeft / step());
+    }
+
+    function scrollToIndex(index) {
+      var clamped = Math.max(0, Math.min(index, cardEls.length - 1));
+      cardsEl.scrollTo({ left: clamped * step(), behavior: "smooth" });
+    }
+
+    function setActiveDot(index) {
+      dotEls.forEach(function (dot, i) {
+        dot.classList.toggle("is-active", i === index);
+      });
+    }
+
+    /* flexコンテナは横に並ぶ全カードのうち最も背の高いものに合わせて高さが
+       決まるため、そのままだと写真付きなど背の高いカードがスライダー内に
+       あると、それより低いカードの下に空白ができてしまう。
+       高さを上書きする対象は、スクロールされる本体(cardsEl)ではなく、
+       ひとつ外側のラッパー(position:relative + overflow:hiddenの
+       .why-slider / .trial-slider / .review-slider)にする。cardsEl自体の
+       高さをタッチスクロール中に書き換えると、iOSでスワイプの慣性が
+       途切れて操作しづらくなるため。 */
+    function syncHeight(index) {
+      var active = cardEls[index];
+      var wrap = cardsEl.parentElement;
+      if (active && wrap) {
+        wrap.style.height = active.offsetHeight + "px";
+      }
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener("click", function () {
+        scrollToIndex(currentIndex() - 1);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", function () {
+        scrollToIndex(currentIndex() + 1);
+      });
+    }
+
+    dotEls.forEach(function (dot, index) {
+      dot.addEventListener("click", function () {
+        scrollToIndex(index);
+      });
+    });
+
+    var scrollTimer = null;
+    cardsEl.addEventListener("scroll", function () {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function () {
+        var index = currentIndex();
+        setActiveDot(index);
+        syncHeight(index);
+      }, 100);
+    });
+
+    syncHeight(0);
+
+    /* Webフォントの読み込みが完了するタイミングによっては、フォールバック
+       フォントで測った高さのまま固定されてしまい、実際のフォントに切り替わって
+       テキストの折り返しが変わった際に高さがずれる(空白ができる)ことがある。
+       フォント読み込み完了後に、その時点で表示中のカードの高さで再計算する。 */
+    if (window.document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        syncHeight(currentIndex());
+      });
+    }
+
+    window.addEventListener("load", function () {
+      syncHeight(currentIndex());
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Googleマップの口コミ(店舗ごとに星平均+件数を表示し、実際の口コミ本文が    */
+  /* あれば横スライドのカードで、なければ「Googleで見る」リンクのみ表示する)。 */
+  /* [data-reviews-source] に data/reviews.json を読み込んで描画する。        */
+  /* ------------------------------------------------------------------ */
+  var reviewGroups = document.querySelector("[data-reviews-source]");
+
+  if (reviewGroups) {
+    function buildStarsHtml(rating) {
+      var filled = Math.round(rating || 0);
+      var html = "";
+      for (var i = 0; i < 5; i++) {
+        html += '<span class="review-star' + (i < filled ? " is-filled" : "") + '">★</span>';
+      }
+      return html;
+    }
+
+    function buildReviewCardHtml(review) {
+      return (
+        '<div class="review-card">' +
+          '<div class="review-card-head">' +
+            '<span class="review-card-avatar">' + (review.author ? review.author.charAt(0) : "") + "</span>" +
+            '<span class="review-card-head-body">' +
+              '<span class="review-card-author">' + review.author + "</span>" +
+              '<span class="review-card-date">' + review.date + "</span>" +
+            "</span>" +
+          "</div>" +
+          '<div class="review-card-stars">' + buildStarsHtml(review.rating) + "</div>" +
+          '<p class="review-card-text">' + review.text + "</p>" +
+          (review.photo
+            ? '<img class="review-card-photo" src="' + review.photo + '" alt="' + (review.photoAlt || "口コミに添付された写真") + '" loading="lazy">'
+            : "") +
+          '<span class="review-card-source">(Googleのクチコミから引用)</span>' +
+        "</div>"
+      );
+    }
+
+    function buildReviewGroupHtml(store, groupIndex) {
+      var reviews = store.reviews || [];
+      var sliderId = "review-cards-" + store.id;
+
+      var bodyHtml;
+      if (reviews.length) {
+        bodyHtml =
+          '<div class="review-slider">' +
+            '<button type="button" class="review-slider-arrow review-slider-arrow-prev" data-review-prev="' + groupIndex + '" aria-label="前の口コミへ">‹</button>' +
+            '<div class="review-cards" id="' + sliderId + '">' +
+              reviews.map(buildReviewCardHtml).join("") +
+            "</div>" +
+            '<button type="button" class="review-slider-arrow review-slider-arrow-next" data-review-next="' + groupIndex + '" aria-label="次の口コミへ">›</button>' +
+          "</div>" +
+          '<div class="review-slider-dots" data-review-dots="' + groupIndex + '">' +
+            reviews.map(function (r, i) {
+              return '<button type="button" class="review-slider-dot' + (i === 0 ? " is-active" : "") + '" data-slider-dot data-review-dot="' + i + '" aria-label="' + (i + 1) + '件目"></button>';
+            }).join("") +
+          "</div>";
+      } else {
+        bodyHtml = '<p class="review-group-note">個別の口コミは準備中です。</p>';
+      }
+
+      return (
+        '<div class="review-group">' +
+          '<div class="review-summary">' +
+            '<h3 class="review-summary-store">' + store.storeName + "</h3>" +
+            '<div class="review-summary-stars">' +
+              buildStarsHtml(store.rating) +
+              '<span class="review-summary-score">' + store.rating.toFixed(1) + "</span>" +
+              '<span class="review-summary-count">(' + store.reviewCount + "件)</span>" +
+            "</div>" +
+          "</div>" +
+          bodyHtml +
+          (store.mapsUrl
+            ? '<a class="link-line review-summary-link" href="' + store.mapsUrl + '" target="_blank" rel="noopener noreferrer">Googleで口コミをすべて見る ↗</a>'
+            : "") +
+        "</div>"
+      );
+    }
+
+    fetch(reviewGroups.getAttribute("data-reviews-source") + "?v=5")
+      .then(function (res) {
+        return res.ok ? res.json() : { stores: [] };
+      })
+      .then(function (data) {
+        var stores = data.stores || [];
+
+        if (!stores.length) {
+          reviewGroups.innerHTML = '<p class="plan-loading">現在準備中です。</p>';
+          return;
+        }
+
+        reviewGroups.innerHTML = stores.map(buildReviewGroupHtml).join("");
+
+        stores.forEach(function (store, groupIndex) {
+          if (!(store.reviews || []).length) return;
+          var cardsEl = document.getElementById("review-cards-" + store.id);
+          var prevBtn = document.querySelector('[data-review-prev="' + groupIndex + '"]');
+          var nextBtn = document.querySelector('[data-review-next="' + groupIndex + '"]');
+          var dotsEl = document.querySelector('[data-review-dots="' + groupIndex + '"]');
+          if (cardsEl) setupCardSlider(cardsEl, prevBtn, nextBtn, dotsEl);
+        });
+      })
+      .catch(function () {
+        reviewGroups.innerHTML = '<p class="plan-loading">口コミの読み込みに失敗しました。</p>';
+      });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* FAQ(カテゴリタグ + アコーディオン)                                    */
+  /* [data-faq-source] に data/faq.json を読み込み、カテゴリ(categories)     */
+  /* ごとにタグボタンを生成する。タグをタップすると、そのカテゴリの質問だけを     */
+  /* ネイティブの<details>/<summary>アコーディオンで表示する。                */
+  /* 質問の追加・編集はdata/faq.jsonを編集するだけでよい。                    */
+  /* ------------------------------------------------------------------ */
+  var faqList = document.querySelector("[data-faq-source]");
+  var faqTabs = document.getElementById("faq-tabs");
+
+  function buildFaqItemHtml(item) {
+    return (
+      '<details class="faq-item">' +
+        "<summary>" + item.q + "</summary>" +
+        '<div class="faq-answer">' + item.a + "</div>" +
+      "</details>"
+    );
+  }
+
+  function buildFaqTabHtml(category, index) {
+    return (
+      '<button type="button" class="faq-tab' + (index === 0 ? " is-active" : "") + '" role="tab" ' +
+        'aria-selected="' + (index === 0 ? "true" : "false") + '" data-faq-tab="' + index + '">' +
+        category.name +
+      "</button>"
+    );
+  }
+
+  function renderFaqCategory(category) {
+    faqList.innerHTML = category && (category.items || []).length
+      ? category.items.map(buildFaqItemHtml).join("")
+      : '<p class="plan-loading">現在準備中です。</p>';
+  }
+
+  if (faqList && faqTabs) {
+    fetch(faqList.getAttribute("data-faq-source") + "?v=5")
+      .then(function (res) {
+        return res.ok ? res.json() : { categories: [] };
+      })
+      .then(function (data) {
+        var categories = data.categories || [];
+
+        if (!categories.length) {
+          faqTabs.innerHTML = "";
+          faqList.innerHTML = '<p class="plan-loading">現在準備中です。</p>';
+          return;
+        }
+
+        faqTabs.innerHTML = categories.map(buildFaqTabHtml).join("");
+        renderFaqCategory(categories[0]);
+
+        faqTabs.addEventListener("click", function (e) {
+          var tab = e.target.closest("[data-faq-tab]");
+          if (!tab) return;
+
+          faqTabs.querySelectorAll("[data-faq-tab]").forEach(function (t) {
+            var isActive = t === tab;
+            t.classList.toggle("is-active", isActive);
+            t.setAttribute("aria-selected", isActive ? "true" : "false");
+          });
+
+          renderFaqCategory(categories[Number(tab.getAttribute("data-faq-tab"))]);
+        });
+      })
+      .catch(function () {
+        faqTabs.innerHTML = "";
+        faqList.innerHTML = '<p class="plan-loading">FAQの読み込みに失敗しました。</p>';
+      });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* スクロールリビール(自然体を感じさせる、静かなフェード+浮き上がり)。      */
+  /* 各セクションのcontainerが画面に入ったタイミングで、ふわっと現れる。      */
+  /* prefers-reduced-motionの場合は何もしない(最初から表示されたまま)。     */
+  /* ------------------------------------------------------------------ */
+  var prefersReducedMotion =
+    window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!prefersReducedMotion && "IntersectionObserver" in window) {
+    var revealTargets = document.querySelectorAll(".section > .container");
+    var revealObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    revealTargets.forEach(function (el) {
+      el.classList.add("reveal");
+      revealObserver.observe(el);
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Services Carousel (3つのサービス)                                  */
+  /* ------------------------------------------------------------------ */
+  window.scrollToCarouselItem = function (index) {
+    var carousel = document.getElementById("servicesCarousel");
+    var items = carousel.querySelectorAll(".carousel-item");
+    var nav = document.getElementById("carouselNav");
+    var buttons = nav.querySelectorAll("button");
+
+    items.forEach(function (item, i) {
+      item.classList.toggle("active", i === index);
+    });
+
+    buttons.forEach(function (btn, i) {
+      btn.classList.toggle("active", i === index);
+    });
+
+    var scrollPosition = index * (items[0].offsetWidth + 25);
+    carousel.scrollLeft = scrollPosition;
+  };
+
+  if (window.innerWidth < 1024) {
+    var carousel = document.getElementById("servicesCarousel");
+    if (carousel) {
+      carousel.addEventListener("scroll", function () {
+        var items = carousel.querySelectorAll(".carousel-item");
+        var nav = document.getElementById("carouselNav");
+        var buttons = nav.querySelectorAll("button");
+
+        var scrollPos = carousel.scrollLeft;
+        var itemWidth = items[0].offsetWidth + 25;
+        var activeIndex = Math.round(scrollPos / itemWidth);
+
+        buttons.forEach(function (btn, i) {
+          btn.classList.toggle("active", i === activeIndex);
+        });
+      });
+    }
+  }
+})();

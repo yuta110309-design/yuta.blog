@@ -1,0 +1,42 @@
+{
+  "_comment": "店舗ごとの予約リンク設定。店舗が増えた場合はこの配列にオブジェクトを追加するだけでOK(コード修正不要)。id はセクション内のタブ切替やURLパラメータ等で参照するキー。",
+  "stores": [
+    {
+      "id": "daikanyama",
+      "name": "代官山店",
+      "shortName": "代官山",
+      "area": "東京",
+      "fitkarteUrl": "https://roots-fitness.fit-karte.com/mypage?s=roots-fitness-daikanyama&openExternalBrowser=1",
+      "instagramUrl": "https://www.instagram.com/roots_fitness_daikanyama",
+      "status": "active"
+    },
+    {
+      "id": "karuizawa",
+      "name": "軽井沢店",
+      "shortName": "軽井沢",
+      "area": "長野",
+      "fitkarteUrl": "https://roots-fitness.fit-karte.com/mypage?s=roots-fitness-karuizawa&openExternalBrowser=1",
+      "instagramUrl": "https://www.instagram.com/roots__fitness",
+      "status": "active",
+      "rentalWear": {
+        "available": true,
+        "price": 300,
+        "priceUnit": "回"
+      }
+    },
+    {
+      "id": "online",
+      "name": "オンライン",
+      "shortName": "オンライン",
+      "area": "全国",
+      "fitkarteUrl": "https://roots-fitness.fit-karte.com/mypage?s=REPLACE_ME_ONLINE&openExternalBrowser=1",
+      "status": "placeholder",
+      "_note": "オンラインの予約導線は独立ページ(online-training.html)側で確定次第、fitkarteUrl を差し替える。"
+    }
+  ],
+  "line": {
+    "_comment": "副CTA(公式LINE友だち追加)。将来的に店舗別LINEに分ける場合はstore単位にlineUrlを追加する運用に変更可能。",
+    "url": "https://line.me/R/ti/p/@325frgjv",
+    "label": "公式LINEで相談する"
+  }
+}

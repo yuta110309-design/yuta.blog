@@ -200,10 +200,10 @@ if (eventRows.length && APP_API_BASE) {
 
     const now = new Date();
     const isWeekly = cfg.recurrence.mode === 'weekly';
-    // 「来週は無理だが再来週は行きたい」に対応するため、定例イベントは直近5回分から
-    // 開催日を選べるようにする（単発イベントは従来通り1回だけ）。
+    // 定例イベントは1ヶ月先まで予約できるよう、直近6回分から開催日を選べるようにする
+    // （単発イベントは従来通り1回だけ）。
     const occurrenceOptions = isWeekly
-      ? rsvpUpcomingOccurrences(cfg.recurrence, now, 5)
+      ? rsvpUpcomingOccurrences(cfg.recurrence, now, 6)
       : [rsvpComputeOccurrence(cfg.recurrence, now)].filter(Boolean);
     const nextOccurrence = occurrenceOptions[0] || null;
 

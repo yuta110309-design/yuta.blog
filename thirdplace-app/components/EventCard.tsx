@@ -27,14 +27,14 @@ export default function EventCard({
   onRefresh: () => Promise<void> | void;
 }) {
   const [open, setOpen] = useState(false);
-  // 「来週は無理だが再来週は行きたい」に対応するため、定例イベントは直近5回分から
-  // 開催日を選べるようにする（単発イベントは従来通り1回だけ）。
+  // 定例イベントは1ヶ月先まで予約できるよう、直近6回分から開催日を選べるようにする
+  // （単発イベントは従来通り1回だけ）。
   const [selectedOccDate, setSelectedOccDate] = useState<string | null>(null);
 
   const isWeekly = event.recurrence?.mode === 'weekly';
   const now = new Date();
   const occurrenceOptions = isWeekly
-    ? computeUpcomingOccurrences(event.recurrence, now, 5)
+    ? computeUpcomingOccurrences(event.recurrence, now, 6)
     : [computeOccurrence(event.recurrence, now)].filter((d): d is Date => d !== null);
   const nextOccurrence = occurrenceOptions[0] ?? null;
 

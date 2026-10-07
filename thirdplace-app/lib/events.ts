@@ -63,6 +63,29 @@ export const EVENTS: EventConfig[] = [
       { label: '持ち物', value: '動きやすい服装、汚れてもいい靴、タオル、着替え' },
       { label: 'ひとこと', value: '種まきをして「また収穫に来る」きっかけをつくる回です。整った施設ではなく、土と自然の中で体を動かしましょう。' }
     ]
+  },
+  {
+    id: 'futsal',
+    emoji: '⚽',
+    title: 'フットサル（男女混合）',
+    location: '国立代々木競技場フットサルコート 第1コート',
+    description:
+      '初めましての方も歓迎の、男女混合でゆるく楽しむフットサル部活動です。経験・レベルは一切問いません。「ボールを蹴るの久しぶり」な方も大歓迎。体を動かしながら、仕事でも家でもない新しいつながりをつくる時間にしませんか。',
+    recurrence: { mode: 'once', dateISO: '2026-11-29T19:00:00', time: '19:00' },
+    deadlineDaysBefore: 0,
+    capacity: 25,
+    extraFields: [
+      { key: 'referrer', label: '紹介者のお名前（いれば）', type: 'text', notionProperty: '紹介者名' },
+      { key: 'payment', label: '当日決済方法', type: 'select', options: ['現金', 'PayPay'], notionProperty: '決済方法' },
+      { key: 'job', label: 'お仕事', type: 'text', notionProperty: 'お仕事' }
+    ],
+    emailDetails: [
+      { label: '集合場所', value: '国立代々木競技場フットサルコート 第1コート' },
+      { label: '参加費', value: '¥2,000（現地払い）' },
+      { label: '持ち物', value: 'フットサルシューズ（必須）、飲み物、タオル（レンタルシューズ¥550あり）' },
+      { label: 'レベル', value: '経験不問・初心者歓迎です' },
+      { label: 'ひとこと', value: '男女混合・運動が得意でない方も歓迎です。初めましての方もお気軽にどうぞ。' }
+    ]
   }
 ];
 

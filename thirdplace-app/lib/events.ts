@@ -10,11 +10,14 @@ export const EVENTS: EventConfig[] = [
     title: '朝ラン',
     location: '恵比寿ガーデンプレイス集合・発着',
     description:
-      '週末の朝を気持ちよく動かす、朝ランです。ゆるいペースで、走った後は清々しい一日のスタートに。初参加・お一人参加も大歓迎です。',
-    recurrence: { mode: 'once', dateISO: null, time: '08:00' },
-    dateLabelOverride: '開催時期は保留中',
-    timeLabelOverride: '8:00〜（想定）',
-    deadlineDaysBefore: null,
+      '水曜の朝を気持ちよく動かす、朝ランです。ゆるいペースで、走った後は清々しい一日のスタートに。初参加・お一人参加も大歓迎です。',
+    recurrence: {
+      mode: 'dates',
+      dates: ['2026-10-14T07:30:00', '2026-10-28T07:30:00'],
+      time: '07:30'
+    },
+    timeLabelOverride: '7:30〜',
+    deadlineDaysBefore: 0,
     capacity: 10,
     emailDetails: [
       { label: '集合場所', value: '恵比寿ガーデンプレイス' },
@@ -153,6 +156,16 @@ export function computeOccurrence(recurrence: Recurrence, from: Date = new Date(
     return candidate;
   }
 
+  // 毎週/毎月のような規則的な周期ではなく、バラバラな複数日程をあらかじめ指定する開催形式
+  // （例：10/14と10/28の2回だけ開催、など）。
+  if (recurrence.mode === 'dates') {
+    const candidates = (recurrence.dates ?? [])
+      .map((iso) => new Date(iso))
+      .filter((d) => d >= from)
+      .sort((a, b) => a.getTime() - b.getTime());
+    return candidates[0] ?? null;
+  }
+
   return null;
 }
 
@@ -166,6 +179,9 @@ export function recurrenceLabel(recurrence: Recurrence): string {
   }
   if (recurrence.mode === 'once' && !recurrence.dateISO) {
     return '不定期開催（曜日固定なし・都度決定）';
+  }
+  if (recurrence.mode === 'dates') {
+    return '不定期開催（複数日程あり）';
   }
   return '単発開催';
 }

@@ -138,7 +138,12 @@ const RSVP_DEVICE_ID = getDeviceId();
 const RSVP_EVENTS = {
   yoruran: { recurrence: { mode: 'weekly', weekday: 1, time: '20:00' }, deadlineDaysBefore: 0, capacity: 10 },
   toride: { recurrence: { mode: 'once', dateISO: '2026-11-01T11:00:00' }, deadlineDaysBefore: null, capacity: 15 },
-  futsal: { recurrence: { mode: 'once', dateISO: '2026-11-29T19:00:00' }, deadlineDaysBefore: 0, capacity: 25 }
+  futsal: { recurrence: { mode: 'once', dateISO: '2026-11-29T19:00:00' }, deadlineDaysBefore: 0, capacity: 25 },
+  asaran: {
+    recurrence: { mode: 'dates', dates: ['2026-10-14T07:30:00', '2026-10-28T07:30:00'], time: '07:30' },
+    deadlineDaysBefore: 0,
+    capacity: 10
+  }
 };
 
 function rsvpPad(n) {
@@ -165,6 +170,15 @@ function rsvpComputeOccurrence(recurrence, from) {
     rsvpApplyTime(candidate, recurrence.time);
     if (candidate < from) candidate.setDate(candidate.getDate() + 7);
     return candidate;
+  }
+  // 毎週/毎月のような規則的な周期ではなく、バラバラな複数日程をあらかじめ指定する開催形式
+  // （例：10/14と10/28の2回だけ開催、など）。
+  if (recurrence.mode === 'dates') {
+    const candidates = (recurrence.dates || [])
+      .map((iso) => new Date(iso))
+      .filter((d) => d >= from)
+      .sort((a, b) => a.getTime() - b.getTime());
+    return candidates[0] || null;
   }
   return null;
 }
@@ -200,17 +214,19 @@ if (eventRows.length && APP_API_BASE) {
     if (!cfg) return;
 
     const now = new Date();
-    const isWeekly = cfg.recurrence.mode === 'weekly';
+    // weekly（毎週）だけでなく、dates（バラバラな複数日程を個別指定）のイベントも
+    // 複数の開催日から選べるようにする。
+    const hasMultipleOccurrences = cfg.recurrence.mode === 'weekly' || cfg.recurrence.mode === 'dates';
     // 定例イベントは1ヶ月先まで予約できるよう、直近6回分から開催日を選べるようにする
     // （単発イベントは従来通り1回だけ）。
-    const occurrenceOptions = isWeekly
+    const occurrenceOptions = hasMultipleOccurrences
       ? rsvpUpcomingOccurrences(cfg.recurrence, now, 6)
       : [rsvpComputeOccurrence(cfg.recurrence, now)].filter(Boolean);
     const nextOccurrence = occurrenceOptions[0] || null;
 
     // 定例（毎週）イベントは開催日が固定文言だと過去日のまま残ってしまうため、
     // 次回の開催日を毎回計算して表示を更新する（単発イベントは元の表記のまま）。
-    if (isWeekly && nextOccurrence) {
+    if (hasMultipleOccurrences && nextOccurrence) {
       const dateEl = row.querySelector('.event-date');
       const firstNode = dateEl && dateEl.firstChild;
       if (firstNode && firstNode.nodeType === Node.TEXT_NODE) {
@@ -239,7 +255,7 @@ if (eventRows.length && APP_API_BASE) {
     // カードを開かなくても開催日の候補が分かるよう、折りたたみ時から常に表示する
     const datesPreview = row.querySelector('.event-dates-preview');
     if (datesPreview) {
-      if (isWeekly && occurrenceOptions.length > 1) {
+      if (hasMultipleOccurrences && occurrenceOptions.length > 1) {
         datesPreview.hidden = false;
         datesPreview.innerHTML =
           '<span class="event-dates-preview-label">開催日を選べます</span><div class="rsvp-date-row">' +
@@ -286,7 +302,7 @@ if (eventRows.length && APP_API_BASE) {
     const alreadyGoing = list.some((r) => r.device_id === RSVP_DEVICE_ID && r.status === 'go');
 
     const datePickerHtml =
-      isWeekly && occurrenceOptions.length > 1
+      hasMultipleOccurrences && occurrenceOptions.length > 1
         ? '<label class="field-label">開催日</label><div class="rsvp-date-row">' +
           occurrenceOptions
             .map((o) => {

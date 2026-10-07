@@ -1,4 +1,4 @@
-export type RecurrenceMode = 'weekly' | 'monthly' | 'once';
+export type RecurrenceMode = 'weekly' | 'monthly' | 'once' | 'dates';
 
 export interface Recurrence {
   mode: RecurrenceMode;
@@ -6,6 +6,7 @@ export interface Recurrence {
   nth?: number; // monthlyのみ 第n週
   time?: string; // 'HH:MM'
   dateISO?: string | null; // onceのみ
+  dates?: string[]; // datesのみ。不定期な複数の開催日をISO日時でそれぞれ指定する
 }
 
 export interface ExtraField {

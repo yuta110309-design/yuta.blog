@@ -31,9 +31,11 @@ export default function EventCard({
   // （単発イベントは従来通り1回だけ）。
   const [selectedOccDate, setSelectedOccDate] = useState<string | null>(null);
 
-  const isWeekly = event.recurrence?.mode === 'weekly';
+  // weekly（毎週）だけでなく、dates（バラバラな複数日程を個別指定）のイベントも
+  // 複数の開催日から選べるようにする。
+  const hasMultipleOccurrences = event.recurrence?.mode === 'weekly' || event.recurrence?.mode === 'dates';
   const now = new Date();
-  const occurrenceOptions = isWeekly
+  const occurrenceOptions = hasMultipleOccurrences
     ? computeUpcomingOccurrences(event.recurrence, now, 6)
     : [computeOccurrence(event.recurrence, now)].filter((d): d is Date => d !== null);
   const nextOccurrence = occurrenceOptions[0] ?? null;
@@ -115,7 +117,7 @@ export default function EventCard({
         <div className="pt-5 mt-5 border-t border-white/10">
           {mode === 'attendee' ? (
             <div>
-              {isWeekly && occurrenceOptions.length > 1 && (
+              {hasMultipleOccurrences && occurrenceOptions.length > 1 && (
                 <div className="mb-4.5">
                   <label className="block text-[10.5px] text-sage mb-2 font-medium tracking-widest uppercase">開催日</label>
                   <div className="flex flex-wrap gap-2">

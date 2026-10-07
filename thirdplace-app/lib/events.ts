@@ -27,24 +27,6 @@ export const EVENTS: EventConfig[] = [
     ]
   },
   {
-    id: 'yoruran',
-    emoji: '🌃',
-    title: '夜ラン',
-    location: '恵比寿ガーデンプレイス集合・発着',
-    description:
-      '恵比寿ガーデンプレイスを起点に、ゆるいペースで夜の街を走ります。タイムを追うことより、会話を楽しむことを大切に。初参加・お一人参加も大歓迎です。',
-    recurrence: { mode: 'weekly', weekday: 1, time: '20:00' },
-    timeLabelOverride: '20:00〜21:00',
-    deadlineDaysBefore: 0,
-    capacity: 10,
-    emailDetails: [
-      { label: '集合場所', value: '恵比寿ガーデンプレイス' },
-      { label: '持ち物', value: '動きやすい服装・運動シューズ（暗くなる時間帯のため、反射材があると安心です）' },
-      { label: '当日の流れ', value: '軽くストレッチ → ゆるいペースでラン → 終了後は希望者で軽く歓談' },
-      { label: '天候について', value: '荒天時は中止となる場合があります。前日〜当日にInstagram（@the.thirdplace.ebisu）でお知らせします。' }
-    ]
-  },
-  {
     id: 'toride',
     emoji: '🌾',
     title: '畑HYROX（特別開催）— 茨城・取手',

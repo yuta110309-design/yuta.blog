@@ -1,0 +1,198 @@
+{
+  "_comment": "料金プランデータ。代官山・軽井沢は共通の categories(パーソナル/セミパーソナル)を使用する。各プランに stores を指定しなければ両店舗に表示され、店舗ごとに提供プランが異なることが確定したら該当プランに \"stores\": [\"daikanyama\", \"karuizawa\"] のように対象店舗idの配列を追加すればよい(値は data/stores.json の id と対応)。オンラインは代官山/軽井沢と価格体系が異なる(一律月額)ため、online に独立したカテゴリを持たせている。recommendedFor は「どんな人におすすめか」、photoNote はセッション風景写真の差し替え待ちプレースホルダー(プラン詳細モーダルで表示)。カテゴリに schedule({ 時間帯名: [開始-終了, ...] })を持たせると、そのカテゴリの見出し下に「時間割」として表示される(セミパーソナルで使用中)。",
+  "categories": [
+    {
+      "id": "personal",
+      "name": "パーソナル",
+      "plans": [
+        {
+          "id": "personal-weekly1",
+          "name": "週1回コース",
+          "frequency": "月4回",
+          "price": 52000,
+          "priceUnit": "月",
+          "unitPrice": 13000,
+          "note": "",
+          "recommendedFor": "運動を習慣として始めたい方、まずは無理なくペースをつかみたい方に。",
+          "photoNote": "週1回コースのセッション風景",
+          "photo": "images/plan-personal.jpg"
+        },
+        {
+          "id": "personal-weekly2",
+          "name": "週2回コース",
+          "frequency": "月8回",
+          "price": 88000,
+          "priceUnit": "月",
+          "unitPrice": 11000,
+          "note": "",
+          "recommendedFor": "着実に変化を感じたい方、目的に向けて集中して取り組みたい方に。",
+          "photoNote": "週2回コースのセッション風景",
+          "photo": "images/plan-personal.jpg"
+        },
+        {
+          "id": "personal-unlimited",
+          "name": "通い放題",
+          "frequency": "無制限(休館日以外・週3日目安)",
+          "price": 108000,
+          "priceUnit": "月",
+          "unitPrice": 9000,
+          "note": "",
+          "recommendedFor": "頻度を気にせず、生活の一部としてトレーニングを続けたい方に。",
+          "photoNote": "通い放題(パーソナル)のセッション風景",
+          "photo": "images/plan-personal.jpg"
+        },
+        {
+          "id": "personal-single",
+          "name": "単発(都度)",
+          "frequency": "1回",
+          "price": 9000,
+          "priceUnit": "回",
+          "unitPrice": null,
+          "note": "会員以外・都度利用向け",
+          "recommendedFor": "まずは1回試してみたい方、出張や旅行のタイミングで単発利用したい方に。",
+          "photoNote": "単発利用時のセッション風景",
+          "photo": "images/plan-personal.jpg"
+        }
+      ]
+    },
+    {
+      "id": "semi-personal",
+      "name": "セミパーソナル",
+      "schedule": {
+        "朝": [
+          "9:00-10:00",
+          "10:30-11:30"
+        ],
+        "昼": [
+          "12:00-13:00",
+          "13:30-14:30",
+          "15:00-16:00",
+          "16:30-17:30"
+        ],
+        "夜": [
+          "18:00-19:00",
+          "19:30-20:30"
+        ]
+      },
+      "plans": [
+        {
+          "id": "semi-weekly1",
+          "name": "週1回コース",
+          "frequency": "月4回",
+          "price": 24000,
+          "priceUnit": "月",
+          "unitPrice": 6000,
+          "note": "",
+          "recommendedFor": "セミパーソナルを、まずは無理なく週1回のペースで試してみたい方に。",
+          "photoNote": "週1回コース(セミパーソナル)のセッション風景",
+          "photo": "images/plan-semipersonal.jpg"
+        },
+        {
+          "id": "semi-weekly2",
+          "name": "週2回コース",
+          "frequency": "月8回",
+          "price": 40000,
+          "priceUnit": "月",
+          "unitPrice": 5000,
+          "note": "8回以上通われるなら、通い放題(¥33,000)がお得です。",
+          "recommendedFor": "同じ空間に通う仲間とのペースを大切にしながら、着実に続けていきたい方に。",
+          "photoNote": "週2回コース(セミパーソナル)のセッション風景",
+          "photo": "images/plan-semipersonal.jpg"
+        },
+        {
+          "id": "semi-unlimited",
+          "name": "通い放題",
+          "frequency": "無制限",
+          "price": 33000,
+          "priceUnit": "月",
+          "unitPrice": null,
+          "note": "",
+          "recommendedFor": "同じ場所に通う仲間と、無理なく続けていきたい方に。",
+          "photoNote": "セミパーソナル通い放題のセッション風景",
+          "photo": "images/plan-semipersonal.jpg"
+        },
+        {
+          "id": "semi-single",
+          "name": "単発(都度)",
+          "frequency": "1回",
+          "price": 5000,
+          "priceUnit": "回",
+          "unitPrice": null,
+          "note": "",
+          "recommendedFor": "まずは1回試してみたい方、出張や旅行のタイミングで単発利用したい方に。",
+          "photoNote": "単発利用時のセッション風景",
+          "photo": "images/plan-semipersonal.jpg"
+        }
+      ]
+    },
+    {
+      "id": "pair",
+      "name": "ペアレッスン",
+      "plans": [
+        {
+          "id": "pair-ticket8",
+          "name": "チケット8回",
+          "frequency": "8回(有効期限2ヶ月)",
+          "price": 64000,
+          "priceUnit": "回券",
+          "unitPrice": 8000,
+          "note": "",
+          "recommendedFor": "ご家族やご友人と、まずは短期間から一緒に体を動かしてみたい方に。",
+          "photoNote": "ペアレッスンのセッション風景",
+          "photo": "images/plan-pair.jpg"
+        },
+        {
+          "id": "pair-ticket24",
+          "name": "チケット24回",
+          "frequency": "24回(有効期限3ヶ月)",
+          "price": 168000,
+          "priceUnit": "回券",
+          "unitPrice": 7000,
+          "note": "",
+          "recommendedFor": "お二人のペースで、数ヶ月かけてじっくり取り組みたい方に。",
+          "photoNote": "ペアレッスンのセッション風景",
+          "photo": "images/plan-pair.jpg"
+        }
+      ]
+    }
+  ],
+  "online": {
+    "categories": [
+      {
+        "id": "online",
+        "name": "オンライン",
+        "plans": [
+          {
+            "id": "online-video",
+            "name": "動画視聴プラン",
+            "frequency": "月額",
+            "price": 3980,
+            "priceUnit": "月",
+            "unitPrice": null,
+            "note": "税抜",
+            "recommendedFor": "ライブトレーニング配信、栄養・食事ガイド、メンバーコミュニティ、過去ライブの動画閲覧が含まれます。",
+            "photoNote": "オンラインセッションの様子",
+            "photo": "images/plan-online.jpg"
+          },
+          {
+            "id": "online-support",
+            "name": "サポートプラン",
+            "frequency": "月額",
+            "price": 5980,
+            "priceUnit": "月",
+            "unitPrice": null,
+            "note": "税抜",
+            "recommendedFor": "動画視聴プランの全て、トレーナー1対1サポート、個別フィードバック、優先的なアドバイスが含まれます。",
+            "photoNote": "オンラインセッションの様子",
+            "photo": "images/plan-online.jpg"
+          }
+        ]
+      }
+    ]
+  },
+  "enrollmentFee": {
+    "_comment": "入会金(パーソナル・セミパーソナル・ペアレッスン対象、オンラインは対象外)。季節・キャンペーンで金額を変える場合は amount を書き換えるだけでサイト全体(料金プランセクションの注記)に反映される(コード修正不要)。campaignNote に短いキャンペーン文言(例: 「〇月末までの特別価格です」)を入れると、金額のあとに続けて表示される。空文字なら何も表示されない。",
+    "amount": 33000,
+    "campaignNote": ""
+  }
+}

@@ -13,10 +13,10 @@ export const EVENTS: EventConfig[] = [
       '水曜の朝を気持ちよく動かす、朝ランです。ゆるいペースで、走った後は清々しい一日のスタートに。初参加・お一人参加も大歓迎です。',
     recurrence: {
       mode: 'dates',
-      dates: ['2026-10-14T07:30:00', '2026-10-28T07:30:00'],
+      dates: ['2026-10-14T07:30:00', '2026-10-28T08:30:00'],
       time: '07:30'
     },
-    timeLabelOverride: '7:30〜',
+    timeLabelOverride: '8:30〜',
     deadlineDaysBefore: 0,
     capacity: 10,
     emailDetails: [

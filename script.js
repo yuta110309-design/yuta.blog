@@ -140,7 +140,7 @@ const RSVP_EVENTS = {
   toride: { recurrence: { mode: 'once', dateISO: '2026-11-01T11:00:00' }, deadlineDaysBefore: null, capacity: 15 },
   futsal: { recurrence: { mode: 'once', dateISO: '2026-11-29T19:00:00' }, deadlineDaysBefore: 0, capacity: 25 },
   asaran: {
-    recurrence: { mode: 'dates', dates: ['2026-10-14T07:30:00', '2026-10-28T07:30:00'], time: '07:30' },
+    recurrence: { mode: 'dates', dates: ['2026-10-14T07:30:00', '2026-10-28T08:30:00'], time: '07:30' },
     deadlineDaysBefore: 0,
     capacity: 10
   }

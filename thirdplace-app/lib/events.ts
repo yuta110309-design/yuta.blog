@@ -27,6 +27,23 @@ export const EVENTS: EventConfig[] = [
     ]
   },
   {
+    id: 'hybrid2',
+    emoji: '💪',
+    title: 'ハイブリッドトレーニング 第2回',
+    location: 'Rootsパーソナルジム 代官山',
+    description:
+      '代官山のジムで行う、朝のハイブリッドトレーニング。筋トレ・有酸素・ストレッチを組み合わせた、1人では続けにくい運動を仲間と楽しむ回です。初参加・お一人参加も大歓迎です。',
+    recurrence: { mode: 'once', dateISO: '2026-10-31T07:30:00' },
+    timeLabelOverride: '7:30〜',
+    deadlineDaysBefore: 0,
+    capacity: 10,
+    emailDetails: [
+      { label: '集合場所', value: 'Rootsパーソナルジム 代官山' },
+      { label: '持ち物', value: '動きやすい服装・運動シューズ・飲み物' },
+      { label: '当日の流れ', value: 'ウォームアップ → サーキット形式のトレーニング → クールダウン・ストレッチ' }
+    ]
+  },
+  {
     id: 'toride',
     emoji: '🌾',
     title: '畑HYROX（特別開催）— 茨城・取手',

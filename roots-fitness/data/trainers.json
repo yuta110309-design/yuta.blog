@@ -2,6 +2,19 @@
   "_comment": "トレーナー紹介データ。実際の氏名・写真・経歴・実績・想いをいただき次第、このtrainers配列を差し替えるだけでサイトに反映される(コード修正不要)。現在はサンプル(仮)データのため、実データが揃うまでサイトには「準備中」であることが分かる形で表示している。トレーナーが増減した場合も、この配列を増減させるだけでよい。store/storeName で店舗ごとにグルーピングして横スライド表示される(store は data/stores.json の id と対応させる想定、storeName は見出しに使う表示名)。days は担当曜日(例: [\"月\",\"水\",\"金\"])を月〜日の1文字で指定する。空配列のままだと「曜日は確定次第掲載します。」と表示される。",
   "trainers": [
     {
+      "id": "guest-trainer-aili",
+      "name": "Aili",
+      "store": "daikanyama",
+      "storeName": "代官山",
+      "role": "ゲストトレーナー",
+      "type": "guest",
+      "days": [],
+      "photo": "images/guest-trainer-aili.jpg",
+      "summary": "Pilates Instructor / Nike Official Trainer",
+      "career": "・Pilates Instructor\n・Nike Official Trainer\n・定期イベント開催",
+      "message": ""
+    },
+    {
       "id": "trainer-kawasaki",
       "name": "川崎",
       "store": "daikanyama",
@@ -48,19 +61,6 @@
       "summary": "アスリートアロマトレーナー、パーソナルストレッチトレーナー。アロマトリートメントとストレッチで身体を整える。",
       "career": "・アスリートアロマトレーナー\n・パーソナルストレッチトレーナー",
       "message": "目的地（思い描く姿）にたどり着くためのナビゲーターとして、お客様との対話を特に大切にしています。一人ひとりの身体の状態に合わせ、アロマトリートメントやストレッチを取り入れながら、身体を整えていきます。日々の疲れをリセットしたい方から、より良いコンディションを目指すアスリートまで、その方に合った身体のケアをサポートします。"
-    },
-    {
-      "id": "guest-trainer-aili",
-      "name": "Aili",
-      "store": "daikanyama",
-      "storeName": "代官山",
-      "role": "ゲストトレーナー",
-      "type": "guest",
-      "days": [],
-      "photo": "images/guest-trainer-aili.jpg",
-      "summary": "Pilates Instructor / Nike Official Trainer",
-      "career": "・Pilates Instructor\n・Nike Official Trainer\n・定期イベント開催",
-      "message": ""
     }
   ]
 }

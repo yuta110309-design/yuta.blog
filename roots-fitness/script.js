@@ -902,7 +902,7 @@
       return html;
     }
 
-    fetch(trainerGroups.getAttribute("data-trainers-source") + "?v=5")
+    fetch(trainerGroups.getAttribute("data-trainers-source") + "?v=100")
       .then(function (res) {
         return res.ok ? res.json() : { trainers: [] };
       })

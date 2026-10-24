@@ -44,29 +44,6 @@ export const EVENTS: EventConfig[] = [
     ]
   },
   {
-    id: 'toride',
-    emoji: '🌾',
-    title: '畑HYROX（特別開催）— 茨城・取手',
-    location: '取手駅集合（送迎あり）',
-    description:
-      '「整ってないからこそのフィットネス」がコンセプトの一日。畑HYROX → さつまいも掘り・種まき → BBQの計225分。整った施設ではなく、土と自然の中で体を動かします。参加費¥20,000、限定15名。',
-    recurrence: { mode: 'once', dateISO: '2026-11-01T11:00:00' },
-    timeLabelOverride: '11:00〜15:30',
-    deadlineDaysBefore: null,
-    capacity: 15,
-    emailDetails: [
-      { label: '集合場所', value: '取手駅（10:30集合、送迎で会場へ）' },
-      {
-        label: 'タイムテーブル',
-        value:
-          '10:30 取手駅集合 → 11:00 畑HYROX → 12:15 さつまいも掘り・種まき → 13:00 BBQ → 15:00 片付け・集合写真 → 15:30 送迎 → 15:50頃 取手駅解散'
-      },
-      { label: '参加費', value: '¥20,000（お支払い方法は別途ご案内します）' },
-      { label: '持ち物', value: '動きやすい服装、汚れてもいい靴、タオル、着替え' },
-      { label: 'ひとこと', value: '種まきをして「また収穫に来る」きっかけをつくる回です。整った施設ではなく、土と自然の中で体を動かしましょう。' }
-    ]
-  },
-  {
     id: 'futsal',
     emoji: '⚽',
     title: 'フットサル（男女混合）',

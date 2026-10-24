@@ -881,12 +881,25 @@
     }
 
     function buildTrainerGroupHtml(group) {
-      return (
-        '<div class="trainer-group">' +
-          '<h3 class="trainer-group-title">' + group.storeName + "</h3>" +
-          '<div class="trainer-cards">' + group.trainers.map(buildTrainerCardHtml).join("") + "</div>" +
-        "</div>"
-      );
+      var regularTrainers = group.trainers.filter(function(t) { return !t.type || t.type !== "guest"; });
+      var guestTrainers = group.trainers.filter(function(t) { return t.type === "guest"; });
+
+      var html = '<div class="trainer-group">' +
+        '<h3 class="trainer-group-title">' + group.storeName + "</h3>";
+
+      if (regularTrainers.length > 0) {
+        html += '<div class="trainer-cards">' + regularTrainers.map(buildTrainerCardHtml).join("") + "</div>";
+      }
+
+      if (guestTrainers.length > 0) {
+        html += '<div class="guest-trainers-subsection">' +
+          '<h4 class="guest-trainers-subtitle">ゲストトレーナー</h4>' +
+          '<div class="guest-trainer-cards">' + guestTrainers.map(buildTrainerCardHtml).join("") + '</div>' +
+          "</div>";
+      }
+
+      html += "</div>";
+      return html;
     }
 
     fetch(trainerGroups.getAttribute("data-trainers-source") + "?v=1000")

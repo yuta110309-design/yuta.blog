@@ -6,6 +6,32 @@
       "name": "パーソナル",
       "plans": [
         {
+          "id": "personal-trial",
+          "name": "新規体験",
+          "frequency": "1回",
+          "price": 7650,
+          "priceUnit": "回",
+          "unitPrice": null,
+          "note": "",
+          "stores": ["daikanyama"],
+          "recommendedFor": "まずは1回試してみたい方、Rootsの世界観を体験してみたい方に。",
+          "photoNote": "新規体験セッションの風景",
+          "photo": "images/plan-personal.jpg"
+        },
+        {
+          "id": "personal-trial-karuizawa",
+          "name": "新規体験",
+          "frequency": "1回",
+          "price": 7500,
+          "priceUnit": "回",
+          "unitPrice": null,
+          "note": "",
+          "stores": ["karuizawa"],
+          "recommendedFor": "まずは1回試してみたい方、Rootsの世界観を体験してみたい方に。",
+          "photoNote": "新規体験セッションの風景",
+          "photo": "images/plan-personal.jpg"
+        },
+        {
           "id": "personal-weekly1",
           "name": "週1回コース",
           "frequency": "月4回",

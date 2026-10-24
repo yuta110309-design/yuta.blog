@@ -3315,3 +3315,12 @@ a.news-card:hover {
   background: var(--color-text-soft);
   color: var(--color-white);
 }
+
+/* Plan panel visibility control */
+.plan-panel {
+  display: block;
+}
+
+.plan-panel[hidden] {
+  display: none !important;
+}

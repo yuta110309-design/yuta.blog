@@ -1,0 +1,62 @@
+/* SURVEY PAGE — index.html等と共通のstyle.cssに乗せる形の追加スタイル。 */
+
+.survey-section { padding-top: 56px; }
+.survey-section .eyebrow { margin-bottom: 14px; }
+.survey-section .section-title { margin-bottom: 14px; }
+.survey-section .section-intro { margin-bottom: 40px; }
+
+#survey-success-view .section-title { margin-top: 8px; }
+#survey-success-view .section-intro { margin-bottom: 28px; }
+
+.survey-q { margin-bottom: 34px; }
+.survey-q-label {
+  font-family: "Shippori Mincho", serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+
+/* 選択式ピル（複数候補から1つタップ） */
+.survey-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+.survey-pill {
+  font-family: "Space Mono", monospace;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  background: none;
+  border: 1px solid var(--line-strong);
+  padding: 11px 18px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.survey-pill:hover { border-color: var(--sage); }
+.survey-pill.is-active {
+  background: var(--sage-deep);
+  border-color: var(--sage-deep);
+  color: var(--paper);
+}
+
+/* NPS 0-10 */
+.survey-nps { display: flex; flex-wrap: wrap; gap: 6px; }
+.survey-nps-btn {
+  width: 36px; height: 36px;
+  background: none; border: 1px solid var(--line-strong);
+  color: var(--ink-soft); font-family: "Space Mono", monospace; font-size: 12.5px;
+  cursor: pointer; transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.survey-nps-btn.is-active {
+  background: var(--sage-deep);
+  border-color: var(--sage-deep);
+  color: var(--paper);
+}
+.survey-nps-scale {
+  display: flex; justify-content: space-between;
+  font-size: 10.5px; color: var(--muted); margin-top: 8px; max-width: 420px;
+}
+
+.survey-submit { width: 100%; text-align: center; margin-top: 8px; }
+
+@media (max-width: 640px) {
+  .survey-nps-btn { width: 30px; height: 30px; font-size: 11px; }
+  .survey-nps { gap: 5px; }
+}
